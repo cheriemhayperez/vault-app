@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --vault-accent: #7c3aed;
+  --vault-accent-deep: #5b21b6;
+  --vault-card: #ffffff;
+  --vault-border: #e2e8f0;
+}
+
+.text-vault-accent {
+  color: var(--vault-accent);
+}
+
+:root[data-theme="dark"] {
+  --background: #020617;
+  --foreground: #f1f5f9;
+  --vault-accent: #a78bfa;
+  --vault-accent-deep: #7c3aed;
+  --vault-card: #0f172a;
+  --vault-border: #1e293b;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.08), transparent 35%),
+    radial-gradient(circle at 100% 0%, rgba(109, 40, 217, 0.06), transparent 40%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.12), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(30, 27, 75, 0.35), transparent 45%),
+    var(--background);
+}
+
+:root[data-theme="dark"] .bg-white {
+  background-color: rgb(15 23 42);
+}
+
+:root[data-theme="dark"] .bg-slate-50,
+:root[data-theme="dark"] .bg-slate-50\/80,
+:root[data-theme="dark"] .bg-slate-50\/60 {
+  background-color: rgb(15 23 42);
+}
+
+:root[data-theme="dark"] .bg-slate-100 {
+  background-color: rgb(30 41 59);
+}
+
+:root[data-theme="dark"] .border-slate-100,
+:root[data-theme="dark"] .border-slate-200 {
+  border-color: rgb(30 41 59);
+}
+
+:root[data-theme="dark"] .text-slate-900,
+:root[data-theme="dark"] .text-slate-950 {
+  color: rgb(241 245 249);
+}
+
+:root[data-theme="dark"] .text-slate-800,
+:root[data-theme="dark"] .text-slate-700 {
+  color: rgb(226 232 240);
+}
+
+:root[data-theme="dark"] .text-slate-600 {
+  color: rgb(148 163 184);
+}
+
+:root[data-theme="dark"] .text-slate-500 {
+  color: rgb(100 116 139);
+}
+
+:root[data-theme="dark"] .text-slate-400 {
+  color: rgb(148 163 184);
+}
+
+:root[data-theme="dark"] .shadow-sm {
+  --tw-shadow-color: rgb(0 0 0 / 0.35);
+}
+
+:root[data-theme="dark"] .hover\:bg-slate-50:hover {
+  background-color: rgb(30 41 59);
+}
+
+:root[data-theme="dark"] .hover\:bg-slate-50\/60:hover {
+  background-color: rgb(30 41 59 / 0.6);
+}
+
+:root[data-theme="dark"] .divide-slate-100 > :not(:last-child) {
+  border-color: rgb(30 41 59);
+}
+
+:root[data-theme="dark"] .bg-violet-50 {
+  background-color: rgb(46 16 101 / 0.35);
+}
+
+:root[data-theme="dark"] .text-violet-700 {
+  color: rgb(196 181 253);
+}
+
+:root[data-theme="dark"] .border-violet-600 {
+  border-color: rgb(139 92 246);
+}
+
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select {
+  background-color: rgb(15 23 42);
+  border-color: rgb(51 65 85);
+  color: rgb(241 245 249);
+}
+
+:root[data-theme="dark"] input::placeholder {
+  color: rgb(100 116 139);
+}
+
+:root[data-theme="dark"] .ring-emerald-50 {
+  --tw-ring-color: rgb(6 78 59 / 0.45);
+}
+
+/* Recharts SVG is focusable on click; suppress the default browser focus ring */
+.recharts-wrapper,
+.recharts-wrapper svg,
+.recharts-surface {
+  outline: none;
+}
+
+.recharts-wrapper:focus,
+.recharts-wrapper:focus-visible,
+.recharts-wrapper svg:focus,
+.recharts-wrapper svg:focus-visible,
+.recharts-surface:focus,
+.recharts-surface:focus-visible {
+  outline: none;
+}
+
+input[type="search"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  margin-right: 2px;
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+@keyframes landing-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.landing-float {
+  animation: landing-float 4.5s ease-in-out infinite;
+}
+
+.landing-float-delayed {
+  animation: landing-float 4.5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+@keyframes vault-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.vault-btn-primary {
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 50%, #4c1d95 100%);
+  background-size: 200% 200%;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-position 400ms ease;
+}
+
+.vault-btn-primary:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 12px 32px -8px rgba(124, 58, 237, 0.55);
+  transform: translateY(-1px);
+}
+
+.vault-btn-primary:active {
+  transform: translateY(0);
+}
+
+.vault-btn-outline {
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.vault-btn-outline:hover {
+  transform: translateY(-1px);
+  border-color: rgb(167 139 250);
+  background-color: rgb(245 243 255);
+}
+
+@keyframes vault-notification-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+  }
+}
+
+.vault-notification-pulse {
+  animation: vault-notification-pulse 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vault-notification-pulse {
+    animation: none;
+  }
+}
