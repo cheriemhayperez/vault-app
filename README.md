@@ -2,6 +2,8 @@
 
 **Freelancer finance dashboard for Filipino freelancers** — track take-home pay, government deductions (SSS, PhilHealth, Pag-IBIG, BIR), 50/30/20 budgeting, expenses, investments, and reminders in one place.
 
+**Live app:** [https://vault-watch.vercel.app/](https://vault-watch.vercel.app/)
+
 Free to use. No credit card required.
 
 ---
@@ -41,7 +43,7 @@ Vault helps Filipino freelancers understand where their money goes. Instead of j
 
 ### How to get started (no coding)
 
-1. Open the app in your browser
+1. Open the app: [https://vault-watch.vercel.app/](https://vault-watch.vercel.app/)
 2. **Sign up** at `/signup` with your email
 3. **Log in** at `/login`
 4. Add your first pay record, then set up your budget from the sidebar
@@ -158,7 +160,9 @@ npm run build
 npm run start
 ```
 
-**Hosted (e.g. [Vercel](https://vercel.com/))**
+**Hosted ([Vercel](https://vercel.com/))**
+
+Live demo: [https://vault-watch.vercel.app/](https://vault-watch.vercel.app/)
 
 1. Push the repo to GitHub
 2. Import the project in your hosting provider
