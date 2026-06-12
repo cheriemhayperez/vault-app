@@ -1,3 +1,10 @@
+"use client";
+
+import { useCallback, useState } from "react";
+
+import { AuthFormError } from "@/components/auth/auth-form-error";
+import { isGoogleAuthEnabled, signInWithGoogle } from "@/lib/googleAuth";
+
 const GoogleIcon = () => (
   <svg viewBox="0 0 24 24" className="size-5 shrink-0" aria-hidden>
     <path
@@ -23,23 +30,76 @@ interface SocialAuthButtonsProps {
   dividerText?: string;
 }
 
+const GOOGLE_UNAVAILABLE_MESSAGE =
+  "Google sign-in is coming soon. Please use your email and password for now.";
+
+const MESSAGE_AUTO_DISMISS_MS = 5000;
+
 export const SocialAuthButtons = ({
   dividerText = "or continue with",
-}: SocialAuthButtonsProps) => (
-  <div className="w-full shrink-0 pb-0 sm:pb-2">
-    <p
-      aria-hidden
-      className="my-1.5 flex items-center gap-2 text-[11px] font-medium text-slate-400 before:h-px before:flex-1 before:border-t before:border-slate-200 after:h-px after:flex-1 after:border-t after:border-slate-200 sm:my-4 sm:gap-3 sm:text-xs"
-    >
-      {dividerText}
-    </p>
+}: SocialAuthButtonsProps) => {
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageVariant, setMessageVariant] = useState<"info" | "error">("info");
+  const [isLoading, setIsLoading] = useState(false);
 
-    <button
-      type="button"
-      className="flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 active:scale-[0.99]"
-    >
-      <GoogleIcon />
-      Continue with Google
-    </button>
-  </div>
-);
+  const dismissMessage = useCallback(() => {
+    setMessage(null);
+  }, []);
+
+  const handleGoogleSignIn = async () => {
+    if (!isGoogleAuthEnabled) {
+      setMessageVariant("info");
+      setMessage(GOOGLE_UNAVAILABLE_MESSAGE);
+      return;
+    }
+
+    setMessage(null);
+    setIsLoading(true);
+
+    try {
+      const { error } = await signInWithGoogle();
+      if (error) {
+        setMessageVariant("error");
+        setMessage(error.message);
+        setIsLoading(false);
+      }
+    } catch {
+      setMessageVariant("error");
+      setMessage("Something went wrong. Please try again.");
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full shrink-0 pb-0 sm:pb-2">
+      {message ? (
+        <div className="mt-4">
+          <AuthFormError
+            message={message}
+            variant={messageVariant}
+            dismissible
+            onDismiss={dismissMessage}
+            autoDismissMs={MESSAGE_AUTO_DISMISS_MS}
+          />
+        </div>
+      ) : null}
+
+      <p
+        aria-hidden
+        className="my-1.5 flex items-center gap-2 text-[11px] font-medium text-slate-400 before:h-px before:flex-1 before:border-t before:border-slate-200 after:h-px after:flex-1 after:border-t after:border-slate-200 sm:my-4 sm:gap-3 sm:text-xs"
+      >
+        {dividerText}
+      </p>
+
+      <button
+        type="button"
+        onClick={handleGoogleSignIn}
+        disabled={isLoading}
+        className="flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        <GoogleIcon />
+        {isLoading ? "Redirecting…" : "Continue with Google"}
+      </button>
+    </div>
+  );
+};
