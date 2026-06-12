@@ -32,6 +32,10 @@ export const useVaultToast = () => {
     setToast({ message, variant: "error" });
   }, []);
 
+  const showToastInfo = useCallback((message: string) => {
+    setToast({ message, variant: "info" });
+  }, []);
+
   const clearToast = useCallback(() => {
     setToast(null);
   }, []);
@@ -41,6 +45,7 @@ export const useVaultToast = () => {
     toastVariant: toast?.variant ?? "success",
     setToastMessage,
     showToastError,
+    showToastInfo,
     clearToast,
   };
 };
