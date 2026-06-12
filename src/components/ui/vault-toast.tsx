@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlertCircle, Check, X } from "lucide-react";
+import { AlertCircle, Check, Info, X } from "lucide-react";
 
-export type VaultToastVariant = "success" | "error";
+export type VaultToastVariant = "success" | "error" | "info";
 
 interface VaultToastProps {
   message: string;
@@ -31,6 +31,12 @@ const variantStyles: Record<
     iconWrap: "bg-rose-600",
     text: "text-rose-900",
     close: "text-rose-600 hover:bg-rose-100/80",
+  },
+  info: {
+    container: "border-sky-200 bg-sky-50 text-sky-900",
+    iconWrap: "bg-sky-600",
+    text: "text-sky-900",
+    close: "text-sky-600 hover:bg-sky-100/80",
   },
 };
 
@@ -62,6 +68,8 @@ export const VaultToast = ({
       >
         {variant === "error" ? (
           <AlertCircle className="size-3.5 text-white" strokeWidth={2.5} />
+        ) : variant === "info" ? (
+          <Info className="size-3.5 text-white" strokeWidth={2.5} />
         ) : (
           <Check className="size-3.5 text-white" strokeWidth={3} />
         )}
