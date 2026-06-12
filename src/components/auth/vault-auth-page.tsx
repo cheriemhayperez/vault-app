@@ -43,22 +43,27 @@ const desktopFormPanelClass =
 const mobileFormShell =
   "max-md:absolute max-md:inset-0 max-md:z-10 max-md:flex max-md:flex-col max-md:overflow-hidden";
 
-const mobilePromoReserve = "hidden shrink-0 max-md:block max-md:h-[10.5rem]";
+const mobilePromoReserve = "hidden shrink-0 max-md:block max-md:h-[9.5rem]";
 
 const mobileFormBodyClass =
-  "min-h-0 flex-1 overflow-hidden bg-white max-md:overflow-hidden md:flex-none md:bg-transparent md:overflow-visible";
+  "min-h-0 flex-1 overflow-hidden bg-white max-md:overflow-y-auto max-md:overscroll-contain md:flex-none md:bg-transparent md:overflow-visible";
 
 const mobileFormInnerClass =
   "mx-auto flex w-full min-w-0 max-w-md flex-col max-md:items-center max-md:px-5 max-md:py-3 max-md:text-center md:mx-0 md:max-w-none md:h-full md:overflow-visible";
 
 const mobileAuthHeaderLoginClass =
-  "flex w-full flex-col items-center max-md:mt-5 md:contents";
+  "flex w-full flex-col items-center max-md:mt-3 md:contents";
 
 const mobileAuthHeaderSignUpClass =
-  "flex w-full flex-col items-center max-md:mt-5 md:contents";
+  "flex w-full flex-col items-center max-md:mt-6 md:contents";
 
 const promoButtonClass =
   "inline-flex min-w-[9.5rem] items-center justify-center rounded-full border-2 border-white/90 px-8 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10";
+
+const LOGIN_INVALID_MESSAGE =
+  "Invalid email or password. Please try again.";
+
+const MIN_PASSWORD_LENGTH = 8;
 
 export const VaultAuthPage = ({
   initialSignUp = false,
@@ -70,6 +75,14 @@ export const VaultAuthPage = ({
   useEffect(() => {
     setIsSignUp(initialSignUp);
   }, [initialSignUp]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("reset") === "success") {
+      setLoginNotice("Your password has been updated. Please log in.");
+      window.history.replaceState(window.history.state, "", "/login");
+    }
+  }, []);
 
   const [signUpName, setSignUpName] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
@@ -101,10 +114,16 @@ export const VaultAuthPage = ({
     syncAuthPath(false);
   };
 
-  const handleSignUpSubmit = async (event: React.FormEvent) => {
+  const handleSignUpSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSignUpError(null);
     setSignUpNotice(null);
+
+    const form = event.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     if (signUpPassword !== signUpConfirmPassword) {
       setSignUpError("Passwords do not match.");
@@ -159,10 +178,17 @@ export const VaultAuthPage = ({
     }
   };
 
-  const handleLoginSubmit = async (event: React.FormEvent) => {
+  const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoginError(null);
     setLoginNotice(null);
+
+    const form = event.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
     setIsLoggingIn(true);
 
     try {
@@ -172,7 +198,11 @@ export const VaultAuthPage = ({
       });
 
       if (error) {
-        setLoginError(error.message);
+        setLoginError(
+          error.message === "Invalid login credentials"
+            ? LOGIN_INVALID_MESSAGE
+            : error.message,
+        );
         return;
       }
 
@@ -185,7 +215,7 @@ export const VaultAuthPage = ({
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-6 max-md:fixed max-md:inset-0 max-md:h-screen max-md:w-screen max-md:items-center max-md:overflow-hidden max-md:px-5 max-md:py-8 sm:items-center sm:py-10">
+    <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-6 max-md:fixed max-md:inset-0 max-md:flex max-md:h-[100dvh] max-md:min-h-0 max-md:w-screen max-md:items-center max-md:justify-center max-md:overflow-x-hidden max-md:overflow-y-auto max-md:overscroll-contain max-md:px-4 max-md:py-3 sm:items-center sm:py-10">
       <div
         className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-violet-300/30 blur-3xl max-md:scale-75 max-md:opacity-70"
         aria-hidden
@@ -195,7 +225,7 @@ export const VaultAuthPage = ({
         aria-hidden
       />
 
-      <div className="relative my-auto w-full max-w-[920px] overflow-hidden rounded-2xl bg-white shadow-[0_24px_70px_-18px_rgba(76,29,149,0.35)] max-md:flex max-md:h-[calc(100dvh-2rem)] max-md:max-h-[760px] max-md:max-w-[380px] max-md:flex-col max-md:rounded-3xl max-md:shadow-xl md:h-[620px]">
+      <div className="relative my-auto w-full max-w-[920px] shrink-0 overflow-hidden rounded-2xl bg-white shadow-[0_24px_70px_-18px_rgba(76,29,149,0.35)] max-md:flex max-md:h-[calc(100dvh-1.5rem)] max-md:max-h-[calc(100dvh-1.5rem)] max-md:max-w-[380px] max-md:flex-col max-md:rounded-3xl max-md:shadow-xl md:h-[620px]">
         <div className="relative isolate h-full w-full overflow-hidden rounded-2xl bg-white max-md:rounded-3xl md:h-[620px]">
           {/* Mobile — solid white form zone behind promo + forms */}
           <div
@@ -205,7 +235,7 @@ export const VaultAuthPage = ({
 
           {/* Mobile — sliding 40% promo panel */}
           <div
-            className={`absolute left-0 right-0 z-30 flex h-[10.5rem] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-violet-900 via-indigo-950 to-slate-950 px-6 text-center text-white md:hidden ${mobileSlideTransition} ${
+            className={`absolute left-0 right-0 z-30 flex h-[9.5rem] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-violet-900 via-indigo-950 to-slate-950 px-6 text-center text-white md:hidden ${mobileSlideTransition} ${
               isLogin
                 ? "top-0 rounded-t-3xl rounded-b-[2.5rem]"
                 : "bottom-0 top-auto rounded-b-3xl rounded-t-[2.5rem]"
@@ -285,7 +315,7 @@ export const VaultAuthPage = ({
 
               <form
                 onSubmit={handleLoginSubmit}
-                className="mt-3 w-full min-w-0 space-y-2 max-md:mt-3 md:mt-6 md:space-y-3.5"
+                className="mt-3 w-full min-w-0 max-md:mt-3 max-md:space-y-3 md:mt-6 md:space-y-3.5"
                 aria-label="Login form"
               >
                 <AuthFormError message={loginError} />
@@ -296,8 +326,12 @@ export const VaultAuthPage = ({
                   name="login-email"
                   placeholder="Email"
                   autoComplete="email"
+                  required
                   value={loginEmail}
-                  onChange={(event) => setLoginEmail(event.target.value)}
+                  onChange={(event) => {
+                    setLoginEmail(event.target.value);
+                    setLoginError(null);
+                  }}
                   icon={<Mail className="size-4" strokeWidth={2} />}
                 />
                 <div className="space-y-1.5 md:space-y-2">
@@ -307,13 +341,17 @@ export const VaultAuthPage = ({
                     name="login-password"
                     placeholder="Password"
                     autoComplete="current-password"
+                    required
                     value={loginPassword}
-                    onChange={(event) => setLoginPassword(event.target.value)}
+                    onChange={(event) => {
+                      setLoginPassword(event.target.value);
+                      setLoginError(null);
+                    }}
                     icon={<Lock className="size-4" strokeWidth={2} />}
                   />
                   <div className="flex justify-end max-md:justify-center">
                     <Link
-                      href="#"
+                      href="/forgot-password"
                       className="text-xs font-medium text-slate-500 transition hover:text-violet-600"
                     >
                       Forgot Password?
@@ -363,7 +401,7 @@ export const VaultAuthPage = ({
 
               <form
                 onSubmit={handleSignUpSubmit}
-                className="mt-2 w-full min-w-0 space-y-1.5 max-md:mt-2 md:mt-6 md:space-y-3.5"
+                className="mt-2 w-full min-w-0 max-md:mt-2 max-md:space-y-3 md:mt-6 md:space-y-3.5"
                 aria-label="Sign up form"
               >
                 <AuthFormError message={signUpError} />
@@ -374,8 +412,12 @@ export const VaultAuthPage = ({
                   name="signup-name"
                   placeholder="Full name"
                   autoComplete="name"
+                  required
                   value={signUpName}
-                  onChange={(event) => setSignUpName(event.target.value)}
+                  onChange={(event) => {
+                    setSignUpName(event.target.value);
+                    setSignUpError(null);
+                  }}
                   icon={<User className="size-4" strokeWidth={2} />}
                   className="!h-10"
                 />
@@ -385,8 +427,12 @@ export const VaultAuthPage = ({
                   name="signup-email"
                   placeholder="Email"
                   autoComplete="email"
+                  required
                   value={signUpEmail}
-                  onChange={(event) => setSignUpEmail(event.target.value)}
+                  onChange={(event) => {
+                    setSignUpEmail(event.target.value);
+                    setSignUpError(null);
+                  }}
                   icon={<Mail className="size-4" strokeWidth={2} />}
                   className="!h-10"
                 />
@@ -396,8 +442,13 @@ export const VaultAuthPage = ({
                   name="signup-password"
                   placeholder="Password"
                   autoComplete="new-password"
+                  required
+                  minLength={MIN_PASSWORD_LENGTH}
                   value={signUpPassword}
-                  onChange={(event) => setSignUpPassword(event.target.value)}
+                  onChange={(event) => {
+                    setSignUpPassword(event.target.value);
+                    setSignUpError(null);
+                  }}
                   icon={<Lock className="size-4" strokeWidth={2} />}
                   className="!h-10"
                 />
@@ -407,10 +458,13 @@ export const VaultAuthPage = ({
                   name="signup-confirm-password"
                   placeholder="Confirm password"
                   autoComplete="new-password"
+                  required
+                  minLength={MIN_PASSWORD_LENGTH}
                   value={signUpConfirmPassword}
-                  onChange={(event) =>
-                    setSignUpConfirmPassword(event.target.value)
-                  }
+                  onChange={(event) => {
+                    setSignUpConfirmPassword(event.target.value);
+                    setSignUpError(null);
+                  }}
                   icon={<Lock className="size-4" strokeWidth={2} />}
                   className="!h-10"
                 />
