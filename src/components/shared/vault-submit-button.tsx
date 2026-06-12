@@ -51,7 +51,7 @@ export const VaultSubmitButton = ({
       disabled={isDisabled}
       aria-busy={isProcessing}
       aria-disabled={isDisabled}
-      className={`rounded-lg bg-violet-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition enabled:hover:bg-violet-700 ${
+      className={`rounded-lg bg-violet-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition enabled:hover:bg-violet-700 disabled:cursor-not-allowed ${
         isValidationDisabled ? "opacity-40 shadow-none" : ""
       } ${className}`}
     >

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 
@@ -25,6 +25,12 @@ export const metadata: Metadata = {
     "Take-home pay, government deductions, and 50/30/20 budgeting for Filipino freelancers.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -40,11 +46,11 @@ export default async function RootLayout({
       lang="en"
       data-theme={themeMode}
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full scroll-smooth antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full min-h-dvh scroll-smooth antialiased`}
     >
-      <body className="min-h-screen w-full overflow-x-hidden font-sans antialiased">
+      <body className="min-h-dvh w-full overflow-x-hidden font-sans antialiased">
         <Providers>
-          <div className="flex min-h-screen w-full flex-col">{children}</div>
+          <div className="flex min-h-dvh w-full flex-col">{children}</div>
         </Providers>
       </body>
     </html>

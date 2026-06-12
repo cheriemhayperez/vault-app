@@ -215,7 +215,7 @@ export const VaultAuthPage = ({
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-start justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-6 max-md:fixed max-md:inset-0 max-md:flex max-md:h-[100dvh] max-md:min-h-0 max-md:w-screen max-md:items-center max-md:justify-center max-md:overflow-x-hidden max-md:overflow-y-auto max-md:overscroll-contain max-md:px-4 max-md:py-3 sm:items-center sm:py-10">
+    <div className="relative flex min-h-dvh w-full items-start justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-6 max-md:fixed max-md:inset-x-0 max-md:top-0 max-md:flex max-md:h-dvh max-md:max-h-dvh max-md:min-h-0 max-md:w-full max-md:items-center max-md:justify-center max-md:overflow-x-hidden max-md:overflow-y-auto max-md:overscroll-contain max-md:px-4 max-md:py-3 sm:items-center sm:py-10">
       <div
         className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-violet-300/30 blur-3xl max-md:scale-75 max-md:opacity-70"
         aria-hidden
@@ -225,8 +225,8 @@ export const VaultAuthPage = ({
         aria-hidden
       />
 
-      <div className="relative my-auto w-full max-w-[920px] shrink-0 overflow-hidden rounded-2xl bg-white shadow-[0_24px_70px_-18px_rgba(76,29,149,0.35)] max-md:flex max-md:h-[calc(100dvh-1.5rem)] max-md:max-h-[calc(100dvh-1.5rem)] max-md:max-w-[380px] max-md:flex-col max-md:rounded-3xl max-md:shadow-xl md:h-[620px]">
-        <div className="relative isolate h-full w-full overflow-hidden rounded-2xl bg-white max-md:rounded-3xl md:h-[620px]">
+      <div className="relative my-auto w-full max-w-[920px] shrink-0 overflow-hidden rounded-2xl bg-white shadow-[0_24px_70px_-18px_rgba(76,29,149,0.35)] max-md:flex max-md:h-[calc(100dvh-1.5rem)] max-md:max-h-[calc(100dvh-1.5rem)] max-md:min-h-0 max-md:max-w-[380px] max-md:flex-col max-md:rounded-3xl max-md:shadow-xl md:h-[620px]">
+        <div className="relative isolate h-full min-h-0 w-full overflow-hidden rounded-2xl bg-white max-md:flex max-md:flex-col max-md:rounded-3xl md:h-[620px]">
           {/* Mobile — solid white form zone behind promo + forms */}
           <div
             className="absolute inset-0 z-0 bg-white md:hidden"
@@ -235,7 +235,7 @@ export const VaultAuthPage = ({
 
           {/* Mobile — sliding 40% promo panel */}
           <div
-            className={`absolute left-0 right-0 z-30 flex h-[9.5rem] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-violet-900 via-indigo-950 to-slate-950 px-6 text-center text-white md:hidden ${mobileSlideTransition} ${
+            className={`absolute left-0 right-0 z-30 flex h-[9.5rem] shrink-0 flex-shrink-0 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-violet-900 via-indigo-950 to-slate-950 px-6 text-center text-white md:hidden ${mobileSlideTransition} ${
               isLogin
                 ? "top-0 rounded-t-3xl rounded-b-[2.5rem]"
                 : "bottom-0 top-auto rounded-b-3xl rounded-t-[2.5rem]"
@@ -302,7 +302,7 @@ export const VaultAuthPage = ({
               <div className={`${mobileFormInnerClass} max-md:justify-start md:flex-none`}>
               <div className={mobileAuthHeaderLoginClass}>
                 <VaultLogo
-                  className="mb-2 max-md:h-9 max-md:w-auto md:mb-6"
+                  className="mb-2 max-md:h-10 max-md:w-auto md:mb-6"
                   height={44}
                 />
                 <h1 className="w-full text-center text-xl font-bold tracking-tight text-slate-900 md:text-left md:text-2xl">
@@ -388,7 +388,7 @@ export const VaultAuthPage = ({
               <div className={`${mobileFormInnerClass} max-md:justify-start md:flex-none`}>
               <div className={mobileAuthHeaderSignUpClass}>
                 <VaultLogo
-                  className="mb-2 max-md:h-9 max-md:w-auto md:mb-6"
+                  className="mb-2 max-md:h-10 max-md:w-auto md:mb-6"
                   height={44}
                 />
                 <h1 className="w-full text-center text-xl font-bold tracking-tight text-slate-900 md:text-left md:text-2xl">

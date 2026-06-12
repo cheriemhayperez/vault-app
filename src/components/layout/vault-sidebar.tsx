@@ -146,7 +146,7 @@ export const VaultSidebar = ({
       {tooltipPortal}
       {/* Desktop sidebar */}
       <aside
-        className={`sticky top-0 z-30 hidden h-screen shrink-0 flex-col border-r border-violet-100 bg-white transition-all duration-300 md:flex ${
+        className={`z-30 hidden h-full shrink-0 flex-shrink-0 flex-col border-r border-violet-100 bg-white transition-all duration-300 md:flex ${
           isCollapsed ? "w-[4.5rem]" : "w-64"
         }`}
       >
@@ -206,7 +206,7 @@ export const VaultSidebar = ({
         {mobileOpen ? (
           <div
             key="mobile-drawer"
-            className="fixed inset-0 z-40 md:hidden"
+            className="fixed inset-x-0 top-0 z-40 h-dvh max-h-dvh md:hidden"
             data-mobile-drawer
           >
             <motion.button
@@ -225,9 +225,9 @@ export const VaultSidebar = ({
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="absolute left-0 top-0 flex h-full w-[70vw] max-w-[18rem] flex-col border-r border-violet-100 bg-white shadow-xl"
+              className="absolute left-0 top-0 flex h-dvh max-h-dvh w-[70vw] max-w-[18rem] flex-col border-r border-violet-100 bg-white shadow-xl"
             >
-              <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
+              <div className="flex shrink-0 flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-4">
                 <Link
                   href="/dashboard"
                   onClick={onMobileClose}

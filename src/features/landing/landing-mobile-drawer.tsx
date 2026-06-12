@@ -22,7 +22,7 @@ export const LandingMobileDrawer = ({
     {isOpen ? (
       <div
         key="landing-mobile-drawer"
-        className="fixed inset-0 z-[60] lg:hidden"
+        className="fixed inset-x-0 top-0 z-[60] h-dvh max-h-dvh lg:hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="landing-mobile-menu"
@@ -44,9 +44,9 @@ export const LandingMobileDrawer = ({
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="absolute right-0 top-0 flex h-full w-[min(85vw,20rem)] flex-col border-l border-slate-100 bg-white shadow-2xl"
+          className="absolute right-0 top-0 flex h-dvh max-h-dvh w-[min(85vw,20rem)] flex-col border-l border-slate-100 bg-white shadow-2xl"
         >
-          <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
+          <div className="flex shrink-0 flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-4">
             <LandingLogoLink onClick={onClose} />
             <button
               type="button"
@@ -58,7 +58,7 @@ export const LandingMobileDrawer = ({
             </button>
           </div>
 
-          <div className="flex flex-1 flex-col overflow-y-auto px-4 py-4">
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4">
             <LandingNavLinks variant="mobile" onNavigate={onNavigate} />
 
             <div className="mt-auto space-y-3 border-t border-slate-200 pt-4">

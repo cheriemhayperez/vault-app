@@ -40,7 +40,7 @@ export const AuthField = ({
         </span>
         <input
           id={fieldId}
-          className={`h-11 w-full rounded-lg border pl-11 pr-4 text-sm outline-none ring-0 transition ${variantStyles[variant]} ${className}`}
+          className={`h-11 w-full rounded-lg border pl-11 pr-4 text-base outline-none ring-0 transition md:text-sm ${variantStyles[variant]} ${className}`}
           {...props}
         />
       </div>
