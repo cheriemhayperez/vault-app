@@ -10,6 +10,7 @@ import { ReminderListItem } from "@/components/shared/reminder-list-item";
 import { ReminderListToolbar } from "@/components/shared/reminder-list-toolbar";
 import { FormErrorBanner } from "@/components/shared/form-error-banner";
 import { ReminderModal } from "./reminder-modal";
+import { VaultPageHeaderActions } from "@/components/layout/vault-page-header-actions";
 import { Button } from "@/components/ui/button";
 import { PageLoadingSpinner } from "@/components/ui/page-loading-spinner";
 import { VaultToast } from "@/components/ui/vault-toast";
@@ -63,35 +64,18 @@ export const RemindersPage = () => {
         />
       ) : null}
 
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h1 className="font-sans text-2xl font-bold tracking-tight text-slate-900">
-              Reminders
-            </h1>
-            <p className="mt-1 font-sans text-sm tracking-tight text-slate-500">
-              Never miss important salary and payroll dates
-            </p>
-          </div>
-          <Button
-            type="button"
-            className="max-md:hidden bg-violet-600 shadow-sm hover:bg-violet-700"
-            onClick={openCreate}
-          >
-            <Plus className="mr-2 size-4" />
-            New Reminder
-          </Button>
-        </div>
-
+      <VaultPageHeaderActions>
         <Button
           type="button"
-          className="h-11 w-full bg-violet-600 shadow-sm hover:bg-violet-700 md:hidden"
+          className="bg-violet-600 shadow-sm hover:bg-violet-700"
           onClick={openCreate}
         >
           <Plus className="mr-2 size-4" />
           New Reminder
         </Button>
+      </VaultPageHeaderActions>
 
+      <div className="space-y-6">
         {loadError ? (
           <FormErrorBanner variant="page" message={loadError} />
         ) : null}

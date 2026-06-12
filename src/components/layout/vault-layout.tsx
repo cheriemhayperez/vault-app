@@ -7,6 +7,7 @@ import { VaultSidebar } from "@/components/layout/vault-sidebar";
 import { VaultPageHeader } from "@/components/layout/vault-page-header";
 import { PageLoadingSpinner } from "@/components/ui/page-loading-spinner";
 import { DashboardPeriodProvider } from "@/contexts/dashboard-period-context";
+import { VaultPageHeaderActionsProvider } from "@/contexts/vault-page-header-actions-context";
 import { VaultProfileProvider } from "@/contexts/vault-profile-context";
 import { VaultPreferencesProvider } from "@/contexts/vault-preferences-context";
 import { VaultReadyProvider } from "@/contexts/vault-ready-context";
@@ -32,6 +33,7 @@ export const VaultLayout = ({ children }: VaultLayoutProps) => {
       <VaultProfileProvider>
         <VaultPreferencesProvider>
           <DashboardPeriodProvider>
+            <VaultPageHeaderActionsProvider>
             <div className="flex h-dvh max-h-dvh min-h-0 w-full overflow-hidden bg-slate-50 font-sans tracking-tight text-slate-900 antialiased transition-colors duration-300">
               <VaultDataLoader />
               <ReminderNotificationSync />
@@ -47,6 +49,7 @@ export const VaultLayout = ({ children }: VaultLayoutProps) => {
                 </main>
               </div>
             </div>
+            </VaultPageHeaderActionsProvider>
           </DashboardPeriodProvider>
         </VaultPreferencesProvider>
       </VaultProfileProvider>
