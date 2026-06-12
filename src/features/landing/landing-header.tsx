@@ -28,7 +28,7 @@ export const LandingHeader = ({
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        className={`sticky top-0 z-50 w-full shrink-0 flex-shrink-0 transition-all duration-300 ${
           isMobileMenuOpen ? "hidden lg:block" : ""
         } ${showNavBackground ? "px-3 pt-3 sm:px-5 sm:pt-4 lg:px-6" : ""}`}
       >
@@ -48,6 +48,7 @@ export const LandingHeader = ({
           >
             <LandingLogoLink
               className="shrink-0 text-slate-900 lg:justify-self-start"
+              height={40}
               onClick={onCloseMobileMenu}
             />
 
@@ -58,7 +59,7 @@ export const LandingHeader = ({
             <div className="hidden items-center justify-self-end gap-1 sm:gap-2 lg:flex">
               <Link
                 href="/login"
-                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
+                className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-violet-100 hover:text-violet-800"
               >
                 Log in
               </Link>

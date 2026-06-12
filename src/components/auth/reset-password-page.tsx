@@ -112,7 +112,7 @@ const ResetPasswordForm = () => {
 
   if (initError) {
     return (
-      <div className="relative flex min-h-screen w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-8">
+      <div className="relative flex min-h-dvh w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-8">
         <div className="relative w-full max-w-md rounded-2xl bg-white px-8 py-10 text-center shadow-[0_24px_70px_-18px_rgba(76,29,149,0.35)] sm:px-10 sm:py-12">
           <AuthFormError message={initError} />
           <Link
@@ -128,14 +128,14 @@ const ResetPasswordForm = () => {
 
   if (!isReady) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70">
+      <div className="flex min-h-dvh items-center justify-center bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70">
         <PageLoadingSpinner label="Verifying reset link…" />
       </div>
     );
   }
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-8">
+    <div className="relative flex min-h-dvh w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-8">
       <div
         className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-violet-300/30 blur-3xl"
         aria-hidden
@@ -220,7 +220,7 @@ const ResetPasswordForm = () => {
 export const ResetPasswordPage = () => (
   <Suspense
     fallback={
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70">
+      <div className="flex min-h-dvh items-center justify-center bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70">
         <PageLoadingSpinner label="Verifying reset link…" />
       </div>
     }

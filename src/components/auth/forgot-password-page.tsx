@@ -36,6 +36,7 @@ export const ForgotPasswordPage = () => {
       }
 
       setNotice("Check your email for a reset link.");
+      setEmail("");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -44,7 +45,7 @@ export const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-8">
+    <div className="relative flex min-h-dvh w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-violet-50/80 via-slate-100 to-sky-100/70 px-4 py-8">
       <div
         className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-violet-300/30 blur-3xl"
         aria-hidden

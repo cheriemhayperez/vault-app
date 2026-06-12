@@ -8,7 +8,7 @@ interface LegalPlaceholderPageProps {
 }
 
 export const LegalPlaceholderPage = ({ title }: LegalPlaceholderPageProps) => (
-  <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
+  <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
     <header className="border-b border-slate-200 bg-white px-4 py-4 sm:px-6">
       <div className="mx-auto flex max-w-3xl items-center justify-between">
         <LandingLogoLink />

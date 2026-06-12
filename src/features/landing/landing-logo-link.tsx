@@ -13,7 +13,7 @@ interface LandingLogoLinkProps {
 
 export const LandingLogoLink = ({
   className = "",
-  height = 36,
+  height = 40,
   onClick,
 }: LandingLogoLinkProps) => {
   const pathname = usePathname();

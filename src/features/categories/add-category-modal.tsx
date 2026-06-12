@@ -95,6 +95,25 @@ export const AddCategoryModal = ({
 
   const canSubmit = name.trim().length > 0 && isPayCategoryKind(kind);
 
+  const parsedDefault = parseAmountInput(defaultAmount);
+  const defaultAmountValue =
+    defaultAmount.trim() && !Number.isNaN(parsedDefault) && parsedDefault > 0
+      ? parsedDefault
+      : undefined;
+
+  const editingDefaultAmount =
+    editingCategory?.defaultAmount && editingCategory.defaultAmount > 0
+      ? editingCategory.defaultAmount
+      : undefined;
+
+  const isDirty =
+    !isEdit ||
+    !editingCategory ||
+    name.trim() !== editingCategory.name ||
+    kind !== editingCategory.kind ||
+    color !== (editingCategory.color ?? DEFAULT_CATEGORY_COLOR) ||
+    defaultAmountValue !== editingDefaultAmount;
+
   const closeCombobox = useCallback(() => {
     setOpenCombobox(false);
   }, []);
@@ -108,12 +127,6 @@ export const AddCategoryModal = ({
   if (!open) {
     return null;
   }
-
-  const parsedDefault = parseAmountInput(defaultAmount);
-  const defaultAmountValue =
-    defaultAmount.trim() && !Number.isNaN(parsedDefault) && parsedDefault > 0
-      ? parsedDefault
-      : undefined;
 
   const handleSubmit = async () => {
     const trimmed = name.trim();
@@ -246,7 +259,7 @@ export const AddCategoryModal = ({
             label={isEdit ? "Update" : "Create"}
             mode={isEdit ? "update" : "save"}
             isProcessing={isSaving}
-            disabled={!canSubmit}
+            disabled={!canSubmit || (isEdit && !isDirty)}
             onClick={() => void handleSubmit()}
           />
         </VaultModalFooter>

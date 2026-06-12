@@ -61,7 +61,7 @@ export const AuthCallbackClient = () => {
 
   if (errorMessage) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="max-w-md text-sm text-slate-600">{errorMessage}</p>
         <button
           type="button"
@@ -75,7 +75,7 @@ export const AuthCallbackClient = () => {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-dvh items-center justify-center">
       <PageLoadingSpinner label="Signing you in…" />
     </div>
   );

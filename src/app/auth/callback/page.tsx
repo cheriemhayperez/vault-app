@@ -7,7 +7,7 @@ export default function AuthCallbackPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="flex min-h-dvh items-center justify-center">
           <PageLoadingSpinner label="Signing you in…" />
         </div>
       }
