@@ -142,15 +142,6 @@ export const SettingsPage = () => {
       ) : null}
 
     <div className="space-y-6">
-      <div className="min-w-0">
-        <h1 className="font-sans text-2xl font-bold tracking-tight text-slate-900">
-          Settings
-        </h1>
-        <p className="mt-1 font-sans text-sm tracking-tight text-slate-500">
-          Manage your account and app preferences
-        </p>
-      </div>
-
       <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-6">
         <div className="min-w-0 max-w-full">
           <div

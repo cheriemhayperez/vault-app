@@ -60,15 +60,6 @@ export const ExpensesPage = () => {
       ) : null}
 
       <div className="space-y-6">
-        <div className="min-w-0">
-          <h1 className="font-sans text-2xl font-bold tracking-tight text-slate-900">
-            Expenses
-          </h1>
-          <p className="mt-1 font-sans text-sm tracking-tight text-slate-500">
-            Track your spending by category
-          </p>
-        </div>
-
         <div className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
           <div className="flex flex-col gap-5 sm:gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex min-w-0 items-start gap-6 sm:gap-8 md:flex-1 md:gap-12">

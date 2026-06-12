@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { AddCategoryModal } from "./add-category-modal";
 import { DeleteCategoryDialog } from "./delete-category-dialog";
 import { RecordActionsMenu } from "@/components/shared/record-actions-menu";
+import { VaultPageHeaderActions } from "@/components/layout/vault-page-header-actions";
 import { Button } from "@/components/ui/button";
 import { VaultToast } from "@/components/ui/vault-toast";
 import { useAppSelector } from "@/store";
@@ -115,26 +116,18 @@ export const CategoriesPage = () => {
         />
       ) : null}
 
-      <div className="space-y-8">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-              Manage Categories
-            </h1>
-            <p className="mt-1 text-sm text-slate-500">
-              Create and organize categories for your pay records
-            </p>
-          </div>
-          <Button
-            type="button"
-            className="shrink-0 rounded-lg bg-violet-600 px-4 hover:bg-violet-700"
-            onClick={openAdd}
-          >
-            <Plus className="mr-1.5 size-4" />
-            Add Category
-          </Button>
-        </div>
+      <VaultPageHeaderActions>
+        <Button
+          type="button"
+          className="shrink-0 rounded-lg bg-violet-600 px-4 hover:bg-violet-700"
+          onClick={openAdd}
+        >
+          <Plus className="mr-1.5 size-4" />
+          Add Category
+        </Button>
+      </VaultPageHeaderActions>
 
+      <div className="space-y-8">
         <div className="grid gap-6 lg:grid-cols-2">
           <CategoryPanel
             {...INCOME_PANEL}

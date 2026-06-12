@@ -24,6 +24,7 @@ import { QuickDeductionModal } from "./quick-deduction-modal";
 import { PayRecordDirectionIcon } from "@/components/shared/pay-record-direction-icon";
 import { RecordCategoryBadge } from "@/components/shared/record-category-badge";
 import { RecordActionsMenu } from "@/components/shared/record-actions-menu";
+import { VaultPageHeaderActions } from "@/components/layout/vault-page-header-actions";
 import { Button } from "@/components/ui/button";
 import { VaultToast } from "@/components/ui/vault-toast";
 import {
@@ -115,48 +116,38 @@ export const RecordsPage = () => {
         />
       ) : null}
 
-      <div className="w-full min-w-0 space-y-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h1 className="font-sans text-2xl font-bold tracking-tight text-slate-900">
-              Pay Records
-            </h1>
-            <p className="mt-1 font-sans text-sm tracking-tight text-slate-500">
-              Track and manage your income and deductions
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              aria-busy={isSyncing}
-              className={`transition-all duration-200 ${
-                isSyncing
-                  ? "cursor-wait border-violet-300 bg-violet-50 text-violet-700 shadow-sm ring-2 ring-violet-200/50 disabled:opacity-100"
-                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
-              }`}
-              disabled={isSyncing}
-              title="Reload pay records from the server"
-              onClick={handleSyncRecords}
-            >
-              <RefreshCw
-                className={`mr-2 size-4 shrink-0 transition-transform ${
-                  isSyncing ? "animate-spin text-violet-600" : ""
-                }`}
-              />
-              {isSyncing ? "Syncing…" : "Sync Linked Dates"}
-            </Button>
-            <Button
-              type="button"
-              className="bg-violet-600 hover:bg-violet-700"
-              onClick={openAddRecord}
-            >
-              <Plus className="mr-2 size-4" />
-              Add Record
-            </Button>
-          </div>
-        </div>
+      <VaultPageHeaderActions>
+        <Button
+          type="button"
+          variant="outline"
+          aria-busy={isSyncing}
+          className={`transition-all duration-200 ${
+            isSyncing
+              ? "cursor-wait border-violet-300 bg-violet-50 text-violet-700 shadow-sm ring-2 ring-violet-200/50 disabled:opacity-100"
+              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+          }`}
+          disabled={isSyncing}
+          title="Reload pay records from the server"
+          onClick={handleSyncRecords}
+        >
+          <RefreshCw
+            className={`mr-2 size-4 shrink-0 transition-transform ${
+              isSyncing ? "animate-spin text-violet-600" : ""
+            }`}
+          />
+          {isSyncing ? "Syncing…" : "Sync Linked Dates"}
+        </Button>
+        <Button
+          type="button"
+          className="bg-violet-600 hover:bg-violet-700"
+          onClick={openAddRecord}
+        >
+          <Plus className="mr-2 size-4" />
+          Add Record
+        </Button>
+      </VaultPageHeaderActions>
 
+      <div className="w-full min-w-0 space-y-6">
         {syncError ? (
           <FormErrorBanner variant="page" message={syncError} />
         ) : null}

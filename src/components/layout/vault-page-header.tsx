@@ -4,28 +4,21 @@ import { usePathname } from "next/navigation";
 
 import { getPageMeta } from "@/components/layout/config/vault-nav";
 import { PeriodFiltersRow } from "@/components/shared/period-filters";
+import { useVaultPageHeaderActions } from "@/contexts/vault-page-header-actions-context";
+
+const PERIOD_FILTER_PATHS = new Set(["/dashboard", "/investments"]);
 
 export const VaultPageHeader = () => {
   const pathname = usePathname();
-
-  if (
-    pathname === "/records" ||
-    pathname === "/categories" ||
-    pathname === "/budget" ||
-    pathname === "/expenses" ||
-    pathname === "/reminders" ||
-    pathname === "/investments" ||
-    pathname === "/settings"
-  ) {
-    return null;
-  }
-
   const { title, description } = getPageMeta(pathname);
+  const { actions } = useVaultPageHeaderActions();
+  const showPeriodFilters = PERIOD_FILTER_PATHS.has(pathname);
+  const trailing = actions ?? (showPeriodFilters ? <PeriodFiltersRow /> : null);
 
   return (
     <div className="mb-4 w-full min-w-0 sm:mb-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0 flex-1">
           <h1 className="font-sans text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
             {title}
           </h1>
@@ -34,7 +27,11 @@ export const VaultPageHeader = () => {
           </p>
         </div>
 
-        <PeriodFiltersRow className="shrink-0 sm:pt-0.5" />
+        {trailing ? (
+          <div className="flex w-full shrink-0 flex-wrap items-center justify-start gap-2 sm:w-auto sm:justify-end sm:pt-0">
+            {trailing}
+          </div>
+        ) : null}
       </div>
     </div>
   );

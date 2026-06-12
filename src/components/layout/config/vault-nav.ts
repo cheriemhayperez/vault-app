@@ -85,7 +85,7 @@ const PAGE_COPY: Record<string, { title: string; description: string }> = {
     description: "Track your income, deductions, and savings at a glance",
   },
   "/records": {
-    title: "Records",
+    title: "Pay Records",
     description: "Track and manage your income and deductions",
   },
   "/investments": {

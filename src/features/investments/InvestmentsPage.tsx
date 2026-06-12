@@ -9,7 +9,6 @@ import { EditInvestmentReturnModal } from "./edit-investment-return-modal";
 import { RecordInvestmentIncomeModal } from "./record-investment-income-modal";
 import { InvestmentListItem } from "@/components/shared/investment-list-item";
 import { InvestmentPortfolioCharts } from "./investment-portfolio-charts";
-import { PeriodFiltersRow } from "@/components/shared/period-filters";
 import { Button } from "@/components/ui/button";
 import { VaultToast } from "@/components/ui/vault-toast";
 import { useInvestments } from "@/features/investments/hooks/use-investments";
@@ -67,16 +66,6 @@ export const InvestmentsPage = () => {
       ) : null}
 
       <div className={styles.page}>
-        <div className={styles.headerRow}>
-          <div className={styles.header}>
-            <h1 className={styles.title}>Investments</h1>
-            <p className={styles.subtitle}>
-              Track your investment portfolio and returns
-            </p>
-          </div>
-          <PeriodFiltersRow className="shrink-0 sm:pt-0.5" />
-        </div>
-
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {METRIC_CARDS.map((card) => {
             const Icon = card.icon;

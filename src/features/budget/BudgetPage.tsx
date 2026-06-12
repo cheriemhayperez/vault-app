@@ -13,6 +13,7 @@ import {
 import { AddBudgetCategoryModal } from "./add-budget-category-modal";
 import { PeriodFiltersRow } from "@/components/shared/period-filters";
 import { BudgetSettingsModal } from "./budget-settings-modal";
+import { VaultPageHeaderActions } from "@/components/layout/vault-page-header-actions";
 import { DeleteCategoryDialog } from "@/features/categories/delete-category-dialog";
 import { Button } from "@/components/ui/button";
 import { VaultToast } from "@/components/ui/vault-toast";
@@ -74,27 +75,19 @@ export const BudgetPage = () => {
         />
       ) : null}
 
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h1 className="font-sans text-2xl font-bold tracking-tight text-slate-900">
-              Budget
-            </h1>
-            <p className="mt-1 font-sans text-sm tracking-tight text-slate-500">
-              Track your spending with the 50/30/20 rule
-            </p>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            className="border-slate-200 bg-white text-slate-700"
-            onClick={() => setIsSettingsOpen(true)}
-          >
-            <Settings className="mr-2 size-4" />
-            Settings
-          </Button>
-        </div>
+      <VaultPageHeaderActions>
+        <Button
+          type="button"
+          variant="outline"
+          className="border-slate-200 bg-white text-slate-700"
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          <Settings className="mr-2 size-4" />
+          Settings
+        </Button>
+      </VaultPageHeaderActions>
 
+      <div className="space-y-6">
         <div className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
           <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
             Net Pay
