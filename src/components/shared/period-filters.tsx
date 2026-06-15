@@ -24,13 +24,10 @@ const PERIOD_TYPE_OPTIONS: { value: DashboardPeriodType; label: string }[] = [
 ];
 
 const FILTER_MENU_PANEL =
-  "fixed z-[100] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.12)]";
+  "fixed z-[100] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.12)] dark:border-vault-subtle dark:bg-vault-surface";
 
 const FILTER_TRIGGER =
-  "flex h-9 w-full items-center rounded-lg border border-violet-200 bg-white py-0 pr-8 text-left text-sm font-medium tracking-tight text-slate-700 outline-none transition-colors hover:border-violet-300 focus:border-violet-400 focus:ring-2 focus:ring-violet-100";
-
-const FILTER_TRIGGER_NEUTRAL =
-  "flex h-9 w-full items-center rounded-lg border border-slate-300 bg-white py-0 pr-8 text-left text-sm font-medium tracking-tight text-slate-900 outline-none transition-colors hover:border-slate-400 focus:border-slate-900 focus:ring-2 focus:ring-slate-100";
+  "vault-field-control vault-select-trigger vault-period-filter-trigger flex h-9 w-full items-center rounded-lg py-0 pr-8 text-left text-sm font-medium tracking-tight outline-none focus:ring-0";
 
 type FilterDropdownVariant = "violet" | "neutral";
 
@@ -156,18 +153,7 @@ const FilterDropdown = ({
     };
   }, [isOpen]);
 
-  const isNeutral = variant === "neutral";
-  const triggerBase = isNeutral ? FILTER_TRIGGER_NEUTRAL : FILTER_TRIGGER;
-  const openBorderClass = isNeutral
-    ? "border-slate-900 ring-2 ring-slate-100"
-    : "border-violet-400 ring-2 ring-violet-100";
-  const selectedItemClass = isNeutral
-    ? "bg-slate-50 font-medium text-slate-900"
-    : "bg-violet-50 font-medium text-violet-700";
-  const unselectedItemClass = isNeutral
-    ? "bg-white font-medium text-slate-900 hover:bg-slate-50"
-    : "bg-white font-medium text-slate-900 hover:bg-violet-50";
-  const checkClass = isNeutral ? "text-slate-900" : "text-violet-600";
+  const triggerBase = FILTER_TRIGGER;
 
   const menuPortal =
     isOpen && menuStyle && typeof document !== "undefined"
@@ -197,19 +183,15 @@ const FilterDropdown = ({
                     onChange(option.value);
                     setIsOpen(false);
                   }}
-                  className={`flex w-full items-center justify-between gap-3 px-3 py-2.5 text-left text-sm transition-colors ${
-                    isSelected ? selectedItemClass : unselectedItemClass
-                  }`}
+                  className="vault-combobox-option"
                 >
-                  <span>{option.label}</span>
+                  <span className="truncate font-medium">{option.label}</span>
                   {isSelected ? (
                     <Check
-                      className={`size-4 shrink-0 ${checkClass}`}
+                      className="vault-combobox-check size-4 shrink-0"
                       strokeWidth={2.5}
                     />
-                  ) : (
-                    <span className="size-4 shrink-0" aria-hidden />
-                  )}
+                  ) : null}
                 </button>
               );
             })}
@@ -234,7 +216,7 @@ const FilterDropdown = ({
           aria-controls={`${id}-menu`}
           onClick={() => setIsOpen((open) => !open)}
           className={`${triggerBase} ${prefixIcon ? "pl-9" : "pl-3"} ${
-            isOpen ? openBorderClass : ""
+            isOpen ? "vault-field-control--open" : ""
           } ${triggerClassName}`}
         >
           {prefixIcon}
@@ -242,7 +224,7 @@ const FilterDropdown = ({
             {formatTriggerLabel?.(selected) ?? selected.label}
           </span>
           <ChevronDown
-            className={`pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-slate-400 transition ${
+            className={`vault-select-trigger-chevron pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 transition ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -289,7 +271,7 @@ export const PeriodFiltersRow = ({ className = "" }: PeriodFiltersRowProps) => {
         options={PERIOD_TYPE_OPTIONS}
         onChange={(value) => setPeriodType(value as DashboardPeriodType)}
         prefixIcon={
-          <Calendar className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-violet-500" />
+          <Calendar className="vault-period-filter-calendar pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2" />
         }
       />
 
@@ -358,7 +340,7 @@ export const CompactPeriodFilter = ({
         options={PERIOD_TYPE_OPTIONS}
         onChange={(value) => setPeriodType(value as DashboardPeriodType)}
         prefixIcon={
-          <Calendar className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-violet-500" />
+          <Calendar className="vault-period-filter-calendar pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2" />
         }
       />
     </div>

@@ -25,8 +25,8 @@ import {
   REVENUE_METRICS,
   SAVINGS_DEDUCTION_RED,
   SAVINGS_RING_ACTIVE,
-  SAVINGS_RING_TRACK,
 } from "@/features/dashboard/config";
+import { CHART_PROGRESS_TRACK } from "@/types/categories";
 import {
   GOVERNMENT_CONTRIBUTION_RATES_YEAR,
 } from "@/utils/philippineDeductions";
@@ -101,7 +101,7 @@ const SavingsRateGauge = ({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={SAVINGS_RING_TRACK}
+          stroke="var(--vault-savings-ring-track)"
           strokeWidth={stroke}
         />
         <circle
@@ -193,7 +193,7 @@ export const DashboardPage = () => {
   }
 
   return (
-    <div className="min-w-0 space-y-4 sm:space-y-6">
+    <div className="min-w-0 space-y-4 pb-4 sm:space-y-6 sm:pb-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3 xl:grid-cols-5">
         {summaryCards.map((card) => {
           const Icon = card.icon;
@@ -292,7 +292,7 @@ export const DashboardPage = () => {
               title="Government Contributions"
               subtitle={`${GOVERNMENT_CONTRIBUTION_RATES_YEAR} rates · ${getPeriodDisplayLabel(filter)}`}
               trailing={
-                <IconBadge className="bg-emerald-50 text-emerald-600">
+                <IconBadge className="vault-dashboard-icon vault-dashboard-icon--emerald">
                   <Calculator className="size-4" />
                 </IconBadge>
               }
@@ -332,7 +332,10 @@ export const DashboardPage = () => {
                           {formatMoneyFixed(rowAmount)}
                         </span>
                       </div>
-                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                      <div
+                        className="h-1.5 w-full overflow-hidden rounded-full"
+                        style={{ backgroundColor: CHART_PROGRESS_TRACK }}
+                      >
                         <div
                           className={`h-full rounded-full transition-all ${row.barClass}`}
                           style={{ width: `${barWidth}%` }}
@@ -369,7 +372,7 @@ export const DashboardPage = () => {
               <RevenueChartLegend className="shrink-0 sm:pt-0.5" />
             </div>
 
-            <div className="mt-3 rounded-lg border border-slate-100 bg-slate-50 px-3 py-3 sm:px-4 sm:py-3.5">
+            <div className="vault-revenue-summary-bar mt-3 -mx-4 px-4 py-3 sm:-mx-5 sm:px-5 sm:py-3.5">
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
                 {REVENUE_METRICS.map((metric) => {
                   const value = revenueValues[metric.key];
@@ -404,7 +407,7 @@ export const DashboardPage = () => {
           variant="income"
           slices={incomeDistribution}
           trailing={
-            <IconBadge className="bg-emerald-50 text-emerald-600">
+            <IconBadge className="vault-dashboard-icon vault-dashboard-icon--emerald">
               <TrendingUp className="size-4" />
             </IconBadge>
           }
@@ -416,7 +419,7 @@ export const DashboardPage = () => {
           variant="deduction"
           slices={deductionDistribution}
           trailing={
-            <IconBadge className="bg-red-50 text-red-500">
+            <IconBadge className="vault-dashboard-icon vault-dashboard-icon--red">
               <TrendingDown className="size-4" />
             </IconBadge>
           }
@@ -428,7 +431,7 @@ export const DashboardPage = () => {
           variant="expense"
           slices={expenseDistribution}
           trailing={
-            <IconBadge className="bg-violet-50 text-violet-600">
+            <IconBadge className="vault-dashboard-icon vault-dashboard-icon--violet">
               <Receipt className="size-4" />
             </IconBadge>
           }
@@ -439,7 +442,7 @@ export const DashboardPage = () => {
       <div className="min-w-0 overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
         <div className="flex items-center justify-between gap-4 border-b border-slate-100 px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex min-w-0 items-center gap-3">
-            <IconBadge className="bg-violet-50 text-violet-600">
+            <IconBadge className="vault-dashboard-icon vault-dashboard-icon--violet">
               <Receipt className="size-4" />
             </IconBadge>
             <div className="min-w-0">
@@ -453,7 +456,7 @@ export const DashboardPage = () => {
           </div>
           <Link
             href="/records"
-            className="inline-flex items-center gap-1 text-sm font-medium text-violet-600 transition-colors hover:text-violet-700"
+            className="vault-view-all-link inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm font-medium"
           >
             View All
             <ArrowRight className="size-4" />
@@ -463,7 +466,7 @@ export const DashboardPage = () => {
         {recentTransactions.length > 0 ? (
           <div className="overflow-x-auto">
             <>
-            <div className="grid min-w-[640px] grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-3 border-b border-slate-100 bg-slate-50/80 px-4 py-2.5 sm:px-5">
+            <div className="vault-ledger-table-header grid min-w-[640px] grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-3 px-4 py-2.5 sm:px-5">
               {["Description", "Category", "Date", "Amount"].map((heading) => (
                 <span
                   key={heading}
@@ -475,7 +478,7 @@ export const DashboardPage = () => {
                 </span>
               ))}
             </div>
-            <div className="min-w-[640px] divide-y divide-slate-100">
+            <div className="vault-ledger-table-rows min-w-[640px] divide-y divide-slate-100 pb-1 sm:pb-2">
               {recentTransactions.map((transaction) => {
                 const isDeduction = transaction.direction === "DEBIT";
 

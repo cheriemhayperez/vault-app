@@ -19,8 +19,8 @@ export const PayRecordDirectionIcon = ({
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center justify-center rounded-full ${boxClass} ${
-        isIncome ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
+      className={`vault-direction-icon inline-flex shrink-0 items-center justify-center rounded-full ${boxClass} ${
+        isIncome ? "vault-direction-icon--credit" : "vault-direction-icon--debit"
       }`}
       aria-hidden
     >

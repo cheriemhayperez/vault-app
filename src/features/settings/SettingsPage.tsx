@@ -79,13 +79,15 @@ const SectionPanelHeader = ({
   title: string;
   description: string;
 }) => (
-  <div className="flex items-start gap-3">
-    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-violet-50">
-      <Icon className="size-5 text-violet-600" />
+  <div className="settings-panel-header">
+    <div className="vault-settings-panel-header-icon">
+      <Icon className="size-4" />
     </div>
     <div>
-      <h2 className="font-semibold tracking-tight text-slate-900">{title}</h2>
-      <p className="mt-0.5 text-sm text-slate-500">{description}</p>
+      <h2 className="font-semibold tracking-tight text-slate-900 dark:text-zinc-50">
+        {title}
+      </h2>
+      <p className="mt-0.5 text-sm text-slate-500 dark:text-zinc-400">{description}</p>
     </div>
   </div>
 );
@@ -159,19 +161,21 @@ export const SettingsPage = () => {
                     type="button"
                     data-settings-tab={section.id}
                     onClick={() => setActiveSection(section.id)}
-                    className={`flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors ${
+                    className={`group flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors ${
                       isActive
                         ? "bg-violet-600 text-white shadow-sm"
                         : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     <span
-                      className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${
-                        isActive ? "bg-violet-500/35" : "bg-transparent"
+                      className={`flex size-7 shrink-0 items-center justify-center rounded-md ${
+                        isActive ? "bg-white/15" : "vault-settings-icon-idle"
                       }`}
                     >
                       <Icon
-                        className={`size-4 ${isActive ? "text-white" : "text-slate-500"}`}
+                        className={`size-3.5 ${
+                          isActive ? "text-white" : "text-slate-500 dark:text-zinc-400"
+                        }`}
                       />
                     </span>
                     <span className="whitespace-nowrap text-sm font-semibold">
@@ -197,18 +201,24 @@ export const SettingsPage = () => {
                 <button
                   key={section.id}
                   type="button"
-                  className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors ${
+                  className={`group flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors ${
                     isActive
                       ? "bg-violet-600 text-white shadow-sm"
-                      : "text-slate-900 hover:bg-violet-50/60 dark:hover:bg-slate-800/80"
+                      : "text-slate-900 hover:bg-violet-50/60 dark:text-zinc-300 dark:hover:bg-white/5"
                   }`}
                   onClick={() => setActiveSection(section.id)}
                 >
-                  <Icon
-                    className={`size-5 shrink-0 ${
-                      isActive ? "text-white" : "text-slate-600"
+                  <span
+                    className={`flex size-9 shrink-0 items-center justify-center rounded-md ${
+                      isActive ? "bg-white/15" : "vault-settings-icon-idle"
                     }`}
-                  />
+                  >
+                    <Icon
+                      className={`size-4 ${
+                        isActive ? "text-white" : "text-slate-500 dark:text-zinc-400"
+                      }`}
+                    />
+                  </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-semibold">{section.label}</span>
                     <span
@@ -230,18 +240,17 @@ export const SettingsPage = () => {
           </nav>
         </div>
 
-      <div className="mt-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm lg:mt-0">
+      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-vault-subtle lg:mt-0">
         {activeSection === "profile" ? (
           <>
-            <div className="border-b border-slate-100 pb-6">
-              <SectionPanelHeader
-                icon={User}
-                title="Profile"
-                description="Manage your personal information"
-              />
-            </div>
+            <SectionPanelHeader
+              icon={User}
+              title="Profile"
+              description="Manage your personal information"
+            />
 
-            <div className="mt-8 flex flex-wrap items-start gap-8 border-b border-slate-100 pb-8">
+            <div className="settings-panel-body">
+            <div className="settings-panel-body-divider flex flex-wrap items-start gap-8 pb-8">
               <div className="flex shrink-0 flex-col items-center">
                 <div className="relative">
                   {profilePhotoUrl ? (
@@ -265,21 +274,21 @@ export const SettingsPage = () => {
                   />
                   <button
                     type="button"
-                    className="absolute bottom-0 right-0 flex size-8 items-center justify-center rounded-full bg-violet-600 text-white shadow-sm ring-2 ring-white transition-colors hover:bg-violet-700"
+                    className="absolute bottom-0 right-0 flex size-8 items-center justify-center rounded-full bg-violet-600 text-white shadow-sm transition-colors hover:bg-violet-700"
                     aria-label="Upload profile photo"
                     onClick={() => photoInputRef.current?.click()}
                   >
                     <Camera className="size-4" />
                   </button>
                 </div>
-                <div className="mt-3 max-w-[9.5rem] text-center text-xs leading-relaxed text-slate-400">
-                  <p>Click the camera icon to upload a photo</p>
+                <div className="mt-3 text-center text-xs leading-relaxed text-slate-400">
+                  <p className="whitespace-nowrap">Click the camera icon to upload a photo</p>
                   <p className="mt-1">Max size: 2MB</p>
                 </div>
               </div>
               <div className="min-w-0 flex-1 pt-0.5">
-                <p className="text-sm font-semibold text-slate-900">Profile Photo</p>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="text-sm font-semibold text-slate-900 dark:text-zinc-50">Profile Photo</p>
+                <p className="mt-1 text-sm text-slate-500 dark:text-zinc-400">
                   This will be displayed on your profile and in the sidebar.
                 </p>
                 <p className="mt-2 text-xs text-slate-400">
@@ -292,7 +301,7 @@ export const SettingsPage = () => {
               <div>
                 <FieldLabel icon={Mail}>Email Address</FieldLabel>
                 <Input
-                  className="mt-2"
+                  className="vault-settings-readonly-field mt-2"
                   type="email"
                   value={email}
                   readOnly
@@ -320,7 +329,7 @@ export const SettingsPage = () => {
               ) : null}
             </div>
 
-            <div className="mt-8 flex justify-end border-t border-slate-100 pt-6">
+            <div className="settings-panel-footer-divider mt-8 flex justify-end">
               <VaultSubmitButton
                 type="button"
                 label="Save Changes"
@@ -329,6 +338,7 @@ export const SettingsPage = () => {
                 disabled={!hasProfileChanges}
                 onClick={() => void handleSaveProfile()}
               />
+            </div>
             </div>
           </>
         ) : null}
@@ -341,9 +351,10 @@ export const SettingsPage = () => {
               description="Customize the app theme"
             />
 
-            <div className="mt-8">
-              <h3 className="text-sm font-semibold text-slate-900">Theme</h3>
-              <p className="mt-1 text-sm text-slate-500">
+            <div className="settings-panel-body">
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-zinc-50">Theme</h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-zinc-400">
                 Select your preferred appearance for the application.
               </p>
 
@@ -359,7 +370,7 @@ export const SettingsPage = () => {
                       onClick={() => setTheme(theme.id)}
                       className={`flex flex-col rounded-xl border-2 p-4 text-left transition-colors ${
                         isSelected
-                          ? "border-violet-500 bg-white ring-2 ring-violet-50"
+                          ? "border-violet-500 bg-white"
                           : "border-slate-200 bg-white hover:border-slate-300"
                       }`}
                     >
@@ -398,7 +409,7 @@ export const SettingsPage = () => {
                 })}
               </div>
 
-              <div className="mt-6 rounded-lg border border-slate-100 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800/60">
+              <div className="mt-6 rounded-lg bg-slate-50 px-4 py-3 dark:bg-slate-800/60">
                 <p className="text-sm text-slate-600 dark:text-slate-300">
                   <span className="font-medium text-slate-700 dark:text-slate-200">
                     Tip:
@@ -408,6 +419,7 @@ export const SettingsPage = () => {
                   your device&apos;s appearance settings.
                 </p>
               </div>
+            </div>
             </div>
           </>
         ) : null}

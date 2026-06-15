@@ -6,6 +6,7 @@ import {
   type BudgetExpenseCategory,
 } from "@/types/budgetCategories";
 import type { BudgetCategory, Transaction } from "@/types/financial";
+import { CHART_PROGRESS_TRACK } from "@/types/categories";
 import type { CategoryDistributionSlice } from "@/utils/payRecords";
 import { isBudgetLedgerTransaction, UNCATEGORIZED_CATEGORY } from "@/utils/payRecords";
 import {
@@ -208,15 +209,20 @@ export const aggregateExpenseDistribution = (
 
   return [...totals.entries()]
     .sort((a, b) => b[1] - a[1])
-    .map(([name, amount], index) => ({
-      name,
-      amount,
-      percent: (amount / grandTotal) * 100,
-      color:
+    .map(([name, amount], index) => {
+      const color =
         name === UNCATEGORIZED_CATEGORY
           ? "#94a3b8"
-          : EXPENSE_DISTRIBUTION_COLORS[index % EXPENSE_DISTRIBUTION_COLORS.length],
-    }));
+          : EXPENSE_DISTRIBUTION_COLORS[index % EXPENSE_DISTRIBUTION_COLORS.length];
+
+      return {
+        name,
+        amount,
+        percent: (amount / grandTotal) * 100,
+        color,
+        trackColor: CHART_PROGRESS_TRACK,
+      };
+    });
 };
 
 export const getLifestyleExpensesForPeriod = (
@@ -278,13 +284,18 @@ export const aggregateExpenseDistributionForPeriod = (
 
   return [...totals.entries()]
     .sort((a, b) => b[1] - a[1])
-    .map(([name, amount], index) => ({
-      name,
-      amount,
-      percent: (amount / grandTotal) * 100,
-      color:
+    .map(([name, amount], index) => {
+      const color =
         name === UNCATEGORIZED_CATEGORY
           ? "#94a3b8"
-          : EXPENSE_DISTRIBUTION_COLORS[index % EXPENSE_DISTRIBUTION_COLORS.length],
-    }));
+          : EXPENSE_DISTRIBUTION_COLORS[index % EXPENSE_DISTRIBUTION_COLORS.length];
+
+      return {
+        name,
+        amount,
+        percent: (amount / grandTotal) * 100,
+        color,
+        trackColor: CHART_PROGRESS_TRACK,
+      };
+    });
 };

@@ -18,8 +18,7 @@ interface CurrencyAmountFieldProps {
   helperText?: ReactNode;
 }
 
-const defaultInputClassName =
-  "h-10 border-slate-300 pl-8 focus-visible:border-violet-500 focus-visible:ring-violet-500/20";
+const defaultInputClassName = "vault-field-control pl-8";
 
 /** Emphasized amount field styling used in record/expense modals. */
 export const VIOLET_AMOUNT_INPUT_CLASS =

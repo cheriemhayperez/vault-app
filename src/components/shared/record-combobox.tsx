@@ -102,7 +102,7 @@ export const RecordCombobox = ({
 
   return (
     <div ref={containerRef} className="space-y-1.5">
-      <label className="text-xs font-medium text-slate-700">
+      <label className="text-xs font-medium text-slate-700 dark:text-zinc-300">
         {label}
         {required ? <span className="text-rose-500"> *</span> : null}
       </label>
@@ -119,17 +119,19 @@ export const RecordCombobox = ({
               setOpen(!isOpen);
             }
           }}
-          className={`flex h-10 w-full items-center justify-between rounded-lg border px-3 text-left text-sm transition ${
+          className={`vault-field-control flex h-10 w-full items-center justify-between rounded-lg px-3 text-left text-sm ${
             disabled
-              ? "cursor-not-allowed border-slate-200 bg-slate-50 text-slate-400"
+              ? "vault-field-control--disabled cursor-not-allowed"
               : isOpen
-                ? "border-violet-500 bg-white text-slate-900"
-                : "border-slate-300 bg-white text-slate-900 hover:border-slate-400"
+                ? "vault-field-control--open"
+                : ""
           }`}
         >
           <span
             className={`flex min-w-0 flex-1 items-center gap-2.5 ${
-              isPlaceholder ? "text-slate-400" : "font-medium text-slate-900"
+              isPlaceholder
+                ? "text-slate-400 dark:text-zinc-500"
+                : "font-medium text-slate-900 dark:text-zinc-50"
             }`}
           >
             {!isPlaceholder && selectedOption?.colorSwatchClass ? (
@@ -146,10 +148,10 @@ export const RecordCombobox = ({
           <ul
             id={listboxId}
             role="listbox"
-            className="absolute left-0 right-0 top-full z-[100] mt-1 max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+            className="absolute left-0 right-0 top-full z-[100] mt-1 max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg dark:border-vault-subtle dark:bg-vault-surface"
           >
             {options.length === 0 ? (
-              <li className="px-4 py-2.5 text-sm text-slate-500">
+              <li className="px-4 py-2.5 text-sm text-slate-500 dark:text-zinc-400">
                 No categories available
               </li>
             ) : (
@@ -160,7 +162,7 @@ export const RecordCombobox = ({
                     <button
                       type="button"
                       onClick={() => handleSelect(option.value)}
-                      className="flex w-full items-center justify-between px-4 py-2.5 text-left text-sm text-slate-900 transition hover:bg-violet-50 hover:text-violet-700"
+                      className="vault-combobox-option"
                     >
                       <span className="flex min-w-0 flex-1 items-center gap-2.5">
                         {option.colorSwatchClass ? (
@@ -171,7 +173,7 @@ export const RecordCombobox = ({
                         </span>
                       </span>
                       {isSelected ? (
-                        <Check className="size-4 shrink-0 text-violet-600" />
+                        <Check className="vault-combobox-check size-4 shrink-0" />
                       ) : null}
                     </button>
                   </li>

@@ -19,10 +19,10 @@ export const VaultPageHeader = () => {
     <div className="mb-4 w-full min-w-0 sm:mb-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0 flex-1">
-          <h1 className="font-sans text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+          <h1 className="font-sans text-xl font-bold tracking-tight text-slate-950 dark:text-zinc-50 sm:text-2xl">
             {title}
           </h1>
-          <p className="mt-1 font-sans text-xs tracking-tight text-slate-500 sm:text-sm">
+          <p className="mt-1 font-sans text-xs tracking-tight text-slate-500 dark:text-zinc-400 sm:text-sm">
             {description}
           </p>
         </div>

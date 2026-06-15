@@ -41,7 +41,7 @@ const getSavingsRating = (
   if (ratePercent >= 80) {
     return {
       label: "Excellent",
-      badgeClass: "bg-emerald-50 text-emerald-700",
+      badgeClass: "vault-savings-badge vault-savings-badge--emerald",
       ringColor: "#10b981",
       labelClass: "text-emerald-600",
     };
@@ -49,7 +49,7 @@ const getSavingsRating = (
   if (ratePercent >= 50) {
     return {
       label: "Good",
-      badgeClass: "bg-emerald-50 text-emerald-700",
+      badgeClass: "vault-savings-badge vault-savings-badge--emerald",
       ringColor: "#10b981",
       labelClass: "text-emerald-600",
     };
@@ -57,14 +57,14 @@ const getSavingsRating = (
   if (ratePercent > 0) {
     return {
       label: "Moderate",
-      badgeClass: "bg-amber-50 text-amber-700",
+      badgeClass: "vault-savings-badge vault-savings-badge--amber",
       ringColor: "#f59e0b",
       labelClass: "text-amber-600",
     };
   }
   return {
     label: "Low",
-    badgeClass: "bg-rose-50 text-rose-600",
+    badgeClass: "vault-savings-badge vault-savings-badge--rose",
     ringColor: "#f43f5e",
     labelClass: "text-rose-500",
   };
@@ -194,7 +194,7 @@ export const useDashboard = () => {
       sublabel: "Gross earnings",
       value: payMetrics.totalEntitlements,
       icon: Calculator,
-      iconClass: "bg-teal-50 text-teal-600",
+      iconClass: "vault-dashboard-icon vault-dashboard-icon--teal",
       valueClass: "text-teal-700",
       useFixedAmount: true,
     },
@@ -203,7 +203,7 @@ export const useDashboard = () => {
       sublabel: "Bonuses & allowances",
       value: payMetrics.additionalPay,
       icon: Gift,
-      iconClass: "bg-sky-50 text-sky-600",
+      iconClass: "vault-dashboard-icon vault-dashboard-icon--sky",
       valueClass: "text-slate-900",
     },
     {
@@ -211,7 +211,7 @@ export const useDashboard = () => {
       sublabel: "All manual deductions",
       value: payMetrics.totalDeductions,
       icon: TrendingDown,
-      iconClass: "bg-red-50 text-red-500",
+      iconClass: "vault-dashboard-icon vault-dashboard-icon--red",
       valueClass: "text-red-600",
       useFixedAmount: true,
     },
@@ -220,7 +220,7 @@ export const useDashboard = () => {
       sublabel: "Take home amount",
       value: payMetrics.netPay,
       icon: TrendingUp,
-      iconClass: "bg-teal-50 text-teal-600",
+      iconClass: "vault-dashboard-icon vault-dashboard-icon--teal",
       valueClass: "text-teal-700",
       useFixedAmount: true,
     },
@@ -229,7 +229,7 @@ export const useDashboard = () => {
       sublabel: "Active lifestyle spending",
       value: totalLifestyleExpenses,
       icon: Receipt,
-      iconClass: "bg-violet-50 text-violet-600",
+      iconClass: "vault-dashboard-icon vault-dashboard-icon--violet",
       valueClass: "text-violet-700",
       useFixedAmount: true,
     },

@@ -206,7 +206,7 @@ export const ExpensesPage = () => {
             <div className="overflow-x-auto [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300">
               <div className="min-w-[42rem] lg:min-w-full">
                 <div
-                  className={`${EXPENSES_LEDGER_GRID_CLASS} border-b border-slate-100 bg-slate-50/80 px-5 py-2.5`}
+                  className={`vault-ledger-table-header ${EXPENSES_LEDGER_GRID_CLASS} px-5 py-2.5`}
                 >
                   {LEDGER_COLUMNS.map((heading) => (
                     <span
@@ -220,7 +220,7 @@ export const ExpensesPage = () => {
                   ))}
                   <span className="sr-only">Actions</span>
                 </div>
-                <div className="divide-y divide-slate-100">
+                <div className="vault-ledger-table-rows divide-y divide-slate-100">
                   {monthExpenses.map((expense) => (
                     <div
                       key={expense.id}

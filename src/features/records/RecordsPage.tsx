@@ -163,8 +163,8 @@ export const RecordsPage = () => {
                   Add common deductions quickly
                 </p>
               </div>
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-rose-50">
-                <TrendingDown className="size-4 text-rose-500" />
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg vault-dashboard-icon--red">
+                <TrendingDown className="size-4" />
               </div>
             </div>
 
@@ -207,18 +207,17 @@ export const RecordsPage = () => {
                 <p className="mt-1 text-sm text-slate-500">
                   Add bonuses, overtime, and more
                 </p>
-                <Button
+                <button
                   type="button"
-                  variant="outline"
-                  className="mt-3 h-8 border-violet-200 px-3 text-xs text-violet-700 hover:bg-violet-50"
+                  className="vault-field-control vault-additional-pay-btn mt-3 inline-flex h-8 items-center px-3 text-xs font-medium outline-none focus:ring-0"
                   onClick={() => setIsAdditionalPayOpen(true)}
                 >
-                  <Plus className="mr-1.5 size-3.5" />
+                  <Plus className="vault-additional-pay-btn-icon mr-1.5 size-3.5" />
                   Add Additional Pay
-                </Button>
+                </button>
               </div>
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-                <TrendingUp className="size-4 text-emerald-600" />
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg vault-dashboard-icon--emerald">
+                <TrendingUp className="size-4" />
               </div>
             </div>
           </div>
@@ -331,7 +330,7 @@ export const RecordsPage = () => {
                       className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-slate-50/80 sm:gap-4"
                     >
                       <div className="flex min-w-0 items-center gap-3">
-                        <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-emerald-50 text-emerald-600">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-md vault-dashboard-icon--emerald">
                           {isCollapsed ? (
                             <ChevronRight className="size-4" />
                           ) : (
@@ -368,7 +367,7 @@ export const RecordsPage = () => {
                     {!isCollapsed ? (
                       <div className="overflow-x-auto md:overflow-visible">
                           <div
-                            className={`${RECORDS_LEDGER_GRID_CLASS} border-y border-slate-100 bg-slate-50/80 px-4 py-2.5`}
+                            className={`vault-ledger-table-header vault-ledger-table-header--border-top ${RECORDS_LEDGER_GRID_CLASS} px-4 py-2.5`}
                           >
                             {LEDGER_COLUMNS.map((column) => (
                               <span
@@ -381,7 +380,7 @@ export const RecordsPage = () => {
                             <span className="sr-only">Actions</span>
                           </div>
 
-                          <div className="divide-y divide-slate-100">
+                          <div className="vault-ledger-table-rows divide-y divide-slate-100">
                             {group.records.map((record) => (
                               <div
                                 key={record.id}

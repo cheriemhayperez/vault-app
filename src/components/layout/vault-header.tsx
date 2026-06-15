@@ -41,7 +41,7 @@ export const VaultHeader = ({ onOpenMobileNav }: VaultHeaderProps) => {
           >
             <Link
               href="/dashboard"
-              className="truncate text-slate-500 transition-colors hover:text-violet-600"
+              className="vault-breadcrumb-home truncate transition-colors"
             >
               Home
             </Link>
@@ -64,7 +64,7 @@ export const VaultHeader = ({ onOpenMobileNav }: VaultHeaderProps) => {
                 ? `Reminders, ${badgeCount} notification${badgeCount === 1 ? "" : "s"}`
                 : "Reminders"
             }
-            className="relative inline-flex shrink-0 overflow-visible rounded-lg p-2 text-slate-500 transition-colors hover:bg-violet-50 hover:text-violet-700"
+            className="vault-header-icon-btn relative inline-flex shrink-0 overflow-visible rounded-lg p-2"
           >
             <Bell className="size-5 md:size-4" strokeWidth={2} />
             {badgeLabel ? (

@@ -40,9 +40,9 @@ export const ColorSwatchPicker = ({
           aria-label={`${option.id} color`}
           aria-pressed={isSelected}
           onClick={() => onChange(option.id)}
-          className={`relative flex size-6 items-center justify-center rounded-full ${option.swatchClass} ${
+          className={`vault-color-swatch relative flex size-6 items-center justify-center rounded-full ${option.swatchClass} ${
             layout === "wrap" ? "mx-auto" : ""
-          } ${isSelected ? `ring-2 ring-offset-1 ${option.ringClass}` : ""}`}
+          } ${isSelected ? `vault-color-swatch--selected vault-color-swatch--${option.id}` : ""}`}
         >
           {isSelected ? (
             <Check className="size-2.5 text-white" strokeWidth={3} />

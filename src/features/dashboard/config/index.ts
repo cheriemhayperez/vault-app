@@ -27,7 +27,7 @@ export const GOVERNMENT_ROWS = [
     dotClass: "bg-violet-500",
     barClass: "bg-violet-500",
   },
-];
+] as const;
 
 export const REVENUE_METRICS = [
   {
@@ -52,6 +52,5 @@ export const REVENUE_METRICS = [
   },
 ] as const;
 
-export const SAVINGS_RING_TRACK = "#ecfdf5";
 export const SAVINGS_RING_ACTIVE = "#22c55e";
 export const SAVINGS_DEDUCTION_RED = "#ef4444";

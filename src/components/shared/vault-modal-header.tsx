@@ -20,19 +20,19 @@ export const VaultModalHeader = ({
     <div>
       <h2
         id={titleId}
-        className="text-lg font-semibold tracking-tight text-slate-900"
+        className="text-lg font-semibold tracking-tight text-slate-900 dark:text-zinc-50"
       >
         {title}
       </h2>
       {description ? (
-        <p className="mt-1 text-sm text-slate-500">{description}</p>
+        <p className="mt-1 text-sm text-slate-500 dark:text-zinc-400">{description}</p>
       ) : null}
     </div>
     <button
       type="button"
       onClick={onClose}
       disabled={closeDisabled}
-      className="flex size-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 disabled:opacity-50"
+      className="vault-modal-close-btn shrink-0 disabled:opacity-50"
       aria-label="Close"
     >
       <X className="size-4" />

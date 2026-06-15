@@ -34,7 +34,7 @@ export const VaultLayout = ({ children }: VaultLayoutProps) => {
         <VaultPreferencesProvider>
           <DashboardPeriodProvider>
             <VaultPageHeaderActionsProvider>
-            <div className="flex h-dvh max-h-dvh min-h-0 w-full overflow-hidden bg-slate-50 font-sans tracking-tight text-slate-900 antialiased transition-colors duration-300">
+            <div className="flex h-dvh max-h-dvh min-h-0 w-full overflow-hidden bg-vault-shell font-sans tracking-tight text-slate-900 antialiased transition-colors duration-300 dark:text-zinc-50">
               <VaultDataLoader />
               <ReminderNotificationSync />
               <VaultSidebar
@@ -43,7 +43,7 @@ export const VaultLayout = ({ children }: VaultLayoutProps) => {
               />
               <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
                 <VaultHeader onOpenMobileNav={() => setMobileNavOpen(true)} />
-                <main className="relative z-0 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-contain px-4 pb-4 pt-4 md:px-6 md:pb-6 md:pt-6">
+                <main className="relative z-0 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-contain bg-vault-shell px-4 pb-8 pt-4 md:px-6 md:pb-10 md:pt-6">
                   <VaultPageHeader />
                   <div className="min-h-0 min-w-0 flex-1">{children}</div>
                 </main>

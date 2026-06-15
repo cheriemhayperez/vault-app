@@ -56,19 +56,8 @@ const CATEGORY_CHART_HEX: Record<PayCategoryColorId, string> = {
   lime: "#84cc16",
 };
 
-/** Light track backgrounds paired with chart segment colors. */
-const CATEGORY_CHART_TRACK_HEX: Record<PayCategoryColorId, string> = {
-  green: "#ecfdf5",
-  blue: "#eff6ff",
-  purple: "#f5f3ff",
-  red: "#fef2f2",
-  orange: "#fff7ed",
-  yellow: "#fefce8",
-  cyan: "#ecfeff",
-  pink: "#fdf2f8",
-  indigo: "#eef2ff",
-  lime: "#f7fee7",
-};
+/** Shared progress-bar track: white opacity in dark mode, subtle neutral in light. */
+export const CHART_PROGRESS_TRACK = "var(--vault-progress-track)";
 
 export const getCategoryChartColorHex = (
   colorId: PayCategoryColorId | undefined,
@@ -76,100 +65,20 @@ export const getCategoryChartColorHex = (
   CATEGORY_CHART_HEX[colorId ?? DEFAULT_CATEGORY_COLOR] ??
   CATEGORY_CHART_HEX.green;
 
-export const getCategoryChartTrackHex = (
-  colorId: PayCategoryColorId | undefined,
-): string =>
-  CATEGORY_CHART_TRACK_HEX[colorId ?? DEFAULT_CATEGORY_COLOR] ??
-  CATEGORY_CHART_TRACK_HEX.green;
-
-const CATEGORY_BADGE_STYLES: Record<
-  PayCategoryColorId,
-  { badge: string; text: string }
-> = {
-  green: { badge: "bg-emerald-50", text: "text-emerald-700" },
-  blue: { badge: "bg-blue-50", text: "text-blue-700" },
-  purple: { badge: "bg-violet-50", text: "text-violet-700" },
-  red: { badge: "bg-red-50", text: "text-red-600" },
-  orange: { badge: "bg-orange-50", text: "text-orange-700" },
-  yellow: { badge: "bg-yellow-50", text: "text-yellow-700" },
-  cyan: { badge: "bg-cyan-50", text: "text-cyan-700" },
-  pink: { badge: "bg-pink-50", text: "text-pink-700" },
-  indigo: { badge: "bg-indigo-50", text: "text-indigo-700" },
-  lime: { badge: "bg-lime-50", text: "text-lime-700" },
-};
+export const getCategoryChartTrackHex = (): string => CHART_PROGRESS_TRACK;
 
 export const getCategoryBadgeClassName = (
   colorId: PayCategoryColorId | undefined,
 ): string => {
-  const style =
-    CATEGORY_BADGE_STYLES[colorId ?? DEFAULT_CATEGORY_COLOR] ??
-    CATEGORY_BADGE_STYLES.green;
-  return `inline-flex w-fit max-w-full truncate rounded-md px-2 py-0.5 text-xs font-medium ${style.badge} ${style.text}`;
-};
-
-const CATEGORY_QUICK_ACTION_STYLES: Record<
-  PayCategoryColorId,
-  { border: string; hoverBorder: string; hoverBg: string }
-> = {
-  green: {
-    border: "border-emerald-100",
-    hoverBorder: "hover:border-emerald-200",
-    hoverBg: "hover:bg-emerald-50/40",
-  },
-  blue: {
-    border: "border-blue-100",
-    hoverBorder: "hover:border-blue-200",
-    hoverBg: "hover:bg-blue-50/40",
-  },
-  purple: {
-    border: "border-violet-100",
-    hoverBorder: "hover:border-violet-200",
-    hoverBg: "hover:bg-violet-50/40",
-  },
-  red: {
-    border: "border-red-100",
-    hoverBorder: "hover:border-red-200",
-    hoverBg: "hover:bg-red-50/40",
-  },
-  orange: {
-    border: "border-orange-100",
-    hoverBorder: "hover:border-orange-200",
-    hoverBg: "hover:bg-orange-50/40",
-  },
-  yellow: {
-    border: "border-yellow-100",
-    hoverBorder: "hover:border-yellow-200",
-    hoverBg: "hover:bg-yellow-50/40",
-  },
-  cyan: {
-    border: "border-cyan-100",
-    hoverBorder: "hover:border-cyan-200",
-    hoverBg: "hover:bg-cyan-50/40",
-  },
-  pink: {
-    border: "border-pink-100",
-    hoverBorder: "hover:border-pink-200",
-    hoverBg: "hover:bg-pink-50/40",
-  },
-  indigo: {
-    border: "border-indigo-100",
-    hoverBorder: "hover:border-indigo-200",
-    hoverBg: "hover:bg-indigo-50/40",
-  },
-  lime: {
-    border: "border-lime-100",
-    hoverBorder: "hover:border-lime-200",
-    hoverBg: "hover:bg-lime-50/40",
-  },
+  const id = colorId ?? DEFAULT_CATEGORY_COLOR;
+  return `inline-flex w-fit max-w-full truncate rounded-md px-2 py-0.5 text-xs font-medium vault-category-badge vault-category-badge--${id}`;
 };
 
 export const getCategoryQuickActionClassName = (
   colorId: PayCategoryColorId | undefined,
 ): string => {
-  const style =
-    CATEGORY_QUICK_ACTION_STYLES[colorId ?? DEFAULT_CATEGORY_COLOR] ??
-    CATEGORY_QUICK_ACTION_STYLES.green;
-  return `inline-flex items-center gap-2 rounded-lg border bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition ${style.border} ${style.hoverBorder} ${style.hoverBg}`;
+  const id = colorId ?? DEFAULT_CATEGORY_COLOR;
+  return `inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition vault-category-quick-action vault-category-quick-action--${id}`;
 };
 
 export const findPayCategoryByName = (

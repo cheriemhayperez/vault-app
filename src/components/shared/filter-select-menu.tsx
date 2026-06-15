@@ -19,6 +19,8 @@ export interface FilterSelectOption {
   value: string;
   label: string;
   menuLabel?: string;
+  /** Shown before label in the trigger (e.g. currency symbol). */
+  symbol?: string;
   colorId?: PayCategoryColorId;
 }
 
@@ -126,7 +128,7 @@ export const FilterSelectMenu = ({
             ref={menuRef}
             role="listbox"
             {...(nestedPopover ? { "data-nested-popover-menu": "" } : {})}
-            className={`fixed ${nestedPopover ? "z-[130]" : "z-[100]"} w-max max-w-[min(100vw-1rem,24rem)] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg ${menuClassName}`}
+            className={`fixed ${nestedPopover ? "z-[130]" : "z-[100]"} w-max max-w-[min(100vw-1rem,24rem)] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg dark:border-vault-subtle dark:bg-vault-surface ${menuClassName}`}
             style={{
               top: menuStyle.top,
               left: menuStyle.left,
@@ -147,19 +149,21 @@ export const FilterSelectMenu = ({
                     onChange(option.value);
                     setIsOpen(false);
                   }}
-                  className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm text-slate-900 transition hover:bg-violet-50 hover:text-violet-700"
+                  className="vault-combobox-option"
                 >
-                  {option.colorId ? (
-                    <span
-                      className={`size-2 shrink-0 rounded-full ${getCategoryColorSwatchClass(option.colorId)}`}
-                    />
-                  ) : null}
-                  <span className="min-w-0 flex-1 whitespace-nowrap">
-                    {option.menuLabel ?? option.label}
+                  <span className="flex min-w-0 flex-1 items-center gap-2.5">
+                    {option.colorId ? (
+                      <span
+                        className={`size-2 shrink-0 rounded-full ${getCategoryColorSwatchClass(option.colorId)}`}
+                      />
+                    ) : null}
+                    <span className="truncate font-medium">
+                      {option.menuLabel ?? option.label}
+                    </span>
                   </span>
                   {isSelected ? (
                     <Check
-                      className="ml-auto size-4 shrink-0 text-violet-600"
+                      className="vault-combobox-check size-4 shrink-0"
                       strokeWidth={2.5}
                     />
                   ) : null}
@@ -184,8 +188,8 @@ export const FilterSelectMenu = ({
             event.stopPropagation();
             setIsOpen((open) => !open);
           }}
-          className={`flex h-9 w-full items-center gap-2 rounded-lg border bg-white py-0 pr-8 text-left text-sm text-slate-700 outline-none transition-colors hover:border-slate-300 focus:ring-0 ${
-            isOpen ? "border-violet-400" : "border-slate-200"
+          className={`vault-field-control vault-select-trigger flex h-9 w-full items-center gap-2 py-0 pr-8 text-left text-sm outline-none focus:ring-0 ${
+            isOpen ? "vault-field-control--open" : ""
           } ${triggerPrefix ? "pl-9" : "pl-3"}`}
         >
           {triggerPrefix ? (
@@ -198,9 +202,20 @@ export const FilterSelectMenu = ({
               className={`size-2 shrink-0 rounded-full ${getCategoryColorSwatchClass(selected.colorId)}`}
             />
           ) : null}
-          <span className="min-w-0 flex-1 truncate">{selected?.label}</span>
+          <span className="flex min-w-0 flex-1 items-center truncate">
+            {selected?.symbol ? (
+              <>
+                <span className="vault-select-trigger-symbol shrink-0">
+                  {selected.symbol}
+                </span>
+                <span className="ml-1.5 truncate">{selected.label}</span>
+              </>
+            ) : (
+              selected?.label
+            )}
+          </span>
           <ChevronDown
-            className={`pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-slate-400 transition ${
+            className={`vault-select-trigger-chevron pointer-events-none absolute right-2.5 top-1/2 size-3.5 -translate-y-1/2 text-slate-400 transition ${
               isOpen ? "rotate-180" : ""
             }`}
           />

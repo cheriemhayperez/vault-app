@@ -10,6 +10,7 @@ import {
 } from "recharts";
 
 import type { CategoryDistributionSlice } from "@/utils/payRecords";
+import { CHART_PROGRESS_TRACK } from "@/types/categories";
 import { useVaultPreferences } from "@/contexts/vault-preferences-context";
 import { getActiveCurrencyFormatters } from "@/utils/format/currencyFormat";
 
@@ -78,12 +79,6 @@ export const CategoryDistributionCard = ({
   const chartSizePx = 120;
   const innerRadius = chartSizePx * 0.33;
   const outerRadius = chartSizePx * 0.46;
-  const progressTrackClass =
-    variant === "deduction"
-      ? "h-2.5 bg-red-50"
-      : variant === "expense"
-        ? "h-2.5 bg-violet-50"
-        : "h-2.5 bg-slate-100";
 
   const showPieTooltip = hasData;
 
@@ -190,14 +185,8 @@ export const CategoryDistributionCard = ({
                   </span>
                 </div>
                 <div
-                  className={`h-2.5 overflow-hidden rounded-full ${
-                    slice.trackColor ? "" : progressTrackClass
-                  }`}
-                  style={
-                    slice.trackColor
-                      ? { backgroundColor: slice.trackColor }
-                      : undefined
-                  }
+                  className="h-2.5 overflow-hidden rounded-full"
+                  style={{ backgroundColor: CHART_PROGRESS_TRACK }}
                 >
                   <div
                     className="h-full rounded-full transition-all"

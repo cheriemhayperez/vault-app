@@ -2,7 +2,7 @@ import type { Transaction } from "@/types/financial";
 import {
   findPayCategoryByName,
   getCategoryChartColorHex,
-  getCategoryChartTrackHex,
+  CHART_PROGRESS_TRACK,
   type PayCategory,
 } from "@/types/categories";
 import { formatPhpFixed } from "@/utils/format/formatters";
@@ -11,7 +11,7 @@ import { isSalaryCategoryName } from "@/utils/additionalPayTypes";
 export const UNCATEGORIZED_CATEGORY = "Uncategorized";
 
 export const UNCATEGORIZED_BADGE_CLASS =
-  "inline-flex w-fit max-w-full truncate rounded-md px-2 py-0.5 text-xs font-medium bg-slate-100 text-slate-600";
+  "inline-flex w-fit max-w-full truncate rounded-md px-2 py-0.5 text-xs font-medium vault-category-badge vault-category-badge--slate";
 
 const AUTO_DESCRIPTION_LABELS = new Set(["Income", "Deduction"]);
 
@@ -235,7 +235,7 @@ export interface PayRecordDistributionOptions {
 }
 
 const UNCATEGORIZED_CHART_COLOR = "#94a3b8";
-const UNCATEGORIZED_TRACK_COLOR = "#f1f5f9";
+const UNCATEGORIZED_TRACK_COLOR = CHART_PROGRESS_TRACK;
 
 export const aggregatePayRecordDistribution = (
   transactions: Transaction[],
@@ -299,7 +299,7 @@ export const aggregatePayRecordDistribution = (
 
     return {
       color: getCategoryChartColorHex(colorId),
-      trackColor: getCategoryChartTrackHex(colorId),
+      trackColor: CHART_PROGRESS_TRACK,
     };
   };
 

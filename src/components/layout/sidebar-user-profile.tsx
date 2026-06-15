@@ -135,9 +135,9 @@ export const SidebarUserProfile = ({ isCollapsed }: SidebarUserProfileProps) => 
               href="/settings"
               role="menuitem"
               onClick={() => setIsMenuOpen(false)}
-              className="flex w-full items-center gap-2.5 border-b border-slate-100 px-4 py-2.5 text-sm font-medium text-slate-800 transition hover:bg-violet-50"
+              className="vault-account-menu-settings flex w-full items-center gap-2.5 border-b border-slate-100 px-4 py-2.5 text-sm font-medium"
             >
-              <Settings className="size-4 shrink-0 text-violet-600" strokeWidth={2} />
+              <Settings className="vault-account-menu-icon size-4 shrink-0" strokeWidth={2} />
               Settings
             </Link>
 
@@ -146,9 +146,9 @@ export const SidebarUserProfile = ({ isCollapsed }: SidebarUserProfileProps) => 
               role="menuitem"
               disabled={isSigningOut}
               onClick={() => void handleSignOut()}
-              className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-rose-500 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="vault-account-menu-signout flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
             >
-              <LogOut className="size-4 shrink-0" strokeWidth={2} />
+              <LogOut className="vault-account-menu-icon size-4 shrink-0" strokeWidth={2} />
               {isSigningOut ? "Signing out…" : "Sign out"}
             </button>
           </div>,
@@ -158,8 +158,10 @@ export const SidebarUserProfile = ({ isCollapsed }: SidebarUserProfileProps) => 
 
   return (
     <div
-      className={`shrink-0 border-t border-slate-100 pt-2.5 pb-4 max-md:pb-[calc(1rem+env(safe-area-inset-bottom,0px))] dark:border-slate-800 ${
-        isCollapsed ? "px-2" : "px-4"
+      className={`shrink-0 pt-2.5 pb-4 max-md:pb-[calc(1rem+env(safe-area-inset-bottom,0px))] ${
+        isCollapsed
+          ? "px-1.5"
+          : "border-t border-vault-subtle px-4"
       }`}
     >
       <button
@@ -169,13 +171,11 @@ export const SidebarUserProfile = ({ isCollapsed }: SidebarUserProfileProps) => 
         aria-label="Account menu"
         aria-expanded={isMenuOpen}
         aria-haspopup="menu"
-        className={`flex w-full items-center gap-3 rounded-lg text-left transition ${
-          isMenuOpen
-            ? "bg-violet-50 text-violet-700"
-            : "text-slate-600 hover:bg-violet-50 hover:text-slate-900"
-        } ${isCollapsed ? "justify-center px-2 py-2" : "px-1 py-2.5"}`}
+        className={`vault-sidebar-account-btn flex w-full items-center gap-3 rounded-lg text-left ${
+          isMenuOpen ? "vault-sidebar-account-btn--open" : ""
+        } ${isCollapsed ? "justify-center px-0 py-2" : "px-1 py-2.5"}`}
       >
-        <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-violet-600 text-xs font-bold text-white shadow-sm shadow-violet-500/20">
+        <div className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-violet-600 text-xs font-bold text-white shadow-sm shadow-violet-500/20 ${isCollapsed ? "size-8" : "size-9"}`}>
           {avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img

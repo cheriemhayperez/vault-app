@@ -24,37 +24,25 @@ export const REVENUE_CHART_COLORS = {
   income: "#10b981",
   deductions: "#f43f5e",
   expenses: "#7c3aed",
-  net: "#334155",
+  net: "#94a3b8",
 } as const;
 
 const CHART_COLORS = REVENUE_CHART_COLORS;
 
 const HOLLOW_DOT = (color: string) => ({
   r: 5,
-  fill: "#ffffff",
+  fill: "transparent",
   stroke: color,
-  strokeWidth: 2.5,
-});
-
-const FILLED_DOT = (color: string) => ({
-  r: 4,
-  fill: color,
-  stroke: "#ffffff",
   strokeWidth: 2,
+  strokeOpacity: 0.4,
 });
 
 const ACTIVE_HOLLOW_DOT = (color: string) => ({
   r: 6,
-  fill: "#ffffff",
+  fill: "transparent",
   stroke: color,
-  strokeWidth: 3,
-});
-
-const ACTIVE_FILLED_DOT = (color: string) => ({
-  r: 5,
-  fill: color,
-  stroke: "#ffffff",
-  strokeWidth: 2,
+  strokeWidth: 2.5,
+  strokeOpacity: 1,
 });
 
 export const REVENUE_CHART_LEGEND = [
@@ -133,15 +121,15 @@ const RevenueChartTooltip = ({
   }
 
   const rows = [
-    { label: "Income", value: row.income, tone: "text-emerald-600" },
-    { label: "Deductions", value: row.deductions, tone: "text-rose-500" },
-    { label: "Expenses", value: row.expenses, tone: "text-violet-600" },
-    { label: "Net", value: row.net, tone: "text-slate-700" },
+    { label: "Income", value: row.income, color: CHART_COLORS.income },
+    { label: "Deductions", value: row.deductions, color: CHART_COLORS.deductions },
+    { label: "Expenses", value: row.expenses, color: CHART_COLORS.expenses },
+    { label: "Net", value: row.net, color: CHART_COLORS.net },
   ];
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 shadow-md">
-      <p className="mb-2 text-xs font-semibold tracking-tight text-slate-900">
+    <div className="vault-revenue-chart-tooltip rounded-lg border px-3 py-2.5">
+      <p className="vault-revenue-chart-tooltip-title mb-2 text-xs font-semibold tracking-tight">
         {label ?? row.period}
       </p>
       <div className="space-y-1.5">
@@ -150,8 +138,11 @@ const RevenueChartTooltip = ({
             key={item.label}
             className="flex items-center justify-between gap-6 text-[11px]"
           >
-            <span className="text-slate-500">{item.label}</span>
-            <span className={`font-normal tabular-nums ${item.tone}`}>
+            <span className="vault-revenue-chart-tooltip-label">{item.label}</span>
+            <span
+              className="font-normal tabular-nums"
+              style={{ color: item.color }}
+            >
               {getActiveCurrencyFormatters().formatMoneyMetric(item.value)}
             </span>
           </div>
@@ -186,7 +177,7 @@ export const RevenueOverviewChart = ({
         >
           <CartesianGrid
             strokeDasharray="6 6"
-            stroke="#e8edf2"
+            stroke="var(--vault-chart-grid-stroke)"
             vertical={false}
           />
           <XAxis
@@ -211,7 +202,7 @@ export const RevenueOverviewChart = ({
           />
           <Tooltip
             content={<RevenueChartTooltip />}
-            cursor={{ stroke: "#cbd5e1", strokeWidth: 1 }}
+            cursor={{ stroke: "var(--vault-chart-cursor-stroke)", strokeWidth: 1 }}
           />
           <Line
             type="monotone"
@@ -240,8 +231,8 @@ export const RevenueOverviewChart = ({
             stroke={CHART_COLORS.net}
             strokeWidth={2}
             strokeOpacity={0.35}
-            dot={FILLED_DOT(CHART_COLORS.net)}
-            activeDot={ACTIVE_FILLED_DOT(CHART_COLORS.net)}
+            dot={HOLLOW_DOT(CHART_COLORS.net)}
+            activeDot={ACTIVE_HOLLOW_DOT(CHART_COLORS.net)}
           />
           <Line
             type="monotone"

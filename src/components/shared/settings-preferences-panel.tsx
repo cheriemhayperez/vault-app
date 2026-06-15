@@ -12,11 +12,11 @@ import {
 } from "@/utils/vaultPreferences";
 
 const CURRENCY_OPTIONS = [
-  { value: "php", label: "₱ PHP", menuLabel: "₱ Philippine Peso" },
-  { value: "usd", label: "$ USD", menuLabel: "$ US Dollar" },
-  { value: "eur", label: "€ EUR", menuLabel: "€ Euro" },
-  { value: "gbp", label: "£ GBP", menuLabel: "£ British Pound" },
-  { value: "jpy", label: "¥ JPY", menuLabel: "¥ Japanese Yen" },
+  { value: "php", symbol: "₱", label: "PHP", menuLabel: "₱ Philippine Peso" },
+  { value: "usd", symbol: "$", label: "USD", menuLabel: "$ US Dollar" },
+  { value: "eur", symbol: "€", label: "EUR", menuLabel: "€ Euro" },
+  { value: "gbp", symbol: "£", label: "GBP", menuLabel: "£ British Pound" },
+  { value: "jpy", symbol: "¥", label: "JPY", menuLabel: "¥ Japanese Yen" },
 ] as const;
 
 const DATE_FORMAT_OPTIONS = [
@@ -78,25 +78,25 @@ export const SettingsPreferencesPanel = () => {
         />
       ) : null}
 
-      <div className="border-b border-slate-100 pb-6">
-        <div className="flex items-start gap-3">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-violet-50">
-            <SlidersHorizontal className="size-5 text-violet-600" />
-          </div>
-          <div>
-            <h2 className="font-semibold tracking-tight text-slate-900">
-              Preferences
-            </h2>
-            <p className="mt-0.5 text-sm text-slate-500">
-              Currency, dates, and more
-            </p>
-          </div>
+      <div className="settings-panel-header">
+        <div className="vault-settings-panel-header-icon">
+          <SlidersHorizontal className="size-4" />
+        </div>
+        <div>
+          <h2 className="font-semibold tracking-tight text-slate-900 dark:text-zinc-50">
+            Preferences
+          </h2>
+          <p className="mt-0.5 text-sm text-slate-500 dark:text-zinc-400">
+            Currency, dates, and more
+          </p>
         </div>
       </div>
 
-      <div className="mt-8">
-        <h3 className="text-sm font-semibold text-slate-900">Regional Settings</h3>
-        <p className="mt-1 text-sm text-slate-500">
+      <div className="settings-panel-body">
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-zinc-50">
+          Regional Settings
+        </h3>
+        <p className="mt-1 text-sm text-slate-500 dark:text-zinc-400">
           Customize how data is displayed throughout the application.
         </p>
 
@@ -143,7 +143,7 @@ export const SettingsPreferencesPanel = () => {
           })}
         </div>
 
-        <div className="mt-6 rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
+        <div className="mt-6 rounded-lg bg-slate-50 px-4 py-3">
           <p className="text-sm text-slate-600">
             <span className="font-medium text-slate-700">Note:</span> These
             preferences are stored locally in your browser and will persist

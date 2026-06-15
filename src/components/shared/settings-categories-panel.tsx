@@ -24,12 +24,14 @@ const KIND_META: Record<
 > = {
   income: {
     label: "Income",
-    badgeClass: "bg-emerald-50 text-emerald-700",
+    badgeClass:
+      "border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/10 dark:text-emerald-400",
     countLabel: "categories",
   },
   deduction: {
     label: "Deduction",
-    badgeClass: "bg-rose-50 text-rose-700",
+    badgeClass:
+      "border border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-500/50 dark:bg-rose-500/10 dark:text-rose-400",
     countLabel: "categories",
   },
 };
@@ -57,11 +59,11 @@ const CategoryGroup = ({
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <span
-          className={`inline-flex rounded-md px-2 py-0.5 text-xs font-semibold ${meta.badgeClass}`}
+          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${meta.badgeClass}`}
         >
           {meta.label}
         </span>
-        <span className="text-sm text-slate-500">
+        <span className="text-sm text-slate-500 dark:text-zinc-500">
           {categories.length} {meta.countLabel}
         </span>
       </div>
@@ -70,21 +72,21 @@ const CategoryGroup = ({
         {categories.map((category) => (
           <li
             key={category.id}
-            className="flex items-center justify-between gap-3 rounded-lg border border-slate-100 bg-slate-50/60 px-4 py-3"
+            className="vault-category-card group flex items-center justify-between gap-3 rounded-lg px-4 py-3"
           >
             <div className="flex min-w-0 items-center gap-3">
               <span
                 className={`size-2.5 shrink-0 rounded-full ${getCategoryColorSwatchClass(category.color)}`}
               />
-              <span className="truncate text-sm font-semibold text-slate-900">
+              <span className="truncate text-sm font-semibold text-slate-900 dark:text-zinc-50">
                 {category.name}
               </span>
             </div>
-            <div className="flex shrink-0 items-center gap-1">
+            <div className="flex shrink-0 items-center gap-0.5">
               <button
                 type="button"
                 onClick={() => onEdit(category)}
-                className="rounded-lg p-2 text-slate-400 transition hover:bg-white hover:text-slate-600"
+                className="vault-category-action-edit"
                 aria-label={`Edit ${category.name}`}
               >
                 <Pencil className="size-4" />
@@ -92,7 +94,7 @@ const CategoryGroup = ({
               <button
                 type="button"
                 onClick={() => onDelete(category)}
-                className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-500"
+                className="vault-category-action-delete"
                 aria-label={`Delete ${category.name}`}
               >
                 <Trash2 className="size-4" />
@@ -154,25 +156,29 @@ export const SettingsCategoriesPanel = () => {
         />
       ) : null}
 
-      <div className="flex items-start gap-3 border-b border-slate-100 pb-6">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-violet-50">
-          <Tags className="size-5 text-violet-600" />
+      <div className="settings-panel-header">
+        <div className="vault-settings-panel-header-icon">
+          <Tags className="size-4" />
         </div>
         <div>
-          <h2 className="font-semibold tracking-tight text-slate-900">Categories</h2>
-          <p className="mt-0.5 text-sm text-slate-500">
+          <h2 className="font-semibold tracking-tight text-slate-900 dark:text-zinc-50">
+            Categories
+          </h2>
+          <p className="mt-0.5 text-sm text-slate-500 dark:text-zinc-400">
             Income and deduction types
           </p>
         </div>
       </div>
 
-      <div className="pt-6">
+      <div className="settings-panel-body">
         <div className="flex items-center justify-between gap-4">
-          <h3 className="text-sm font-semibold text-slate-900">Categories</h3>
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-zinc-50">
+            Categories
+          </h3>
           <button
             type="button"
             onClick={openAdd}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-violet-200 hover:bg-violet-50/50"
+            className="vault-category-add-btn"
           >
             <Plus className="size-4" />
             Add
@@ -180,12 +186,12 @@ export const SettingsCategoriesPanel = () => {
         </div>
 
         {totalCount === 0 ? (
-          <div className="mt-6 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/40 px-6 py-14 text-center">
-            <Tags className="size-10 text-slate-300" strokeWidth={1.5} />
-            <p className="mt-4 text-sm font-semibold text-slate-600">
+          <div className="mt-6 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/40 px-6 py-14 text-center dark:border-vault-subtle dark:bg-vault-shell/50">
+            <Tags className="size-10 text-slate-300 dark:text-zinc-600" strokeWidth={1.5} />
+            <p className="mt-4 text-sm font-semibold text-slate-600 dark:text-zinc-300">
               No categories yet
             </p>
-            <p className="mt-1 max-w-xs text-sm text-slate-500">
+            <p className="mt-1 max-w-xs text-sm text-slate-500 dark:text-zinc-500">
               Add categories to organize your income and deductions.
             </p>
           </div>

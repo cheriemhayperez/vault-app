@@ -41,6 +41,7 @@ const ACTIVE_HOLLOW_DOT = (color: string) => ({
   fill: "#ffffff",
   stroke: color,
   strokeWidth: 2.5,
+  strokeOpacity: 1,
 });
 
 const renderHollowDot =
@@ -58,6 +59,7 @@ const renderHollowDot =
         fill="#ffffff"
         stroke={color}
         strokeWidth={2}
+        strokeOpacity={0.4}
       />
     );
   };

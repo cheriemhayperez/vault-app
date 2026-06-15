@@ -206,11 +206,9 @@ export const DatePicker = ({
         aria-expanded={isOpen}
         aria-haspopup="dialog"
         onClick={openCalendar}
-        className={`relative flex h-10 w-full items-center rounded-lg border bg-white py-0 pl-3 pr-10 text-left text-sm outline-none transition disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-500 ${
-          isOpen
-            ? "border-violet-500"
-            : "border-slate-300 hover:border-slate-400"
-        } ${selectedDate ? "text-slate-900" : "text-slate-400"} ${className}`}
+        className={`vault-field-control relative flex h-10 w-full items-center rounded-lg py-0 pl-3 pr-10 text-left text-sm outline-none ring-0 transition disabled:cursor-not-allowed ${
+          isOpen ? "vault-field-control--open" : ""
+        } ${selectedDate ? "" : "text-slate-400"} ${className}`}
       >
         <span className="truncate">{displayValue}</span>
         <Calendar className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />

@@ -67,16 +67,20 @@ const SidebarNavLink = ({
       onMouseLeave={hideTooltip}
       onFocus={showTooltip}
       onBlur={hideTooltip}
-      className={`relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+      className={`relative flex w-full items-center gap-3 rounded-lg py-2.5 text-sm font-medium transition-colors ${
+        navCollapsed ? "justify-center px-0 py-2" : "px-3"
+      } ${
         isActive
-          ? "bg-violet-50 text-violet-700"
-          : "text-slate-600 hover:bg-violet-50 hover:text-violet-700"
-      } ${navCollapsed ? "justify-center px-2" : ""}`}
+          ? navCollapsed
+            ? "vault-nav-active"
+            : "vault-nav-active mr-2"
+          : `vault-sidebar-nav-idle${navCollapsed ? "" : " hover:mr-2"}`
+      }`}
     >
-      {isActive ? (
-        <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-violet-600" />
+      {isActive && !navCollapsed ? (
+        <span className="absolute left-0 top-1/2 h-7 w-[3px] -translate-y-1/2 rounded-r-full bg-violet-600 dark:bg-violet-400" />
       ) : null}
-      <span className={isActive ? "text-violet-600" : "text-slate-500"}>
+      <span className={isActive ? "text-violet-600 dark:text-violet-400" : "inherit"}>
         <item.icon className="size-4" />
       </span>
       {!navCollapsed ? <span>{item.label}</span> : null}
@@ -146,36 +150,29 @@ export const VaultSidebar = ({
       {tooltipPortal}
       {/* Desktop sidebar */}
       <aside
-        className={`z-30 hidden h-full shrink-0 flex-shrink-0 flex-col border-r border-violet-100 bg-white transition-all duration-300 md:flex ${
-          isCollapsed ? "w-[4.5rem]" : "w-64"
+        className={`z-30 hidden h-full shrink-0 flex-shrink-0 flex-col overflow-hidden bg-vault-sidebar transition-all duration-300 md:flex ${
+          isCollapsed ? "w-16" : "w-64 border-r border-vault-subtle"
         }`}
       >
         <div
-          className={`flex h-16 shrink-0 items-center border-b border-slate-100 ${
+          className={`flex h-16 shrink-0 items-center ${
             isCollapsed
-              ? "justify-center gap-1 px-2"
-              : "justify-between gap-2 px-4"
+              ? "justify-center px-0"
+              : "justify-between gap-2 border-b border-vault-subtle px-4"
           }`}
         >
-          {isCollapsed ? (
+          {!isCollapsed ? (
             <Link
               href="/dashboard"
-              className="text-base font-bold leading-none tracking-tight text-violet-600 transition-colors hover:text-violet-700"
-            >
-              V
-            </Link>
-          ) : (
-            <Link
-              href="/dashboard"
-              className="text-lg font-bold tracking-tight text-slate-900 transition-colors hover:text-violet-700"
+              className="vault-brand-link text-lg font-bold tracking-tight"
             >
               Vault
             </Link>
-          )}
+          ) : null}
           <button
             type="button"
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className="rounded-md p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+            className="vault-header-icon-btn rounded-md p-1"
             onClick={() => setIsCollapsed((value) => !value)}
           >
             {isCollapsed ? (
@@ -187,10 +184,10 @@ export const VaultSidebar = ({
         </div>
 
         <div
-          className={`flex min-h-0 flex-1 flex-col pt-4 ${isCollapsed ? "px-2" : "px-4"}`}
+          className={`flex min-h-0 flex-1 flex-col overflow-hidden pt-4 ${isCollapsed ? "px-1.5" : "px-4"}`}
         >
           {!isCollapsed ? (
-            <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+            <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
               Main
             </p>
           ) : null}
@@ -225,20 +222,20 @@ export const VaultSidebar = ({
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="absolute left-0 top-0 flex h-dvh max-h-dvh w-[70vw] max-w-[18rem] flex-col border-r border-violet-100 bg-white shadow-xl"
+              className="absolute left-0 top-0 flex h-dvh max-h-dvh w-[70vw] max-w-[18rem] flex-col border-r border-vault-subtle bg-vault-sidebar shadow-xl"
             >
-              <div className="flex shrink-0 flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-4">
+              <div className="flex shrink-0 flex-shrink-0 items-center justify-between border-b border-vault-subtle px-4 py-4">
                 <Link
                   href="/dashboard"
                   onClick={onMobileClose}
-                  className="text-lg font-bold tracking-tight text-slate-900 transition-colors hover:text-violet-700"
+                  className="vault-brand-link text-lg font-bold tracking-tight"
                 >
                   Vault
                 </Link>
                 <button
                   type="button"
                   aria-label="Close navigation menu"
-                  className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                  className="vault-header-icon-btn rounded-lg p-1.5"
                   onClick={onMobileClose}
                 >
                   <ChevronsLeft className="size-5" strokeWidth={2} />
@@ -246,7 +243,7 @@ export const VaultSidebar = ({
               </div>
 
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-4">
-                <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
                   Main
                 </p>
                 {renderNavLinks(false)}
