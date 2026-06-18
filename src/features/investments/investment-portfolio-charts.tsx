@@ -71,6 +71,57 @@ const niceStepMax = (peak: number, preferredStep: number): number => {
   return Math.ceil(peak / preferredStep) * preferredStep;
 };
 
+const CHART_TICK_COUNT = 4;
+
+/** Scale y-axis to actual data so empty/small portfolios do not show a 0–₱5k band. */
+const resolveInvestmentYMax = (peak: number): number => {
+  if (peak <= 0) {
+    return 100;
+  }
+  if (peak <= 5) {
+    return 10;
+  }
+  if (peak <= 12) {
+    return 15;
+  }
+  if (peak <= 25) {
+    return 25;
+  }
+  if (peak <= 50) {
+    return 50;
+  }
+  if (peak <= 100) {
+    return 100;
+  }
+  if (peak <= 250) {
+    return 250;
+  }
+  if (peak <= 500) {
+    return 500;
+  }
+  if (peak <= 1_000) {
+    return 1_000;
+  }
+  if (peak <= 2_500) {
+    return 2_500;
+  }
+  if (peak <= 5_000) {
+    return 5_000;
+  }
+  if (peak <= 10_000) {
+    return 10_000;
+  }
+  if (peak <= 50_000) {
+    return niceStepMax(peak, 10_000);
+  }
+  return niceStepMax(peak, 50_000);
+};
+
+const buildChartYTicks = (yMax: number): number[] =>
+  Array.from({ length: CHART_TICK_COUNT + 1 }, (_, index) =>
+    Math.round((yMax / CHART_TICK_COUNT) * index),
+  );
+
 const growthYMax = (
   totalCapital: number,
   growthData: { capital: number; returns: number }[],
@@ -80,7 +131,7 @@ const growthYMax = (
     0,
   );
   const target = Math.max(totalCapital, peak);
-  return niceStepMax(target, target > 100_000 ? 55_000 : 5_000);
+  return resolveInvestmentYMax(target);
 };
 
 const returnsYMax = (returnsData: { total: number }[], totalReturns: number) => {
@@ -88,8 +139,13 @@ const returnsYMax = (returnsData: { total: number }[], totalReturns: number) => 
     totalReturns,
     returnsData.reduce((max, item) => Math.max(max, item.total), 0),
   );
-  return niceStepMax(peak, peak > 20_000 ? 10_000 : 5_000);
+  return resolveInvestmentYMax(peak);
 };
+
+const RETURNS_CHART_MARGIN = { top: 8, right: 0, left: 0, bottom: 0 } as const;
+const GROWTH_CHART_MARGIN = { top: 12, right: 0, left: 0, bottom: 0 } as const;
+const CHART_HEIGHT_CLASS = "h-44 sm:h-48";
+const CHART_Y_AXIS_WIDTH = 36;
 
 const CHART_TITLE_CLASS =
   "text-base font-semibold tracking-tight text-slate-900";
@@ -175,33 +231,33 @@ export const InvestmentPortfolioCharts = ({
 
   const growthMax = growthYMax(totalCapital, growthData);
   const returnsMax = returnsYMax(returnsData, totalReturns);
-  const hasReturnBars = returnsData.some((item) => item.total > 0);
+  const growthTicks = buildChartYTicks(growthMax);
+  const returnsTicks = buildChartYTicks(returnsMax);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-start justify-between gap-4 px-5 py-4">
+    <div className="grid gap-4 lg:grid-cols-2 lg:items-stretch">
+      <div className="vault-investment-chart-card flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="px-5 py-4">
           <div className="flex flex-col gap-0.5">
             <h3 className={CHART_TITLE_CLASS}>Returns Overview</h3>
             <p className={CHART_SUBTITLE_CLASS}>
               Dividends & interest received per investment
             </p>
           </div>
-          <div className="text-right">
+        </div>
+        <div className="vault-investment-growth-stats flex flex-wrap gap-6 px-5 py-3 text-sm">
+          <div>
             <p className="text-xs text-slate-500">Total Returns</p>
-            <p className="text-2xl font-bold tabular-nums text-vault-accent">
+            <p className="font-mono font-bold tabular-nums text-vault-accent">
               {formatMoneyMetric(totalReturns)}
             </p>
           </div>
         </div>
-        <div className="border-t border-slate-200 px-5 py-4">
-          <div className="h-56">
-            {returnsData.length > 0 && hasReturnBars ? (
+        <div className="vault-investment-chart pb-2 pt-1">
+          <div className={`${CHART_HEIGHT_CLASS} w-full min-w-0`}>
+            {returnsData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={returnsData}
-                  margin={{ top: 8, right: 8, left: 0, bottom: 4 }}
-                >
+                <BarChart data={returnsData} margin={RETURNS_CHART_MARGIN}>
                   <CartesianGrid
                     strokeDasharray="4 4"
                     vertical={false}
@@ -213,18 +269,22 @@ export const InvestmentPortfolioCharts = ({
                     axisLine={false}
                     tickLine={false}
                     interval={0}
-                    angle={-45}
-                    textAnchor="end"
-                    height={56}
+                    angle={returnsData.length > 2 ? -45 : 0}
+                    textAnchor={returnsData.length > 2 ? "end" : "middle"}
+                    height={returnsData.length > 2 ? 56 : 28}
+                    tickMargin={2}
+                    padding={{ left: 0, right: 0 }}
                   />
                   <YAxis
                     domain={[0, returnsMax]}
+                    ticks={returnsTicks}
                     allowDecimals={false}
                     tickFormatter={formatMoneyAxisTick}
                     tick={{ fill: "#64748b", fontSize: 11 }}
                     axisLine={false}
                     tickLine={false}
-                    width={52}
+                    width={CHART_Y_AXIS_WIDTH}
+                    tickMargin={0}
                   />
                   <Tooltip content={<ReturnsChartTooltip />} cursor={false} />
                   <Bar
@@ -245,7 +305,7 @@ export const InvestmentPortfolioCharts = ({
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="vault-investment-chart-card flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4 px-5 py-4">
           <div className="flex flex-col gap-0.5">
             <h3 className={CHART_TITLE_CLASS}>Portfolio Growth</h3>
@@ -270,7 +330,7 @@ export const InvestmentPortfolioCharts = ({
             </span>
           </div>
         </div>
-        <div className="flex flex-wrap gap-6 border-t border-slate-200 px-5 py-3 text-sm">
+        <div className="vault-investment-growth-stats flex flex-wrap gap-6 px-5 py-3 text-sm">
           <div>
             <p className="text-xs text-slate-500">Total Capital</p>
             <p className="font-mono font-bold tabular-nums text-slate-900">
@@ -284,14 +344,11 @@ export const InvestmentPortfolioCharts = ({
             </p>
           </div>
         </div>
-        <div className="border-t border-slate-200 px-5 py-4">
-          <div className="h-56">
+        <div className="vault-investment-chart pb-2 pt-1">
+          <div className={`${CHART_HEIGHT_CLASS} w-full min-w-0`}>
             {growthData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart
-                  data={growthData}
-                  margin={{ top: 8, right: 8, left: 0, bottom: 4 }}
-                >
+                <ComposedChart data={growthData} margin={GROWTH_CHART_MARGIN}>
                   <defs>
                     <linearGradient
                       id="investmentCapitalArea"
@@ -325,16 +382,20 @@ export const InvestmentPortfolioCharts = ({
                     interval={0}
                     angle={growthData.length > 2 ? -25 : 0}
                     textAnchor={growthData.length > 2 ? "end" : "middle"}
-                    height={growthData.length > 2 ? 48 : 32}
+                    height={growthData.length > 2 ? 48 : 28}
+                    tickMargin={2}
+                    padding={{ left: 0, right: 0 }}
                   />
                   <YAxis
                     domain={[0, growthMax]}
+                    ticks={growthTicks}
                     allowDecimals={false}
                     tickFormatter={formatMoneyAxisTick}
                     tick={{ fill: "#64748b", fontSize: 11 }}
                     axisLine={false}
                     tickLine={false}
-                    width={52}
+                    width={CHART_Y_AXIS_WIDTH}
+                    tickMargin={0}
                   />
                   <Tooltip
                     content={<PortfolioGrowthTooltip />}

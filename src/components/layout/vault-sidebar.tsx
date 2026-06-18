@@ -150,8 +150,8 @@ export const VaultSidebar = ({
       {tooltipPortal}
       {/* Desktop sidebar */}
       <aside
-        className={`z-30 hidden h-full shrink-0 flex-shrink-0 flex-col overflow-hidden bg-vault-sidebar transition-all duration-300 md:flex ${
-          isCollapsed ? "w-16" : "w-64 border-r border-vault-subtle"
+        className={`z-30 hidden h-full shrink-0 flex-shrink-0 flex-col overflow-hidden border-r border-vault-subtle bg-vault-sidebar transition-all duration-300 md:flex ${
+          isCollapsed ? "w-16" : "w-64"
         }`}
       >
         <div

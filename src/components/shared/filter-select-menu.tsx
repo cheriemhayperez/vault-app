@@ -36,6 +36,10 @@ interface FilterSelectMenuProps {
   menuClassName?: string;
 }
 
+const MENU_MAX_HEIGHT = 240;
+const MENU_GAP = 4;
+const VIEWPORT_PADDING = 8;
+
 export const FilterSelectMenu = ({
   value,
   options,
@@ -53,6 +57,7 @@ export const FilterSelectMenu = ({
     top: number;
     left: number;
     minWidth: number;
+    maxHeight: number;
   } | null>(null);
 
   const selected = options.find((option) => option.value === value) ?? options[0];
@@ -65,10 +70,47 @@ export const FilterSelectMenu = ({
     }
 
     const rect = trigger.getBoundingClientRect();
+    const measuredHeight = menuRef.current?.offsetHeight;
+    const estimatedHeight = Math.min(
+      MENU_MAX_HEIGHT,
+      options.length * 36 + 20,
+    );
+    const menuHeight = Math.min(
+      MENU_MAX_HEIGHT,
+      measuredHeight ?? estimatedHeight,
+    );
+
+    const spaceBelow = window.innerHeight - rect.bottom - VIEWPORT_PADDING;
+    const spaceAbove = rect.top - VIEWPORT_PADDING;
+
+    let top: number;
+    let maxHeight: number;
+
+    if (spaceBelow >= Math.min(menuHeight, 120) + MENU_GAP) {
+      top = rect.bottom + MENU_GAP;
+      maxHeight = Math.min(MENU_MAX_HEIGHT, spaceBelow - MENU_GAP);
+    } else if (spaceAbove >= Math.min(menuHeight, 120) + MENU_GAP) {
+      maxHeight = Math.min(MENU_MAX_HEIGHT, spaceAbove - MENU_GAP);
+      top = rect.top - maxHeight - MENU_GAP;
+    } else if (spaceBelow >= spaceAbove) {
+      maxHeight = Math.min(MENU_MAX_HEIGHT, spaceBelow - MENU_GAP);
+      top = rect.bottom + MENU_GAP;
+    } else {
+      maxHeight = Math.min(MENU_MAX_HEIGHT, spaceAbove - MENU_GAP);
+      top = Math.max(VIEWPORT_PADDING, rect.top - maxHeight - MENU_GAP);
+    }
+
+    top = Math.max(
+      VIEWPORT_PADDING,
+      Math.min(top, window.innerHeight - maxHeight - VIEWPORT_PADDING),
+    );
+    maxHeight = Math.max(120, maxHeight);
+
     setMenuStyle({
-      top: rect.bottom + 4,
+      top,
       left: rect.left,
       minWidth: rect.width,
+      maxHeight,
     });
   };
 
@@ -78,7 +120,9 @@ export const FilterSelectMenu = ({
       return;
     }
     updatePosition();
-  }, [isOpen]);
+    const frameId = requestAnimationFrame(() => updatePosition());
+    return () => cancelAnimationFrame(frameId);
+  }, [isOpen, options.length]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -128,11 +172,12 @@ export const FilterSelectMenu = ({
             ref={menuRef}
             role="listbox"
             {...(nestedPopover ? { "data-nested-popover-menu": "" } : {})}
-            className={`fixed ${nestedPopover ? "z-[130]" : "z-[100]"} w-max max-w-[min(100vw-1rem,24rem)] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg dark:border-vault-subtle dark:bg-vault-surface ${menuClassName}`}
+            className={`vault-combobox-menu fixed ${nestedPopover ? "z-[130]" : "z-[100]"} w-max max-w-[min(100vw-1rem,24rem)] overflow-y-auto overscroll-contain rounded-lg border border-slate-200 bg-white pt-1.5 pb-2.5 shadow-lg dark:border-vault-subtle dark:bg-vault-surface [scrollbar-width:thin] ${menuClassName}`}
             style={{
               top: menuStyle.top,
               left: menuStyle.left,
               minWidth: menuStyle.minWidth,
+              maxHeight: menuStyle.maxHeight,
             }}
           >
             {options.map((option) => {
@@ -188,7 +233,7 @@ export const FilterSelectMenu = ({
             event.stopPropagation();
             setIsOpen((open) => !open);
           }}
-          className={`vault-field-control vault-select-trigger flex h-9 w-full items-center gap-2 py-0 pr-8 text-left text-sm outline-none focus:ring-0 ${
+          className={`vault-field-control vault-select-trigger flex h-9 w-full items-center gap-2 rounded-lg py-0 pr-8 text-left text-sm outline-none focus:ring-0 ${
             isOpen ? "vault-field-control--open" : ""
           } ${triggerPrefix ? "pl-9" : "pl-3"}`}
         >

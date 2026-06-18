@@ -21,22 +21,22 @@ const variantStyles: Record<
   }
 > = {
   success: {
-    container: "border-violet-200 bg-violet-50 text-violet-900",
+    container: "vault-toast vault-toast--success",
     iconWrap: "bg-violet-600",
-    text: "text-violet-900",
-    close: "text-violet-600 hover:bg-violet-100/80",
+    text: "vault-toast-text vault-toast-text--success",
+    close: "vault-toast-close vault-toast-close--success",
   },
   error: {
-    container: "border-rose-200 bg-rose-50 text-rose-900",
+    container: "vault-toast vault-toast--error",
     iconWrap: "bg-rose-600",
-    text: "text-rose-900",
-    close: "text-rose-600 hover:bg-rose-100/80",
+    text: "vault-toast-text vault-toast-text--error",
+    close: "vault-toast-close vault-toast-close--error",
   },
   info: {
-    container: "border-sky-200 bg-sky-50 text-sky-900",
+    container: "vault-toast vault-toast--info",
     iconWrap: "bg-sky-600",
-    text: "text-sky-900",
-    close: "text-sky-600 hover:bg-sky-100/80",
+    text: "vault-toast-text vault-toast-text--info",
+    close: "vault-toast-close vault-toast-close--info",
   },
 };
 

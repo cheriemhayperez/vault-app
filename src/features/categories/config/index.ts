@@ -1,5 +1,4 @@
-export const CATEGORY_ACTIONS_TRIGGER_CLASS =
-  "flex size-8 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-600";
+export const CATEGORY_ACTIONS_TRIGGER_CLASS = "vault-category-actions-trigger";
 
 export const INCOME_PANEL = {
   kind: "income" as const,

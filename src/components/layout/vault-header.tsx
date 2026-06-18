@@ -23,7 +23,7 @@ export const VaultHeader = ({ onOpenMobileNav }: VaultHeaderProps) => {
     badgeCount > 9 ? "9+" : badgeCount > 0 ? String(badgeCount) : null;
 
   return (
-    <header className="z-40 shrink-0 flex-shrink-0 overflow-visible border-b border-slate-100 bg-white px-4 py-3 md:h-16 md:px-6 md:py-0">
+    <header className="z-40 shrink-0 flex-shrink-0 overflow-visible border-b border-vault-subtle bg-vault-header px-4 py-3 md:h-16 md:px-6 md:py-0">
       <div className="flex h-full w-full items-center justify-between gap-3 overflow-visible">
         <div className="flex min-w-0 items-center gap-2.5">
           <button

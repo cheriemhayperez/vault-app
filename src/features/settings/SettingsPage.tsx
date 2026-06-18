@@ -164,7 +164,7 @@ export const SettingsPage = () => {
                     className={`group flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-2.5 transition-colors ${
                       isActive
                         ? "bg-violet-600 text-white shadow-sm"
-                        : "text-slate-600 hover:bg-slate-100"
+                        : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-300 dark:hover:text-zinc-300"
                     }`}
                   >
                     <span
@@ -174,7 +174,9 @@ export const SettingsPage = () => {
                     >
                       <Icon
                         className={`size-3.5 ${
-                          isActive ? "text-white" : "text-slate-500 dark:text-zinc-400"
+                          isActive
+                            ? "text-white"
+                            : "text-slate-500 group-hover:text-slate-900 dark:text-zinc-400 dark:group-hover:text-zinc-400"
                         }`}
                       />
                     </span>
@@ -204,7 +206,7 @@ export const SettingsPage = () => {
                   className={`group flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors ${
                     isActive
                       ? "bg-violet-600 text-white shadow-sm"
-                      : "text-slate-900 hover:bg-violet-50/60 dark:text-zinc-300 dark:hover:bg-white/5"
+                      : "text-slate-500 hover:bg-violet-50/60 hover:text-slate-900 dark:text-zinc-300 dark:hover:bg-white/5 dark:hover:text-zinc-300"
                   }`}
                   onClick={() => setActiveSection(section.id)}
                 >
@@ -215,7 +217,9 @@ export const SettingsPage = () => {
                   >
                     <Icon
                       className={`size-4 ${
-                        isActive ? "text-white" : "text-slate-500 dark:text-zinc-400"
+                        isActive
+                          ? "text-white"
+                          : "text-slate-500 group-hover:text-slate-900 dark:text-zinc-400 dark:group-hover:text-zinc-400"
                       }`}
                     />
                   </span>
@@ -223,7 +227,7 @@ export const SettingsPage = () => {
                     <span className="block text-sm font-semibold">{section.label}</span>
                     <span
                       className={`mt-0.5 block truncate text-xs ${
-                        isActive ? "text-violet-100" : "text-slate-500"
+                        isActive ? "text-violet-100" : "text-slate-500 dark:text-slate-500"
                       }`}
                     >
                       {section.description}
@@ -314,7 +318,7 @@ export const SettingsPage = () => {
               <div>
                 <FieldLabel icon={User}>Full Name</FieldLabel>
                 <Input
-                  className="mt-2 border-slate-200 bg-white"
+                  className="mt-2"
                   type="text"
                   placeholder="Enter your full name"
                   value={fullName}

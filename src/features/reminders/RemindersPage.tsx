@@ -86,7 +86,7 @@ export const RemindersPage = () => {
             return (
               <div
                 key={stat.key}
-                className="flex items-center gap-2 rounded-xl border border-slate-100 bg-white p-3 sm:gap-4 sm:p-5"
+                className="vault-elevated-card flex items-center gap-2 rounded-xl border border-slate-100 bg-white p-3 sm:gap-4 sm:p-5"
               >
                 <div className={`shrink-0 rounded-lg p-2 sm:p-2.5 ${stat.tone}`}>
                   <Icon className="size-4 sm:size-5" />
@@ -104,43 +104,50 @@ export const RemindersPage = () => {
           })}
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-slate-100 bg-white">
-          <div className="flex border-b border-slate-100">
-            {(
-              [
-                { id: "upcoming" as const, label: "Upcoming" },
-                { id: "completed" as const, label: "Completed" },
-                { id: "dismissed" as const, label: "Dismissed" },
-              ] as const
-            ).map((tab) => {
-              const isActive = activeTab === tab.id;
-              const count = counts[tab.id];
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 px-3 py-3.5 text-sm font-medium transition sm:flex-none sm:justify-start sm:gap-2 sm:px-5 ${
-                    isActive
-                      ? "border-violet-600 text-violet-700"
-                      : "border-transparent text-slate-500 hover:text-slate-700"
-                  }`}
-                >
-                  {tab.label}
-                  {count > 0 ? (
-                    <span
-                      className={
-                        isActive ? "text-violet-600" : "text-slate-400"
-                      }
-                    >
-                      {count}
-                    </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </div>
+        <div className="vault-elevated-card overflow-hidden rounded-xl border border-slate-100 bg-white">
+          {hasAnyReminders ? (
+            <div className="flex border-b border-slate-100">
+              {(
+                [
+                  { id: "upcoming" as const, label: "Upcoming" },
+                  { id: "completed" as const, label: "Completed" },
+                  { id: "dismissed" as const, label: "Dismissed" },
+                ] as const
+              ).map((tab) => {
+                const isActive = activeTab === tab.id;
+                const count = counts[tab.id];
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex flex-1 items-center justify-center gap-1.5 border-b-2 px-3 py-3.5 text-sm font-medium transition sm:flex-none sm:justify-start sm:gap-2 sm:px-5 ${
+                      isActive
+                        ? "border-violet-600 text-violet-700"
+                        : "border-transparent text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    {tab.label}
+                    {count > 0 ? (
+                      <span
+                        className={`${
+                          isActive ? "text-violet-600" : "text-slate-400"
+                        } dark:inline-flex dark:h-5 dark:min-w-5 dark:items-center dark:justify-center dark:rounded-full dark:px-1 dark:text-[11px] dark:font-semibold dark:tabular-nums dark:text-violet-400 ${
+                          isActive
+                            ? "dark:bg-violet-500/20"
+                            : "dark:bg-violet-500/15"
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
 
+          <div className={hasAnyReminders ? "vault-reminder-list-body" : undefined}>
           {tabReminders.length === 0 ? (
             <div className="px-6 py-12 text-center">
               {!hasAnyReminders && activeTab === "upcoming" ? (
@@ -177,7 +184,7 @@ export const RemindersPage = () => {
                 onPageSizeChange={handlePageSizeChange}
                 onPageChange={setCurrentPage}
               />
-              <ul className="bg-slate-50/40 pb-2">
+              <ul className="bg-white pb-2 dark:bg-transparent">
                 {paginatedTabReminders.map((reminder) => (
                 <ReminderListItem
                   key={reminder.id}
@@ -193,6 +200,7 @@ export const RemindersPage = () => {
               </ul>
             </>
           )}
+          </div>
         </div>
       </div>
 

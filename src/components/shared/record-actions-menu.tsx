@@ -15,7 +15,7 @@ interface RecordActionsMenuProps {
 const MENU_WIDTH = 120;
 
 const DEFAULT_TRIGGER_CLASS =
-  "flex items-center justify-center p-1 text-slate-400 transition hover:text-slate-600";
+  "vault-record-actions-trigger flex items-center justify-center p-1";
 
 export const RecordActionsMenu = ({
   isOpen,
@@ -99,7 +99,7 @@ export const RecordActionsMenu = ({
           <div
             ref={menuRef}
             role="menu"
-            className="fixed z-[100] min-w-[7.5rem] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+            className="vault-record-actions-menu fixed z-[100] min-w-[7.5rem] overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
             style={{ top: menuStyle.top, left: menuStyle.left }}
           >
             <button
@@ -109,9 +109,9 @@ export const RecordActionsMenu = ({
                 onOpenChange(false);
                 onEdit();
               }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-50"
+              className="vault-record-actions-menu-edit flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
             >
-              <Pencil className="size-4 text-slate-500" />
+              <Pencil className="size-4" />
               Edit
             </button>
             <button
@@ -121,7 +121,7 @@ export const RecordActionsMenu = ({
                 onOpenChange(false);
                 onDelete();
               }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-rose-500 transition hover:bg-rose-50"
+              className="vault-record-actions-menu-delete flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
             >
               <Trash2 className="size-4" />
               Delete

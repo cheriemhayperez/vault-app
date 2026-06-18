@@ -121,18 +121,14 @@ export const RecordsPage = () => {
           type="button"
           variant="outline"
           aria-busy={isSyncing}
-          className={`transition-all duration-200 ${
-            isSyncing
-              ? "cursor-wait border-violet-300 bg-violet-50 text-violet-700 shadow-sm ring-2 ring-violet-200/50 disabled:opacity-100"
-              : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
-          }`}
+          className="vault-records-sync-btn focus:outline-none focus-visible:outline-none"
           disabled={isSyncing}
           title="Reload pay records from the server"
           onClick={handleSyncRecords}
         >
           <RefreshCw
             className={`mr-2 size-4 shrink-0 transition-transform ${
-              isSyncing ? "animate-spin text-violet-600" : ""
+              isSyncing ? "animate-spin" : ""
             }`}
           />
           {isSyncing ? "Syncing…" : "Sync Linked Dates"}
@@ -147,7 +143,7 @@ export const RecordsPage = () => {
         </Button>
       </VaultPageHeaderActions>
 
-      <div className="w-full min-w-0 space-y-6">
+      <div className="w-full min-w-0 space-y-6 pb-10">
         {syncError ? (
           <FormErrorBanner variant="page" message={syncError} />
         ) : null}
@@ -241,7 +237,7 @@ export const RecordsPage = () => {
                       onChange={(event) => {
                         setSearchQuery(event.target.value);
                       }}
-                      className={`${RECORDS_FILTER_CONTROL_CLASS} w-full bg-slate-50 pl-9 pr-3 placeholder:text-slate-400`}
+                      className={`vault-records-search-input ${RECORDS_FILTER_CONTROL_CLASS} w-full pl-9 pr-3 placeholder:text-slate-400`}
                     />
                   </div>
                 </div>
@@ -327,7 +323,8 @@ export const RecordsPage = () => {
                     <button
                       type="button"
                       onClick={() => toggleMonth(group.key)}
-                      className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-slate-50/80 sm:gap-4"
+                      aria-expanded={!isCollapsed}
+                      className="vault-records-month-trigger flex w-full items-center justify-between gap-3 px-4 py-3 text-left sm:gap-4"
                     >
                       <div className="flex min-w-0 items-center gap-3">
                         <span className="flex size-7 shrink-0 items-center justify-center rounded-md vault-dashboard-icon--emerald">
@@ -365,7 +362,7 @@ export const RecordsPage = () => {
                     </button>
 
                     {!isCollapsed ? (
-                      <div className="overflow-x-auto md:overflow-visible">
+                      <div className="overflow-x-auto pb-4 md:overflow-visible">
                           <div
                             className={`vault-ledger-table-header vault-ledger-table-header--border-top ${RECORDS_LEDGER_GRID_CLASS} px-4 py-2.5`}
                           >

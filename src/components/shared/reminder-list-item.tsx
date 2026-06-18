@@ -15,7 +15,6 @@ import {
 
 import {
   getReminderTypeBadgeClass,
-  getReminderTypeIconClass,
   getReminderTypeLabel,
   type ReminderStatus,
   type VaultReminder,
@@ -38,9 +37,6 @@ interface ReminderListItemProps {
   onDelete: (reminder: VaultReminder) => void;
 }
 
-const MUTED_ACTION_CLASS =
-  "rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-500";
-
 const ReminderActionButtons = ({
   reminder,
   tab,
@@ -56,7 +52,7 @@ const ReminderActionButtons = ({
         <button
           type="button"
           onClick={() => onComplete(reminder)}
-          className="rounded-lg p-2 text-violet-600 transition hover:bg-violet-50"
+          className="rounded-lg p-2 text-violet-600 transition hover:bg-violet-50 dark:hover:bg-violet-500/15 dark:hover:text-violet-400"
           aria-label="Mark as completed"
         >
           <Check className="size-4" />
@@ -64,7 +60,7 @@ const ReminderActionButtons = ({
         <button
           type="button"
           onClick={() => onEdit(reminder)}
-          className={MUTED_ACTION_CLASS}
+          className="vault-reminder-action-edit"
           aria-label={`Edit ${reminder.title}`}
         >
           <Pencil className="size-4" />
@@ -72,7 +68,7 @@ const ReminderActionButtons = ({
         <button
           type="button"
           onClick={() => onDismiss(reminder)}
-          className={MUTED_ACTION_CLASS}
+          className="rounded-lg p-2 text-slate-400 transition hover:bg-yellow-500/15 hover:text-yellow-500 dark:hover:bg-yellow-500/15 dark:hover:text-yellow-400"
           aria-label={`Dismiss ${reminder.title}`}
         >
           <X className="size-4" />
@@ -83,7 +79,7 @@ const ReminderActionButtons = ({
       <button
         type="button"
         onClick={() => onRestore(reminder)}
-        className="rounded-lg p-2 text-violet-600 transition hover:bg-violet-50"
+        className="vault-reminder-action-restore"
         aria-label={`Restore ${reminder.title}`}
       >
         <RotateCcw className="size-4" />
@@ -92,7 +88,7 @@ const ReminderActionButtons = ({
     <button
       type="button"
       onClick={() => onDelete(reminder)}
-      className={MUTED_ACTION_CLASS}
+      className="vault-reminder-action-delete"
       aria-label={`Delete ${reminder.title}`}
     >
       <Trash2 className="size-4" />
@@ -120,7 +116,6 @@ export const ReminderListItem = ({
     : overdue
       ? "bg-red-500"
       : "bg-emerald-500";
-  const iconTone = getReminderTypeIconClass(reminder.type);
 
   const actionProps = {
     reminder,
@@ -135,10 +130,8 @@ export const ReminderListItem = ({
   return (
     <li className="px-4 py-2 first:pt-4 last:pb-4">
       <div
-        className={`relative overflow-hidden rounded-xl border ${
-          isCompleted
-            ? "border-slate-200 bg-slate-50/80"
-            : "border-slate-100 bg-white"
+        className={`relative overflow-hidden rounded-xl border vault-reminder-card ${
+          isCompleted ? "vault-reminder-card--completed" : ""
         }`}
       >
         {showAccent ? (
@@ -148,91 +141,83 @@ export const ReminderListItem = ({
           />
         ) : null}
 
-        <div
-          className={`py-4 pr-4 ${showAccent ? "pl-5" : "pl-4"} ${
-            isCompleted ? "opacity-80" : ""
-          }`}
-        >
-          <div className="flex items-center gap-3">
+        <div className={`py-4 pr-4 ${showAccent ? "pl-5" : "pl-4"}`}>
+          <div
+            className={`flex items-start gap-3 ${isCompleted ? "opacity-80" : ""}`}
+          >
             <div
               className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${
-                isCompleted ? "bg-slate-100" : iconTone.box
+                isCompleted ? "dark:bg-white/15" : ""
               }`}
             >
               <Bell
                 className={`size-5 ${
-                  isCompleted ? "text-slate-400" : iconTone.icon
+                  isCompleted
+                    ? "text-slate-400 dark:text-white"
+                    : "text-slate-900"
                 }`}
               />
             </div>
-            <p
-              className={`min-w-0 flex-1 truncate ${
-                isCompleted
-                  ? "font-medium text-slate-400 line-through decoration-slate-300"
-                  : "font-semibold text-slate-900"
-              }`}
-            >
-              {reminder.title}
-            </p>
+            <div className="min-w-0 flex-1">
+              <p
+                className={`truncate ${
+                  isCompleted
+                    ? "font-medium text-slate-400 line-through decoration-slate-300"
+                    : "font-semibold text-slate-900"
+                }`}
+              >
+                {reminder.title}
+              </p>
+              {reminder.description ? (
+                <p
+                  className={`mt-1 text-sm ${
+                    isCompleted ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
+                  {reminder.description}
+                </p>
+              ) : null}
+            </div>
             <ReminderActionButtons {...actionProps} />
           </div>
 
-          <div className="my-3 border-t border-slate-100" />
+          <div
+            className={`vault-reminder-card-divider my-3 border-t border-slate-100 ${
+              showAccent ? "vault-reminder-card-divider--accent" : ""
+            }`}
+          />
 
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div
-              className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-xs ${
-                isCompleted
-                  ? "text-slate-400"
-                  : isDismissed
-                    ? "text-violet-600"
-                    : "text-slate-500"
-              }`}
-            >
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
               <span
-                className={`inline-flex rounded-md px-2 py-0.5 font-medium ${
-                  isCompleted ? "opacity-70" : ""
-                } ${getReminderTypeBadgeClass(reminder.type)}`}
+                className={`inline-flex font-medium ${getReminderTypeBadgeClass(reminder.type)}`}
               >
                 {getReminderTypeLabel(reminder.type)}
               </span>
-              <span className="inline-flex items-center gap-1">
+              <span className="vault-reminder-meta-datetime inline-flex items-center gap-1">
                 <Calendar className="size-3.5 shrink-0" />
                 {formatReminderDate(reminder.remindAt)}
               </span>
-              <span className="inline-flex items-center gap-1">
+              <span className="vault-reminder-meta-datetime inline-flex items-center gap-1">
                 <Clock className="size-3.5 shrink-0" />
                 {formatReminderTime(reminder.remindAt)}
               </span>
+              {tab === "upcoming" && overdue ? (
+                <span className="shrink-0 rounded-full bg-red-500 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                  Overdue
+                </span>
+              ) : null}
+              {tab === "upcoming" && !overdue ? (
+                <span className="vault-reminder-meta-datetime shrink-0">
+                  {formatReminderRelative(reminder.remindAt, now)}
+                </span>
+              ) : null}
               {repeatSummary ? (
-                <span className="inline-flex items-center gap-1">
+                <span className="vault-reminder-meta-datetime inline-flex items-center gap-1">
                   <Repeat className="size-3.5 shrink-0" />
                   {repeatSummary}
                 </span>
               ) : null}
-            </div>
-            {tab === "upcoming" ? (
-              overdue ? (
-                <span className="shrink-0 rounded-full bg-red-500 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                  Overdue
-                </span>
-              ) : (
-                <span className="shrink-0 text-xs text-slate-500">
-                  {formatReminderRelative(reminder.remindAt, now)}
-                </span>
-              )
-            ) : null}
           </div>
-
-          {reminder.description ? (
-            <p
-              className={`mt-3 text-sm ${
-                isCompleted ? "text-slate-400" : "text-slate-500"
-              }`}
-            >
-              {reminder.description}
-            </p>
-          ) : null}
         </div>
       </div>
     </li>

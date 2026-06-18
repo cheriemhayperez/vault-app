@@ -358,10 +358,10 @@ export const AddInvestmentModal = ({
                   onChange={setReminderDuration}
                 />
               </div>
-              <div className="flex gap-3 rounded-lg border border-violet-100 bg-violet-50/70 px-3.5 py-3">
-                <Bell className="mt-0.5 size-4 shrink-0 text-violet-600" />
+              <div className="vault-investment-reminder-callout flex gap-3 rounded-lg px-3.5 py-3">
+                <Bell className="vault-investment-reminder-callout-icon mt-0.5 size-4 shrink-0" />
                 <div>
-                  <p className="text-sm font-semibold text-violet-900">
+                  <p className="vault-investment-reminder-callout-title text-sm font-semibold">
                     Reminder Settings
                   </p>
                   <p className="mt-1 text-sm leading-relaxed text-slate-500">

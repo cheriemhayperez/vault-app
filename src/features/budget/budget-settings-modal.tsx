@@ -145,10 +145,8 @@ export const BudgetSettingsModal = ({
                     key={preset.id}
                     type="button"
                     onClick={() => applyPreset(preset.id)}
-                    className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition ${
-                      isActive
-                        ? "border-violet-500 bg-violet-50 text-violet-800"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                    className={`vault-budget-preset-btn${
+                      isActive ? " vault-budget-preset-btn--active" : ""
                     }`}
                   >
                     {preset.label}

@@ -32,16 +32,16 @@ export const ReminderListToolbar = ({
   onPageSizeChange,
   onPageChange,
 }: ReminderListToolbarProps) => (
-  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-4 py-3">
-    <p className="text-sm text-slate-500">
+  <div className="vault-reminder-list-toolbar relative flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+    <p className="text-sm text-slate-500 dark:text-white">
       Showing{" "}
-      <span className="font-medium text-slate-700">
+      <span className="font-medium text-slate-700 dark:text-white">
         {rangeStart === rangeEnd
           ? rangeStart.toLocaleString("en-PH")
           : `${rangeStart.toLocaleString("en-PH")}–${rangeEnd.toLocaleString("en-PH")}`}
       </span>{" "}
       of{" "}
-      <span className="font-medium text-slate-700">
+      <span className="font-medium text-slate-700 dark:text-white">
         {totalCount.toLocaleString("en-PH")}
       </span>
     </p>
@@ -53,19 +53,19 @@ export const ReminderListToolbar = ({
             type="button"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage <= 1}
-            className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-white/10 dark:hover:text-white"
             aria-label="Previous page"
           >
             <ChevronLeft className="size-4" />
           </button>
-          <span className="min-w-[2.5rem] text-center text-xs tabular-nums text-slate-500">
+          <span className="min-w-[2.5rem] text-center text-xs tabular-nums text-slate-500 dark:text-white">
             {currentPage}/{totalPages}
           </span>
           <button
             type="button"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-white/10 dark:hover:text-white"
             aria-label="Next page"
           >
             <ChevronRight className="size-4" />
@@ -73,7 +73,7 @@ export const ReminderListToolbar = ({
         </div>
       ) : null}
 
-      <span className="text-sm text-slate-500">Show:</span>
+      <span className="text-sm text-slate-500 dark:text-white">Show:</span>
       <FilterSelectMenu
         value={pageSize}
         options={[...PAGE_SIZE_OPTIONS]}

@@ -38,22 +38,22 @@ export const DatePickerCalendarPanel = ({
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-slate-100 px-3 py-2.5">
+      <div className="flex items-center justify-between border-b border-slate-100 px-3 py-2.5 dark:border-vault-subtle">
         <button
           type="button"
           onClick={onPreviousMonth}
-          className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-violet-50 hover:text-violet-700"
+          className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-violet-50 hover:text-violet-700 dark:text-zinc-400 dark:hover:bg-violet-500/15 dark:hover:text-violet-300"
           aria-label="Previous month"
         >
           <ChevronLeft className="size-4" />
         </button>
-        <p className="text-sm font-semibold text-slate-900">
+        <p className="text-sm font-semibold text-slate-900 dark:text-zinc-50">
           {MONTH_NAMES[viewMonth]} {viewYear}
         </p>
         <button
           type="button"
           onClick={onNextMonth}
-          className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-violet-50 hover:text-violet-700"
+          className="flex size-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-violet-50 hover:text-violet-700 dark:text-zinc-400 dark:hover:bg-violet-500/15 dark:hover:text-violet-300"
           aria-label="Next month"
         >
           <ChevronRight className="size-4" />
@@ -64,7 +64,7 @@ export const DatePickerCalendarPanel = ({
         {WEEKDAY_LABELS.map((label, index) => (
           <div
             key={`${label}-${index}`}
-            className="py-1 text-center text-[11px] font-medium text-slate-400"
+            className="py-1 text-center text-[11px] font-medium text-slate-400 dark:text-zinc-500"
           >
             {label}
           </div>
@@ -86,9 +86,9 @@ export const DatePickerCalendarPanel = ({
                 isSelected
                   ? "bg-violet-600 font-semibold text-white"
                   : cell.inMonth
-                    ? "text-slate-900 hover:bg-violet-50 hover:text-violet-700"
-                    : "text-slate-300 hover:bg-slate-50"
-              } ${isToday && !isSelected ? "ring-1 ring-violet-300" : ""}`}
+                    ? "text-slate-900 hover:bg-violet-50 hover:text-violet-700 dark:text-zinc-50 dark:hover:bg-violet-500/15 dark:hover:text-violet-300"
+                    : "text-slate-300 hover:bg-slate-50 dark:text-zinc-600 dark:hover:bg-white/5"
+              } ${isToday && !isSelected ? "ring-1 ring-violet-300 dark:ring-violet-500/50" : ""}`}
             >
               {cell.date.getDate()}
             </button>
@@ -97,7 +97,9 @@ export const DatePickerCalendarPanel = ({
       </div>
 
       {footer ? (
-        <div className="border-t border-slate-100 px-3 py-3">{footer}</div>
+        <div className="border-t border-slate-100 px-3 py-3 dark:border-vault-subtle">
+          {footer}
+        </div>
       ) : null}
     </>
   );

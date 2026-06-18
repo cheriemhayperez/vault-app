@@ -14,7 +14,7 @@ export const LEDGER_COLUMNS = [
 ] as const;
 
 export const RECORDS_FILTER_CONTROL_CLASS =
-  "h-9 rounded-lg border border-slate-200 py-0 text-sm text-slate-700 outline-none transition-colors focus:border-violet-400 focus:ring-0";
+  "h-9 rounded-lg border border-slate-200 py-0 text-sm text-slate-700 outline-none transition-colors focus:ring-0";
 
 export const TIME_FILTER_OPTIONS: FilterSelectOption[] = [
   { value: "all", label: "All Time" },

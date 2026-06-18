@@ -319,7 +319,6 @@ export const DateTimePicker = ({
                       options={MINUTE_SELECT_OPTIONS}
                       minWidthClass="min-w-0 flex-1"
                       nestedPopover
-                      menuClassName="max-h-48 overflow-y-auto"
                       onChange={(nextMinute) =>
                         handleTimeChange(
                           timeParts.hour12,

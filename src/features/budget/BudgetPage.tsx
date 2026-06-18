@@ -79,7 +79,7 @@ export const BudgetPage = () => {
         <Button
           type="button"
           variant="outline"
-          className="border-slate-200 bg-white text-slate-700"
+          className="vault-budget-settings-btn"
           onClick={() => setIsSettingsOpen(true)}
         >
           <Settings className="mr-2 size-4" />
@@ -88,7 +88,7 @@ export const BudgetPage = () => {
       </VaultPageHeaderActions>
 
       <div className="space-y-6">
-        <div className="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div className="vault-budget-net-pay-card rounded-xl border border-slate-100 p-5 shadow-sm">
           <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
             Net Pay
           </p>
@@ -178,24 +178,26 @@ export const BudgetPage = () => {
             return (
               <div
                 key={bucket.category}
-                className={`flex h-full flex-col rounded-xl border border-slate-100 border-l-4 shadow-sm ${bucket.accent} ${MOBILE_BUCKET_TINT[bucket.category]} ${
+                className={`vault-budget-bucket-card flex h-full flex-col rounded-xl border border-slate-100 border-l-4 shadow-sm ${bucket.accent} ${MOBILE_BUCKET_TINT[bucket.category]} ${
                   isMobileHidden ? "hidden md:flex" : "flex"
                 }`}
               >
-                <div className="flex flex-1 flex-col p-5">
+                <div className="flex flex-col p-5">
                   <div className="flex items-start justify-between gap-3">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-bold uppercase tracking-wide ${bucket.badgeClass}`}
-                    >
-                      {bucket.category}
-                      <span className="font-semibold">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className={`vault-budget-bucket-badge ${bucket.badgeClass}`}
+                      >
+                        {bucket.category}
+                      </span>
+                      <span className="vault-budget-bucket-split">
                         {budgetSplitPercentages[bucket.splitKey]}%
                       </span>
-                    </span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => toggleBucket(bucket.category)}
-                      className="flex size-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                      className="vault-budget-collapse-btn flex size-8 items-center justify-center rounded-lg"
                       aria-label={
                         isCollapsed ? "Expand section" : "Collapse section"
                       }
@@ -216,29 +218,46 @@ export const BudgetPage = () => {
                     {formatMoneySigned(targetAmount)}
                   </p>
 
-                  {!isCollapsed ? (
-                    <div className="flex flex-1 flex-col">
-                      <p
-                        className={`mt-4 text-xs font-medium ${
-                          isOverBudget ? "text-emerald-600" : "text-slate-500"
-                        }`}
-                      >
-                        {formatBudgetUsageLabel(targetAmount, spentAmount)}
-                      </p>
-                      <Progress
-                        value={ratio}
-                        className="mt-2 h-1.5 bg-slate-100"
-                        indicatorClassName={bucket.bar}
-                      />
-                      <div className="mt-2 flex justify-between text-xs text-slate-500">
-                        <span>
-                          {bucket.spentLabel}: {formatMoneyFixed(spentAmount)}
+                  <div className="mt-4 flex flex-col">
+                    <Progress
+                      value={ratio}
+                      className="h-1.5 bg-slate-100"
+                      indicatorClassName={bucket.bar}
+                    />
+                    <p
+                      className={`vault-budget-bucket-percent mt-2 text-xs font-medium${
+                        isOverBudget
+                          ? " vault-budget-bucket-percent--over"
+                          : ""
+                      }`}
+                    >
+                      {formatBudgetUsageLabel(targetAmount, spentAmount)}
+                    </p>
+                    <div className="mt-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="vault-budget-bucket-meta">
+                          {bucket.spentLabel}:{" "}
+                          <span className="vault-budget-bucket-meta-value">
+                            {formatMoneyFixed(spentAmount)}
+                          </span>
                         </span>
-                        <span>
-                          {bucket.leftLabel}: {formatMoneySigned(leftAmount)}
+                        <span className="vault-budget-bucket-meta">
+                          {bucket.leftLabel}:{" "}
+                          <span className="vault-budget-bucket-meta-value">
+                            {formatMoneySigned(leftAmount)}
+                          </span>
                         </span>
                       </div>
+                      {!isCollapsed ? (
+                        <div
+                          className="vault-budget-bucket-divider"
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                    </div>
 
+                    {!isCollapsed ? (
+                      <>
                       {items.length > 0 ? (
                         <div className="mt-5">
                           <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
@@ -301,7 +320,7 @@ export const BudgetPage = () => {
                                     </div>
                                   </button>
 
-                                  <div className="hidden rounded-lg border border-slate-100 bg-white p-4 md:block">
+                                  <div className="vault-budget-category-card hidden rounded-lg border border-slate-100 p-4 md:block">
                                     <div className="flex items-start justify-between gap-2">
                                       <div className="flex min-w-0 items-center gap-2">
                                         <span
@@ -318,7 +337,7 @@ export const BudgetPage = () => {
                                         <button
                                           type="button"
                                           onClick={() => openEditCategory(item)}
-                                          className="rounded-lg p-2 text-slate-400 transition hover:bg-white hover:text-slate-600"
+                                          className="vault-budget-category-edit-btn rounded-lg p-2"
                                           aria-label={`Edit ${item.name}`}
                                         >
                                           <Pencil className="size-4" />
@@ -328,7 +347,7 @@ export const BudgetPage = () => {
                                           onClick={() =>
                                             setDeletingCategory(item)
                                           }
-                                          className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-500"
+                                          className="vault-budget-category-delete-btn rounded-lg p-2"
                                           aria-label={`Delete ${item.name}`}
                                         >
                                           <Trash2 className="size-4" />
@@ -370,11 +389,11 @@ export const BudgetPage = () => {
                         </div>
                       ) : null}
 
-                      <div className="mt-auto pt-5">
+                      <div className="mt-5">
                         <Button
                           type="button"
                           variant="outline"
-                          className="h-10 w-full border-slate-200 text-sm text-slate-700"
+                          className="vault-budget-add-category-btn h-10 w-full text-sm"
                           onClick={() => openAddCategory(bucket.category)}
                         >
                           <Plus className="mr-2 size-4" />
@@ -384,7 +403,7 @@ export const BudgetPage = () => {
                         <div className="mt-4 text-center">
                           <Link
                             href={bucket.expensesHref}
-                            className="text-sm font-medium text-slate-600 hover:text-violet-600"
+                            className="vault-budget-view-link"
                           >
                             {bucket.category === "SAVINGS"
                               ? "View Savings →"
@@ -392,8 +411,9 @@ export const BudgetPage = () => {
                           </Link>
                         </div>
                       </div>
-                    </div>
-                  ) : null}
+                      </>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             );

@@ -118,7 +118,7 @@ export const InvestmentActionsMenu = ({
           <div
             ref={menuRef}
             role="menu"
-            className="fixed z-[200] min-w-[13rem] rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+            className="vault-investment-actions-menu fixed z-[200] min-w-[13rem] rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
             style={{ top: menuStyle.top, left: menuStyle.left }}
           >
             <button
@@ -128,9 +128,9 @@ export const InvestmentActionsMenu = ({
                 onOpenChange(false);
                 onAddReturn();
               }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-violet-50"
+              className="vault-investment-actions-menu-item flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
             >
-              <Plus className="size-4 text-slate-500" />
+              <Plus className="vault-investment-actions-menu-icon size-4" />
               Add Return/Payout
             </button>
             <button
@@ -140,12 +140,12 @@ export const InvestmentActionsMenu = ({
                 onOpenChange(false);
                 onRecordIncome();
               }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-violet-50"
+              className="vault-investment-actions-menu-item flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
             >
-              <Wallet className="size-4 text-slate-500" />
+              <Wallet className="vault-investment-actions-menu-icon size-4" />
               Record as Income
             </button>
-            <div className="my-1 border-t border-slate-100" />
+            <div className="vault-investment-actions-menu-divider my-1 border-t border-slate-100" />
             <button
               type="button"
               role="menuitem"
@@ -153,9 +153,9 @@ export const InvestmentActionsMenu = ({
                 onOpenChange(false);
                 onEdit();
               }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-50"
+              className="vault-investment-actions-menu-item flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
             >
-              <Pencil className="size-4 text-slate-500" />
+              <Pencil className="vault-investment-actions-menu-icon size-4" />
               Edit
             </button>
             <button
@@ -165,7 +165,7 @@ export const InvestmentActionsMenu = ({
                 onOpenChange(false);
                 onDelete();
               }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-rose-500 transition hover:bg-rose-50"
+              className="vault-investment-actions-menu-delete flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
             >
               <Trash2 className="size-4" />
               Delete
@@ -184,7 +184,7 @@ export const InvestmentActionsMenu = ({
           event.stopPropagation();
           onOpenChange(!isOpen);
         }}
-        className="flex items-center justify-center p-1 text-slate-400 transition hover:text-slate-600"
+        className="vault-investment-actions-trigger flex items-center justify-center p-1"
         aria-label="Investment actions"
         aria-expanded={isOpen}
         aria-haspopup="menu"

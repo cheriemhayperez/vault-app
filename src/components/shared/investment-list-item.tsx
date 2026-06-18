@@ -63,15 +63,13 @@ const getTransactionIcon = (transactionType: VaultInvestment["transactionType"])
   if (transactionType === "sell") {
     return {
       Icon: TrendingDown,
-      boxClass: "bg-rose-50",
-      iconClass: "text-rose-600",
+      boxClass: "vault-investment-transaction-icon vault-investment-transaction-icon--sell",
     };
   }
 
   return {
     Icon: TrendingUp,
-    boxClass: "bg-emerald-50",
-    iconClass: "text-emerald-600",
+    boxClass: "vault-investment-transaction-icon vault-investment-transaction-icon--buy",
   };
 };
 
@@ -126,22 +124,23 @@ export const InvestmentListItem = ({
   const totalPayouts = returnTotals.totalPayouts;
   const netProfit = returnTotals.netProfit;
   const netProfitPercent = returnTotals.netProfitPercent;
-  const { Icon, boxClass, iconClass } = getTransactionIcon(
+  const { Icon, boxClass } = getTransactionIcon(
     investment.transactionType,
   );
 
   return (
-    <div className="rounded-xl border border-slate-100 bg-white shadow-sm">
+    <div className="vault-investment-list-card rounded-xl border border-slate-100 bg-white shadow-sm">
       <button
         type="button"
         onClick={() => setExpanded((value) => !value)}
-        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+        aria-expanded={expanded}
+        className="vault-investment-list-trigger group flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
       >
         <div className="flex min-w-0 items-center gap-3">
           <div
             className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${boxClass}`}
           >
-            <Icon className={`size-5 ${iconClass}`} />
+            <Icon className="size-5" />
           </div>
           <div className="min-w-0">
             <p className="truncate text-base font-semibold text-slate-900">
@@ -164,17 +163,22 @@ export const InvestmentListItem = ({
               </p>
             </div>
           ) : null}
-          {expanded ? (
-            <ChevronUp className="size-4 text-slate-400" />
-          ) : (
-            <ChevronDown className="size-4 text-slate-400" />
-          )}
+          <span
+            className="vault-investment-toggle-btn flex size-8 shrink-0 items-center justify-center rounded-lg"
+            aria-hidden
+          >
+            {expanded ? (
+              <ChevronUp className="size-4" />
+            ) : (
+              <ChevronDown className="size-4" />
+            )}
+          </span>
         </div>
       </button>
 
       {expanded ? (
-        <div className="border-t border-slate-100 px-5 pb-5 pt-4">
-          <div className="rounded-lg border border-slate-100 bg-slate-50/40 p-4">
+        <div className="vault-investment-list-body border-t border-slate-100 px-5 pb-5 pt-4">
+          <div className="vault-investment-list-panel rounded-lg border border-slate-100 bg-slate-50/40 p-4">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">

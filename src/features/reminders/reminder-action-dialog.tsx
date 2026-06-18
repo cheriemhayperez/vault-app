@@ -86,7 +86,7 @@ export const ReminderActionDialog = ({
             type="button"
             onClick={onClose}
             disabled={isLocked}
-            className="absolute right-0 top-0 flex size-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 disabled:opacity-50"
+            className="vault-modal-close-btn absolute right-0 top-0 disabled:opacity-50"
             aria-label="Close"
           >
             <X className="size-4" />

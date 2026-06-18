@@ -43,6 +43,7 @@ export const useInvestments = () => {
   const [deletingInvestment, setDeletingInvestment] =
     useState<VaultInvestment | null>(null);
   const [isDeletingInvestment, setIsDeletingInvestment] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const { toastMessage, toastVariant, setToastMessage, showToastError } =
     useVaultToast();
 
@@ -172,15 +173,39 @@ export const useInvestments = () => {
     }
   };
 
-  const handleExport = () => {
-    const csv = exportInvestmentsCsv(filteredInvestments);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "vault-investments.csv";
-    link.click();
-    URL.revokeObjectURL(url);
+const EXPORT_BUSY_MIN_MS = 500;
+
+  const handleExport = async () => {
+    if (isExporting) {
+      return;
+    }
+
+    setIsExporting(true);
+    const startedAt = Date.now();
+
+    try {
+      await new Promise<void>((resolve) => {
+        window.setTimeout(resolve, 0);
+      });
+
+      const csv = exportInvestmentsCsv(filteredInvestments);
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "vault-investments.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      const elapsed = Date.now() - startedAt;
+      const remaining = EXPORT_BUSY_MIN_MS - elapsed;
+      if (remaining > 0) {
+        await new Promise<void>((resolve) => {
+          window.setTimeout(resolve, remaining);
+        });
+      }
+      setIsExporting(false);
+    }
   };
 
   const handleRecordIncome = (investment: VaultInvestment) => {
@@ -255,6 +280,7 @@ export const useInvestments = () => {
     openMenuId,
     deletingInvestment,
     isDeletingInvestment,
+    isExporting,
     toastMessage,
     toastVariant,
     filteredInvestments,

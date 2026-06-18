@@ -48,7 +48,7 @@ const REMINDER_TYPE_BADGE: Record<ReminderType, string> = {
   contribution: "bg-teal-50 text-teal-700",
   bill: "bg-amber-50 text-amber-800",
   investment: "bg-indigo-50 text-indigo-700",
-  custom: "bg-slate-100 text-slate-700",
+  custom: "text-black dark:text-white vault-reminder-type-label--custom",
 };
 
 export const getReminderTypeLabel = (type: ReminderType): string =>

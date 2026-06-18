@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, PieChart } from "lucide-react";
+import { Download, Loader2, PieChart } from "lucide-react";
 
 import { DeleteInvestmentDialog } from "./delete-investment-dialog";
 import { AddInvestmentModal } from "./add-investment-modal";
@@ -27,6 +27,7 @@ export const InvestmentsPage = () => {
     openMenuId,
     deletingInvestment,
     isDeletingInvestment,
+    isExporting,
     toastMessage,
     toastVariant,
     parentInvestments,
@@ -75,7 +76,7 @@ export const InvestmentsPage = () => {
             return (
               <div
                 key={card.title}
-                className="relative overflow-hidden rounded-xl border border-slate-100 bg-white p-5 shadow-sm"
+                className="vault-investment-card relative overflow-hidden p-5"
               >
                 <span className="absolute left-0 top-0 h-full w-1 bg-violet-500" />
                 <div className="flex items-start justify-between pl-2">
@@ -101,7 +102,9 @@ export const InvestmentsPage = () => {
                       </p>
                     ) : null}
                   </div>
-                  <Icon className="size-4 text-violet-600" />
+                  <div className="vault-investment-metric-icon">
+                    <Icon className="size-4" strokeWidth={2} />
+                  </div>
                 </div>
               </div>
             );
@@ -131,12 +134,22 @@ export const InvestmentsPage = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  className="border-slate-200 bg-white text-slate-700"
-                  onClick={handleExport}
-                  disabled={parentInvestments.length === 0}
+                  className="vault-investment-export-btn min-w-[7.25rem] border-slate-200 bg-white text-slate-700 focus:outline-none focus-visible:outline-none"
+                  onClick={() => void handleExport()}
+                  disabled={isExporting || parentInvestments.length === 0}
+                  aria-busy={isExporting}
                 >
-                  <Download className="mr-2 size-4" />
-                  Export
+                  {isExporting ? (
+                    <>
+                      <Loader2 className="mr-2 size-4 animate-spin" aria-hidden />
+                      Exporting...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="mr-2 size-4" aria-hidden />
+                      Export
+                    </>
+                  )}
                 </Button>
               </>
             ) : null}
@@ -165,7 +178,7 @@ export const InvestmentsPage = () => {
             ))}
           </div>
         ) : (
-          <div className={styles.emptyState}>
+          <div className={`vault-investment-card ${styles.emptyState}`}>
             <div className={styles.emptyIcon}>
               <PieChart className="size-8 text-violet-500" strokeWidth={1.5} />
             </div>

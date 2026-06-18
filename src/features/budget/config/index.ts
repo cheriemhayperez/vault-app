@@ -6,8 +6,8 @@ export const BUCKET_CONFIG = [
   {
     category: "NEEDS" as const,
     splitKey: "needs" as const,
-    accent: "border-l-emerald-500",
-    badgeClass: "bg-emerald-50 text-emerald-700",
+    accent: "vault-budget-bucket-card--needs",
+    badgeClass: "vault-budget-bucket-badge--needs",
     headerClass: "text-emerald-600",
     bar: "bg-emerald-500",
     icon: Landmark,
@@ -18,8 +18,8 @@ export const BUCKET_CONFIG = [
   {
     category: "WANTS" as const,
     splitKey: "wants" as const,
-    accent: "border-l-violet-500",
-    badgeClass: "bg-violet-50 text-violet-700",
+    accent: "vault-budget-bucket-card--wants",
+    badgeClass: "vault-budget-bucket-badge--wants",
     headerClass: "text-violet-600",
     bar: "bg-violet-500",
     icon: Wallet,
@@ -30,8 +30,8 @@ export const BUCKET_CONFIG = [
   {
     category: "SAVINGS" as const,
     splitKey: "savings" as const,
-    accent: "border-l-emerald-600",
-    badgeClass: "bg-emerald-50 text-emerald-800",
+    accent: "vault-budget-bucket-card--savings",
+    badgeClass: "vault-budget-bucket-badge--savings",
     headerClass: "text-emerald-700",
     bar: "bg-emerald-600",
     icon: PiggyBank,

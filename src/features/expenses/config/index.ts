@@ -2,24 +2,26 @@ import { Landmark, PiggyBank, Wallet } from "lucide-react";
 
 import type { BudgetCategory } from "@/types/financial";
 
+export const EXPENSE_ACTIONS_TRIGGER_CLASS = "vault-expense-actions-trigger";
+
 export const BUCKET_COLUMNS = [
   {
     category: "NEEDS" as const,
-    badgeClass: "bg-emerald-50 text-emerald-700",
+    badgeClass: "vault-expense-bucket-badge vault-expense-bucket-badge--needs",
     buttonClass: "bg-emerald-600 hover:bg-emerald-700",
     addLabel: "Add Expense",
     icon: Landmark,
   },
   {
     category: "WANTS" as const,
-    badgeClass: "bg-violet-50 text-violet-700",
+    badgeClass: "vault-expense-bucket-badge vault-expense-bucket-badge--wants",
     buttonClass: "bg-violet-600 hover:bg-violet-700",
     addLabel: "Add Wants",
     icon: Wallet,
   },
   {
     category: "SAVINGS" as const,
-    badgeClass: "bg-emerald-50 text-emerald-700",
+    badgeClass: "vault-expense-bucket-badge vault-expense-bucket-badge--savings",
     buttonClass: "bg-emerald-600 hover:bg-emerald-700",
     addLabel: "Add Savings",
     icon: PiggyBank,

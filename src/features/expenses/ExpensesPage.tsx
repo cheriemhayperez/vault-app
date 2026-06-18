@@ -13,6 +13,7 @@ import { useExpenses } from "@/features/expenses/hooks/use-expenses";
 import {
   BUCKET_COLUMNS,
   EXPENSES_LEDGER_GRID_CLASS,
+  EXPENSE_ACTIONS_TRIGGER_CLASS,
   EXPENSE_SUMMARY_COLUMNS,
   LEDGER_COLUMNS,
   MOBILE_BUCKET_TABS,
@@ -165,7 +166,7 @@ export const ExpensesPage = () => {
                     {items.map((expense) => (
                       <li
                         key={expense.id}
-                        className="flex items-center justify-between gap-2 rounded-lg border border-slate-100 bg-slate-50/50 px-3 py-2.5"
+                        className="vault-expense-item-card flex items-center justify-between gap-2 rounded-lg px-3 py-2.5"
                       >
                         <div className="min-w-0">
                           <ExpenseCategoryLabel
@@ -254,6 +255,7 @@ export const ExpensesPage = () => {
                           openEdit(expense);
                         }}
                         onDelete={() => openDeleteExpense(expense)}
+                        triggerClassName={EXPENSE_ACTIONS_TRIGGER_CLASS}
                       />
                     </div>
                   ))}
