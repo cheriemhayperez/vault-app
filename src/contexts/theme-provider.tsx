@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -14,6 +15,7 @@ import {
   applyDocumentTheme,
   readStoredThemePreference,
   resolveTheme,
+  shouldForcePublicLightTheme,
   THEME_STORAGE_KEY,
   writeThemeCookies,
   type ThemePreference,
@@ -25,32 +27,65 @@ interface ThemeContextValue {
   resolvedTheme: VaultThemeMode;
   setTheme: (preference: ThemePreference) => void;
   isReady: boolean;
+  setPublicLightScope: (active: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname();
   const [preference, setPreference] = useState<ThemePreference>("light");
   const [resolvedTheme, setResolvedTheme] = useState<VaultThemeMode>("light");
   const [isReady, setIsReady] = useState(false);
+  const [publicLightScope, setPublicLightScope] = useState(false);
 
-  const syncTheme = useCallback((nextPreference: ThemePreference) => {
-    const resolved = resolveTheme(nextPreference);
-    setPreference(nextPreference);
-    setResolvedTheme(resolved);
-    applyDocumentTheme(resolved);
-    localStorage.setItem(THEME_STORAGE_KEY, nextPreference);
-    writeThemeCookies(nextPreference, resolved);
-  }, []);
+  const forcePublicLight = shouldForcePublicLightTheme(pathname, publicLightScope);
+
+  const applyThemeToDocument = useCallback(
+    (nextPreference: ThemePreference, scopedLight = publicLightScope) => {
+      const resolved = resolveTheme(nextPreference);
+
+      if (shouldForcePublicLightTheme(pathname, scopedLight)) {
+        applyDocumentTheme("light");
+        return resolved;
+      }
+
+      applyDocumentTheme(resolved);
+      return resolved;
+    },
+    [pathname, publicLightScope],
+  );
+
+  const syncTheme = useCallback(
+    (nextPreference: ThemePreference) => {
+      const resolved = applyThemeToDocument(nextPreference);
+      setPreference(nextPreference);
+      setResolvedTheme(resolved);
+      localStorage.setItem(THEME_STORAGE_KEY, nextPreference);
+      writeThemeCookies(nextPreference, resolved);
+    },
+    [applyThemeToDocument],
+  );
 
   useEffect(() => {
     const stored = readStoredThemePreference();
-    syncTheme(stored);
+    const resolved = applyThemeToDocument(stored);
+    setPreference(stored);
+    setResolvedTheme(resolved);
     setIsReady(true);
-  }, [syncTheme]);
+  }, [applyThemeToDocument]);
 
   useEffect(() => {
-    if (preference !== "system") {
+    if (!isReady) {
+      return;
+    }
+
+    const resolved = applyThemeToDocument(preference);
+    setResolvedTheme(resolved);
+  }, [applyThemeToDocument, isReady, preference, pathname, publicLightScope]);
+
+  useEffect(() => {
+    if (!isReady || preference !== "system" || forcePublicLight) {
       return undefined;
     }
 
@@ -63,16 +98,17 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
-  }, [preference]);
+  }, [forcePublicLight, isReady, preference]);
 
   const value = useMemo(
     () => ({
       preference,
-      resolvedTheme,
+      resolvedTheme: forcePublicLight ? "light" : resolvedTheme,
       setTheme: syncTheme,
       isReady,
+      setPublicLightScope,
     }),
-    [preference, resolvedTheme, syncTheme, isReady],
+    [forcePublicLight, preference, resolvedTheme, syncTheme, isReady],
   );
 
   return (

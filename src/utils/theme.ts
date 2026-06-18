@@ -1,6 +1,20 @@
 export type ThemePreference = "light" | "dark" | "system";
 export type VaultThemeMode = "light" | "dark";
 
+export const PUBLIC_LIGHT_ONLY_PATHS = ["/login", "/signup"] as const;
+
+export type PublicLightOnlyPath = (typeof PUBLIC_LIGHT_ONLY_PATHS)[number];
+
+export const isPublicLightOnlyPath = (
+  pathname: string | null | undefined,
+): pathname is PublicLightOnlyPath =>
+  PUBLIC_LIGHT_ONLY_PATHS.includes(pathname as PublicLightOnlyPath);
+
+export const shouldForcePublicLightTheme = (
+  pathname: string | null | undefined,
+  publicLightScope = false,
+): boolean => publicLightScope || isPublicLightOnlyPath(pathname);
+
 export const THEME_STORAGE_KEY = "vault-theme-preference";
 
 export const THEME_MODE_COOKIE = "vault-theme-mode";

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { Providers } from "@/components/ui/providers";
 import {
@@ -37,9 +37,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const themeMode = readThemeModeFromCookie(
-    cookieStore.get(THEME_MODE_COOKIE)?.value,
-  );
+  const headerStore = await headers();
+  const forcePublicLight = headerStore.get("x-vault-force-light-theme") === "1";
+  const themeMode = forcePublicLight
+    ? "light"
+    : readThemeModeFromCookie(cookieStore.get(THEME_MODE_COOKIE)?.value);
 
   return (
     <html

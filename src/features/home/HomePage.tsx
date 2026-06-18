@@ -1,6 +1,7 @@
 "use client";
 
 import { VaultLayout } from "@/components/layout/vault-layout";
+import { PublicLightThemeScope } from "@/components/theme/public-light-theme-scope";
 import { DashboardPage } from "@/features/dashboard/DashboardPage";
 import { LandingPage } from "@/features/landing/LandingPage";
 import { PageLoadingSpinner } from "@/components/ui/page-loading-spinner";
@@ -10,7 +11,11 @@ export const HomePage = () => {
   const { isLoading, isAuthenticated } = useHome();
 
   if (isLoading) {
-    return <PageLoadingSpinner />;
+    return (
+      <PublicLightThemeScope>
+        <PageLoadingSpinner />
+      </PublicLightThemeScope>
+    );
   }
 
   if (isAuthenticated) {
@@ -21,5 +26,9 @@ export const HomePage = () => {
     );
   }
 
-  return <LandingPage />;
+  return (
+    <PublicLightThemeScope>
+      <LandingPage />
+    </PublicLightThemeScope>
+  );
 };
