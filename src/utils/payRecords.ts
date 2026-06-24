@@ -344,6 +344,63 @@ export const formatIncomeLinkOptionLabel = (record: Transaction): string => {
 
 export const formatSalaryLinkOptionLabel = formatIncomeLinkOptionLabel;
 
+export interface PayRecordLedgerRow {
+  record: Transaction;
+  linkedDeductions: Transaction[];
+}
+
+export const getLinkedDeductionsForRecord = (
+  records: Transaction[],
+  parentRecordId: string,
+): Transaction[] =>
+  records.filter(
+    (record) =>
+      record.direction === "DEBIT" &&
+      record.linkedSalaryRecordId === parentRecordId,
+  );
+
+export const buildPayRecordLedgerRows = (
+  records: Transaction[],
+): PayRecordLedgerRow[] => {
+  const linkedChildIds = new Set<string>();
+  const deductionsByParent = new Map<string, Transaction[]>();
+
+  for (const record of records) {
+    if (record.direction !== "DEBIT" || !record.linkedSalaryRecordId) {
+      continue;
+    }
+
+    linkedChildIds.add(record.id);
+    const existing = deductionsByParent.get(record.linkedSalaryRecordId) ?? [];
+    existing.push(record);
+    deductionsByParent.set(record.linkedSalaryRecordId, existing);
+  }
+
+  const rows: PayRecordLedgerRow[] = [];
+
+  for (const record of records) {
+    if (linkedChildIds.has(record.id)) {
+      continue;
+    }
+
+    rows.push({
+      record,
+      linkedDeductions:
+        record.direction === "CREDIT"
+          ? (deductionsByParent.get(record.id) ?? [])
+          : [],
+    });
+  }
+
+  return rows;
+};
+
+export const sumLinkedDeductionAmount = (deductions: Transaction[]): number =>
+  deductions.reduce((total, deduction) => total + deduction.amount, 0);
+
+export const formatLinkedDeductionCountLabel = (count: number): string =>
+  count === 1 ? "1 deduction" : `${count} deductions`;
+
 export const countDistinctPayRecordMonths = (records: Transaction[]): number => {
   const keys = new Set<string>();
   for (const record of records) {

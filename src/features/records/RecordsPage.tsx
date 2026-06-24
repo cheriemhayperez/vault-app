@@ -21,9 +21,7 @@ import { AdditionalPayModal } from "./additional-pay-modal";
 import { DeleteRecordDialog } from "./delete-record-dialog";
 import { PayRecordModal } from "./pay-record-modal";
 import { QuickDeductionModal } from "./quick-deduction-modal";
-import { PayRecordDirectionIcon } from "@/components/shared/pay-record-direction-icon";
-import { RecordCategoryBadge } from "@/components/shared/record-category-badge";
-import { RecordActionsMenu } from "@/components/shared/record-actions-menu";
+import { PayRecordLedgerRowGroup } from "@/components/shared/pay-record-ledger-row";
 import { VaultPageHeaderActions } from "@/components/layout/vault-page-header-actions";
 import { Button } from "@/components/ui/button";
 import { VaultToast } from "@/components/ui/vault-toast";
@@ -32,7 +30,6 @@ import {
   useRecords,
 } from "@/features/records/hooks/use-records";
 import {
-  formatSignedAmount,
   LEDGER_COLUMNS,
   RECORDS_FILTER_CONTROL_CLASS,
   RECORDS_LEDGER_GRID_CLASS,
@@ -42,10 +39,6 @@ import {
   getCategoryColorSwatchClass,
   getCategoryQuickActionClassName,
 } from "@/types/categories";
-import {
-  getRecordRowDescription,
-  isEmptyRecordRowDescription,
-} from "@/utils/payRecords";
 
 export const RecordsPage = () => {
   const {
@@ -66,6 +59,8 @@ export const RecordsPage = () => {
     timeFilter,
     setTimeFilter,
     collapsedMonths,
+    expandedPayRecordIds,
+    unlinkingRecordId,
     isSyncing,
     syncMessage,
     toastMessage,
@@ -81,6 +76,8 @@ export const RecordsPage = () => {
     hasFilteredRecords,
     monthCount,
     toggleMonth,
+    togglePayRecordExpanded,
+    handleUnlinkFromSalary,
     openAddRecord,
     openQuickDeduction,
     closeAddRecord,
@@ -377,54 +374,28 @@ export const RecordsPage = () => {
                             <span className="sr-only">Actions</span>
                           </div>
 
-                          <div className="vault-ledger-table-rows divide-y divide-slate-100">
-                            {group.records.map((record) => (
-                              <div
-                                key={record.id}
-                                className={`${RECORDS_LEDGER_GRID_CLASS} px-4 py-3.5 text-sm hover:bg-slate-50/60`}
-                              >
-                                <div className="flex justify-center">
-                                  <PayRecordDirectionIcon
-                                    direction={record.direction}
-                                  />
-                                </div>
-                                <p
-                                  className={`min-w-0 truncate ${
-                                    isEmptyRecordRowDescription(record)
-                                      ? "text-slate-400"
-                                      : "font-medium text-slate-800"
-                                  }`}
-                                >
-                                  {getRecordRowDescription(record)}
-                                </p>
-                                <RecordCategoryBadge
-                                  record={record}
-                                  incomeCategories={income}
-                                  deductionCategories={deductionCategories}
-                                />
-                                <p className="whitespace-nowrap text-slate-600">
-                                  {formatDate(record.timestamp)}
-                                </p>
-                                <p
-                                  className={`whitespace-nowrap text-right font-semibold tabular-nums ${
-                                    record.direction === "CREDIT"
-                                      ? "text-emerald-600"
-                                      : "text-red-600"
-                                  }`}
-                                >
-                                  {formatSignedAmount(record)}
-                                </p>
-                                <div className="flex justify-end">
-                                  <RecordActionsMenu
-                                    isOpen={openMenuId === record.id}
-                                    onOpenChange={(isOpen) =>
-                                      setOpenMenuId(isOpen ? record.id : null)
-                                    }
-                                    onEdit={() => setEditingRecord(record)}
-                                    onDelete={() => setDeletingRecord(record)}
-                                  />
-                                </div>
-                              </div>
+                          <div className="vault-ledger-table-rows">
+                            {group.ledgerRows.map((row) => (
+                              <PayRecordLedgerRowGroup
+                                key={row.record.id}
+                                row={row}
+                                isExpanded={
+                                  expandedPayRecordIds[row.record.id] ?? false
+                                }
+                                openMenuId={openMenuId}
+                                incomeCategories={income}
+                                deductionCategories={deductionCategories}
+                                formatDate={formatDate}
+                                formatMoneyFixed={formatMoneyFixed}
+                                onToggleExpanded={togglePayRecordExpanded}
+                                onMenuOpenChange={(recordId, isOpen) =>
+                                  setOpenMenuId(isOpen ? recordId : null)
+                                }
+                                onEdit={setEditingRecord}
+                                onDelete={setDeletingRecord}
+                                onUnlinkFromSalary={handleUnlinkFromSalary}
+                                unlinkingRecordId={unlinkingRecordId}
+                              />
                             ))}
                           </div>
                       </div>

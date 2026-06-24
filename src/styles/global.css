@@ -216,6 +216,50 @@
   background-color: var(--vault-surface);
 }
 
+.settings-panel-header--categories {
+  padding-bottom: 0;
+}
+
+:root[data-theme="dark"] .settings-panel-header--categories {
+  background-color: var(--vault-sidebar);
+}
+
+.settings-panel-header--categories-empty {
+  border-bottom: none;
+}
+
+:root[data-theme="dark"] .settings-panel-header--categories-empty {
+  border-bottom: none;
+}
+
+.settings-panel-body--categories {
+  padding-top: 0;
+}
+
+:root[data-theme="dark"] .settings-panel-body--categories {
+  background-color: var(--vault-sidebar);
+}
+
+.settings-panel-body--categories .settings-panel-categories-toolbar {
+  margin-inline: -1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
+  background-color: #ffffff;
+  border-bottom: none;
+}
+
+.settings-panel-body--categories-empty .settings-panel-categories-toolbar {
+  border-top: 1px solid rgb(226 232 240);
+  padding-top: 0.75rem;
+}
+
+:root[data-theme="dark"] .settings-panel-body--categories .settings-panel-categories-toolbar {
+  background-color: #0c1427;
+}
+
+:root[data-theme="dark"] .settings-panel-body--categories-empty .settings-panel-categories-toolbar {
+  border-top: 1px solid var(--vault-border-subtle);
+}
+
 .settings-panel-body {
   background-color: #ffffff;
   padding: 2rem 1.5rem 1.5rem;
@@ -255,6 +299,47 @@
 
 :root[data-theme="dark"] .settings-panel-footer-divider {
   border-top-color: var(--vault-border-subtle);
+}
+
+.vault-settings-categories-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  border: 1px dashed rgb(226 232 240);
+  background-color: rgb(248 250 252 / 0.6);
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+}
+
+.vault-settings-categories-empty-icon {
+  color: rgb(203 213 225);
+}
+
+.vault-settings-categories-empty-title {
+  color: rgb(71 85 105);
+}
+
+.vault-settings-categories-empty-copy {
+  color: rgb(100 116 139);
+}
+
+:root[data-theme="dark"] .vault-settings-categories-empty {
+  border-color: var(--vault-border-subtle);
+  background-color: rgb(8 15 31 / 0.35);
+}
+
+:root[data-theme="dark"] .vault-settings-categories-empty-icon {
+  color: rgb(82 82 91);
+}
+
+:root[data-theme="dark"] .vault-settings-categories-empty-title {
+  color: rgb(228 228 231);
+}
+
+:root[data-theme="dark"] .vault-settings-categories-empty-copy {
+  color: rgb(161 161 170);
 }
 
 :root[data-theme="dark"] .group:hover .vault-settings-icon-idle {
@@ -2033,6 +2118,112 @@ button.vault-budget-add-category-btn:active {
 
 .vault-ledger-table-rows {
   border-top: 1px solid #e9edf0;
+}
+
+.vault-pay-record-expand-btn {
+  color: rgb(148 163 184);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.vault-pay-record-expand-btn:hover,
+.vault-pay-record-expand-btn:active,
+.vault-pay-record-expand-btn[aria-expanded="true"] {
+  background-color: rgb(16 185 129 / 0.12);
+  color: #059669;
+}
+
+.vault-pay-record-link-btn {
+  color: rgb(148 163 184);
+  background-color: transparent;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.vault-pay-record-link-btn:hover,
+.vault-pay-record-link-btn:focus-visible,
+.vault-pay-record-link-btn:active {
+  background-color: rgb(124 58 237 / 0.12);
+  color: #7c3aed;
+}
+
+.vault-pay-record-link-tooltip {
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  z-index: 20;
+  white-space: nowrap;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(226 232 240);
+  background-color: #ffffff;
+  padding: 0.375rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(51 65 85);
+  opacity: 0;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+  transform: translateX(-50%);
+  transition: opacity 150ms ease;
+}
+
+.vault-pay-record-link-btn:hover .vault-pay-record-link-tooltip,
+.vault-pay-record-link-btn:focus-visible .vault-pay-record-link-tooltip {
+  opacity: 1;
+}
+
+.vault-pay-record-ledger-group {
+  border-bottom: 1px solid #e9edf0;
+}
+
+.vault-pay-record-ledger-group:last-child {
+  border-bottom: none;
+}
+
+.vault-pay-record-ledger-row--expanded-parent,
+.vault-pay-record-ledger-row--linked-child {
+  border-bottom: none;
+}
+
+.vault-pay-record-ledger-row--linked-child-last {
+  padding-bottom: 0.875rem;
+}
+
+:root[data-theme="dark"] .vault-pay-record-ledger-group {
+  border-bottom-color: var(--vault-border-subtle);
+}
+
+:root[data-theme="dark"] .vault-pay-record-link-btn {
+  color: rgb(148 163 184);
+  background-color: transparent;
+}
+
+:root[data-theme="dark"] .vault-pay-record-link-btn:hover,
+:root[data-theme="dark"] .vault-pay-record-link-btn:focus-visible,
+:root[data-theme="dark"] .vault-pay-record-link-btn:active {
+  background-color: rgb(124 58 237 / 0.15);
+  color: #a78bfa;
+}
+
+:root[data-theme="dark"] .vault-pay-record-link-tooltip {
+  border-color: var(--vault-border-subtle);
+  background-color: var(--vault-surface);
+  color: rgb(226 232 240);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.25);
+}
+
+:root[data-theme="dark"] .vault-pay-record-expand-btn {
+  color: rgb(148 163 184);
+}
+
+:root[data-theme="dark"] .vault-pay-record-expand-btn:hover,
+:root[data-theme="dark"] .vault-pay-record-expand-btn:active,
+:root[data-theme="dark"] .vault-pay-record-expand-btn[aria-expanded="true"] {
+  background-color: rgb(16 185 129 / 0.15);
+  color: #34d399;
 }
 
 :root[data-theme="dark"] .vault-ledger-table-header {

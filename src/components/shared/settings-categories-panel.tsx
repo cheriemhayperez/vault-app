@@ -156,7 +156,11 @@ export const SettingsCategoriesPanel = () => {
         />
       ) : null}
 
-      <div className="settings-panel-header">
+      <div
+        className={`settings-panel-header settings-panel-header--categories${
+          totalCount === 0 ? " settings-panel-header--categories-empty" : ""
+        }`}
+      >
         <div className="vault-settings-panel-header-icon">
           <Tags className="size-4" />
         </div>
@@ -170,8 +174,12 @@ export const SettingsCategoriesPanel = () => {
         </div>
       </div>
 
-      <div className="settings-panel-body">
-        <div className="flex items-center justify-between gap-4">
+      <div
+        className={`settings-panel-body settings-panel-body--categories${
+          totalCount === 0 ? " settings-panel-body--categories-empty" : ""
+        }`}
+      >
+        <div className="settings-panel-categories-toolbar flex items-center justify-between gap-4">
           <h3 className="text-sm font-semibold text-slate-900 dark:text-zinc-50">
             Categories
           </h3>
@@ -186,12 +194,15 @@ export const SettingsCategoriesPanel = () => {
         </div>
 
         {totalCount === 0 ? (
-          <div className="mt-6 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/40 px-6 py-14 text-center dark:border-vault-subtle dark:bg-vault-shell/50">
-            <Tags className="size-10 text-slate-300 dark:text-zinc-600" strokeWidth={1.5} />
-            <p className="mt-4 text-sm font-semibold text-slate-600 dark:text-zinc-300">
+          <div className="vault-settings-categories-empty mt-6">
+            <Tags
+              className="vault-settings-categories-empty-icon size-10"
+              strokeWidth={1.5}
+            />
+            <p className="vault-settings-categories-empty-title mt-4 text-sm font-semibold">
               No categories yet
             </p>
-            <p className="mt-1 max-w-xs text-sm text-slate-500 dark:text-zinc-500">
+            <p className="vault-settings-categories-empty-copy mt-1 max-w-xs text-sm">
               Add categories to organize your income and deductions.
             </p>
           </div>

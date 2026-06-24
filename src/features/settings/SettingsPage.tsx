@@ -244,7 +244,7 @@ export const SettingsPage = () => {
           </nav>
         </div>
 
-      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-vault-subtle lg:mt-0">
+      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-vault-subtle dark:bg-vault-sidebar lg:mt-0">
         {activeSection === "profile" ? (
           <>
             <SectionPanelHeader

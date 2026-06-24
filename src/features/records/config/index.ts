@@ -3,7 +3,7 @@ import type { Transaction } from "@/types/financial";
 import { getActiveCurrencyFormatters } from "@/utils/format/currencyFormat";
 
 export const RECORDS_LEDGER_GRID_CLASS =
-  "grid min-w-[36rem] grid-cols-[2.75rem_8rem_6.5rem_7.25rem_6.5rem_2.5rem] items-center gap-3 md:min-w-0 md:grid-cols-[2.75rem_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,0.95fr)_minmax(0,1fr)_2.5rem]";
+  "grid min-w-[38rem] grid-cols-[4.25rem_8rem_6.5rem_7.25rem_6.5rem_2.5rem] items-center gap-3 md:min-w-0 md:grid-cols-[4.25rem_minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,0.95fr)_minmax(0,1fr)_2.5rem]";
 
 export const LEDGER_COLUMNS = [
   { label: "Type", headerClass: "text-center" },

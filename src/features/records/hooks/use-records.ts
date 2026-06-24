@@ -5,17 +5,19 @@ import { useMemo, useState } from "react";
 import type { FilterSelectOption } from "@/components/shared/filter-select-menu";
 import { useVaultPreferences } from "@/contexts/vault-preferences-context";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { deleteVaultRecord } from "@/api/ledger";
+import { deleteVaultRecord, updateVaultRecord } from "@/api/ledger";
+import { getCurrentVaultUser } from "@/api/user";
 import { loadVaultData } from "@/features/system/load-vault-data";
 import { useAutoDismissToast } from "@/hooks/use-auto-dismiss-toast";
 import { useConfirmVaultDelete } from "@/hooks/use-confirm-vault-delete";
-import { removePayRecord } from "@/store/slices/financialSlice";
+import { removePayRecord, updatePayRecord } from "@/store/slices/financialSlice";
 import {
   findPayCategoryByName,
   type PayCategory,
 } from "@/types/categories";
 import type { Transaction } from "@/types/financial";
 import {
+  buildPayRecordLedgerRows,
   countDistinctPayRecordMonths,
   groupPayRecordsByMonth,
   isPayRecord,
@@ -75,6 +77,12 @@ export const useRecords = () => {
   const [timeFilter, setTimeFilter] = useState<RecordsTimeFilter>("all");
   const [collapsedMonths, setCollapsedMonths] = useState<Record<string, boolean>>(
     {},
+  );
+  const [expandedPayRecordIds, setExpandedPayRecordIds] = useState<
+    Record<string, boolean>
+  >({});
+  const [unlinkingRecordId, setUnlinkingRecordId] = useState<string | null>(
+    null,
   );
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
@@ -191,6 +199,7 @@ export const useRecords = () => {
       groupPayRecordsByMonth(filteredRecords).map((group) => ({
         ...group,
         fullRecordCount: group.records.length,
+        ledgerRows: buildPayRecordLedgerRows(group.records),
       })),
     [filteredRecords],
   );
@@ -204,6 +213,52 @@ export const useRecords = () => {
       ...previous,
       [key]: !previous[key],
     }));
+  };
+
+  const togglePayRecordExpanded = (recordId: string) => {
+    setExpandedPayRecordIds((previous) => ({
+      ...previous,
+      [recordId]: !previous[recordId],
+    }));
+  };
+
+  const handleUnlinkFromSalary = async (record: Transaction) => {
+    const parentId = record.linkedSalaryRecordId;
+    if (!parentId || unlinkingRecordId) {
+      return;
+    }
+
+    setUnlinkingRecordId(record.id);
+    try {
+      const user = await getCurrentVaultUser();
+      if (!user) {
+        return;
+      }
+
+      const { linkedSalaryRecordId: _removed, ...unlinkedRecord } = record;
+      const saved = await updateVaultRecord(unlinkedRecord, user.id);
+      dispatch(updatePayRecord(saved));
+
+      const remainingLinkedCount = transactions.filter(
+        (item) =>
+          item.id !== record.id && item.linkedSalaryRecordId === parentId,
+      ).length;
+
+      if (remainingLinkedCount === 0) {
+        setExpandedPayRecordIds((previous) => {
+          const next = { ...previous };
+          delete next[parentId];
+          return next;
+        });
+      }
+
+      setToastMessage("Deduction unlinked from salary");
+    } catch (error) {
+      console.error("Failed to unlink deduction:", error);
+      setSyncError("Failed to unlink deduction from salary");
+    } finally {
+      setUnlinkingRecordId(null);
+    }
   };
 
   const openAddRecord = () => {
@@ -270,6 +325,8 @@ export const useRecords = () => {
     timeFilter,
     setTimeFilter,
     collapsedMonths,
+    expandedPayRecordIds,
+    unlinkingRecordId,
     isSyncing,
     syncMessage,
     toastMessage,
@@ -285,6 +342,8 @@ export const useRecords = () => {
     hasFilteredRecords,
     monthCount,
     toggleMonth,
+    togglePayRecordExpanded,
+    handleUnlinkFromSalary,
     openAddRecord,
     openQuickDeduction,
     closeAddRecord,
